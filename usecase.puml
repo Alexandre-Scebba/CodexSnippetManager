@@ -11,7 +11,7 @@ rectangle "Code Snippet Manager" {
     usecase "Search Snippets" as UC4
     usecase "Copy Snippet to Clipboard" as UC5
     usecase "Cloud Sync" as UC6
-    usecase "GitHub Gist Integration" as UC7
+    usecase "Create Filter" as UC7
 }
 
 Developer --> UC1
