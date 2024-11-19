@@ -1,0 +1,25 @@
+@startuml
+
+left to right direction
+
+actor Developer
+
+rectangle "Code Snippet Manager" {
+    usecase "Create Account | Login" as UC1
+    usecase "Create | Edit Snippet" as UC2
+    usecase "Categorize Snippet" as UC3
+    usecase "Search Snippets" as UC4
+    usecase "Copy Snippet to Clipboard" as UC5
+    usecase "Cloud Sync" as UC6
+    usecase "GitHub Gist Integration" as UC7
+}
+
+Developer --> UC1
+Developer --> UC2
+Developer --> UC3
+Developer --> UC4
+Developer --> UC5
+Developer --> UC6
+Developer --> UC7
+
+@enduml

@@ -1,0 +1,52 @@
+@startuml
+
+entity Users {
+  +UserId: int <<PK>>
+  --
+  Username: string
+  Email: string
+  PasswordHash: string
+  CreatedAt: datetime
+  UpdatedAt: datetime
+}
+
+entity Snippets {
+  +SnippetId: int <<PK>>
+  --
+  UserId: int <<FK>>
+  Title: string
+  Description: string
+  Language: string
+  Content: text
+  CreatedAt: datetime
+  UpdatedAt: datetime
+}
+
+entity Tags {
+  +TagId: int <<PK>>
+  --
+  Name: string
+}
+
+entity SnippetTags {
+  +SnippetTagId: int <<PK>>
+  --
+  SnippetId: int <<FK>>
+  TagId: int <<FK>>
+}
+
+entity CloudSync {
+  +SyncId: int <<PK>>
+  --
+  UserId: int <<FK>>
+  SnippetId: int <<FK>>
+  SyncedAt: datetime
+  Status: string
+}
+
+Users ||--o{ Snippets : owns
+Snippets ||--o{ SnippetTags : links
+Tags ||--o{ SnippetTags : links
+Users ||--o{ CloudSync : has
+
+@enduml
