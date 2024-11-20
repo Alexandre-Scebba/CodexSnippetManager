@@ -4,7 +4,10 @@ SCRUM MEETINGS
 1. Done since last scrum
 - First scrum
 2. Plan until next Scrum
-- 
+- setup azure db
+- setup ssms
+- initiate connection string
+- create tables + models
 3. Need assistance / figure things out
 - 
 
