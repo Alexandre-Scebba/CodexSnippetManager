@@ -118,10 +118,10 @@
                         <Grid Margin="5">
                             <TextBox x:Name="Username" Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"/>
                             <TextBlock Text="Username" 
-                                       IsHitTestVisible="False" 
-                                       Foreground="Gray" 
-                                       VerticalAlignment="Center" 
-                                       Margin="5,0,0,0">
+                           IsHitTestVisible="False" 
+                           Foreground="Gray" 
+                           VerticalAlignment="Center" 
+                           Margin="5,0,0,0">
                                 <TextBlock.Style>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -137,10 +137,10 @@
                         <Grid Margin="5">
                             <PasswordBox x:Name="PasswordBox" PasswordChanged="PasswordBox_PasswordChanged"/>
                             <TextBlock Text="Password" 
-                                       IsHitTestVisible="False" 
-                                       Foreground="Gray" 
-                                       VerticalAlignment="Center" 
-                                       Margin="5,0,0,0">
+                           IsHitTestVisible="False" 
+                           Foreground="Gray" 
+                           VerticalAlignment="Center" 
+                           Margin="5,0,0,0">
                                 <TextBlock.Style>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -153,11 +153,31 @@
                                 </TextBlock.Style>
                             </TextBlock>
                         </Grid>
+                        <Grid Margin="5">
+                            <PasswordBox x:Name="ConfirmPasswordBox" PasswordChanged="ConfirmPasswordBox_PasswordChanged"/>
+                            <TextBlock Text="Confirm Password" 
+                           IsHitTestVisible="False" 
+                           Foreground="Gray" 
+                           VerticalAlignment="Center" 
+                           Margin="5,0,0,0">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Password, ElementName=ConfirmPasswordBox}" Value="">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </Grid>
                         <Button Content="Login" Margin="5"/>
-                        <Button Content="Register" Margin="5"/>
+                        <Button Content="Register" Margin="5" Click="RegisterButton_Click"/>
                     </StackPanel>
                 </Grid>
             </TabItem>
+
         </TabControl>
     </Grid>
 </Window>

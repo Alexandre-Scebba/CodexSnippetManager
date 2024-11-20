@@ -1,11 +1,12 @@
 using System.Data.Entity;
 using SnippetManager.Models;
+using Microsoft.Data.SqlClient;
 
 namespace SnippetManager.Data
 {
     public class ApplicationDbContext : DbContext
     {
-        public ApplicationDbContext(string connectionString) : base(connectionString)
+        public ApplicationDbContext() : base("name=DefaultConnection")
         {
         }
 
@@ -22,28 +23,37 @@ namespace SnippetManager.Data
             modelBuilder.Entity<User>()
                 .HasMany(u => u.Snippets)
                 .WithRequired(s => s.User)
-                .HasForeignKey(s => s.UserId);
+                .HasForeignKey(s => s.UserId)
+                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<User>()
                 .HasMany(u => u.CloudSyncs)
                 .WithRequired(cs => cs.User)
-                .HasForeignKey(cs => cs.UserId);
+                .HasForeignKey(cs => cs.UserId)
+                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Snippet>()
                 .HasMany(s => s.SnippetTags)
                 .WithRequired(st => st.Snippet)
-                .HasForeignKey(st => st.SnippetId);
+                .HasForeignKey(st => st.SnippetId)
+                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Tag>()
                 .HasMany(t => t.SnippetTags)
                 .WithRequired(st => st.Tag)
-                .HasForeignKey(st => st.TagId);
+                .HasForeignKey(st => st.TagId)
+                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<CloudSync>()
                 .HasRequired(cs => cs.Snippet)
                 .WithMany()
-                .HasForeignKey(cs => cs.SnippetId);
+                .HasForeignKey(cs => cs.SnippetId)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<CloudSync>() // CloudSync primary key
+                .HasKey(cs => cs.SyncId);
         }
+
 
         public bool CanConnect()
         {
@@ -59,4 +69,5 @@ namespace SnippetManager.Data
             }
         }
     }
+
 }

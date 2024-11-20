@@ -1,30 +1,36 @@
 ﻿using System.ComponentModel;
+using System.Security.Cryptography;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using SnippetManager.Data;
+using SnippetManager.Models;
+using SnippetManager.ViewModels;
 
 namespace SnippetManager
 {
     public partial class MainWindow : Window
     {
         private readonly ApplicationDbContext _context;
+        private readonly bool _isLoggedIn;
 
-        public MainWindow() : this(new ApplicationDbContext("Server=tcp:codex-db.database.windows.net,1433;Initial Catalog=codex;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;Authentication=\"Active Directory Default\";"))
+        public MainWindow() : this(null, false)
         {
             // This constructor calls the parameterized constructor
         }
 
-        public MainWindow(ApplicationDbContext context)
+        public MainWindow(ApplicationDbContext context, bool isLoggedIn)
         {
             InitializeComponent();
-            _context = context;
+            _context = context ?? new ApplicationDbContext();
+            _isLoggedIn = isLoggedIn;
             DataContext = new MainViewModel();
 
-            if (_context.CanConnect())
+            if (_isLoggedIn && _context != null && _context.CanConnect())
             {
                 MessageBox.Show("Database connection is available.");
             }
-            else
+            else if (_isLoggedIn)
             {
                 MessageBox.Show("Failed to connect to the database.");
             }
@@ -37,27 +43,53 @@ namespace SnippetManager
                 viewModel.Password = ((PasswordBox)sender).Password;
             }
         }
-    }
 
-
-    public class MainViewModel : INotifyPropertyChanged
-    {
-        private string _password = string.Empty;
-
-        public string Password
+        private void ConfirmPasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
-            get => _password;
-            set
+            if (DataContext is MainViewModel viewModel)
             {
-                _password = value;
-                OnPropertyChanged(nameof(Password));
+                viewModel.ConfirmPassword = ((PasswordBox)sender).Password;
             }
         }
 
-        public event PropertyChangedEventHandler? PropertyChanged;
-        protected void OnPropertyChanged(string propertyName)
+        private void RegisterButton_Click(object sender, RoutedEventArgs e)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            if (DataContext is MainViewModel viewModel)
+            {
+                if (viewModel.Password != viewModel.ConfirmPassword)
+                {
+                    MessageBox.Show("Passwords do not match.");
+                    return;
+                }
+
+                var hashedPassword = HashPassword(viewModel.Password);
+                var user = new User
+                {
+                    Username = viewModel.Username,
+                    PasswordHash = hashedPassword,
+                    CreatedAt = DateTime.Now,
+                    UpdatedAt = DateTime.Now
+                };
+
+                _context.Users.Add(user);
+                _context.SaveChanges();
+
+                MessageBox.Show("Registration successful.");
+            }
+        }
+
+        private string HashPassword(string password)
+        {
+            using (var sha256 = SHA256.Create())
+            {
+                var bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+                var builder = new StringBuilder();
+                foreach (var b in bytes)
+                {
+                    builder.Append(b.ToString("x2"));
+                }
+                return builder.ToString();
+            }
         }
     }
 }
