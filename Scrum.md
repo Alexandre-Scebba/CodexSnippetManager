@@ -15,7 +15,8 @@ SCRUM MEETINGS
 1. Done since last scrum
 - First scrum
 2. Plan until next Scrum
-- 
+- researching frameworks for syntax highlighting on various coding languages
+- starting basic UI implementation based on modifed mockup plans 
 3. Need assistance / figure things out
 - 
 
