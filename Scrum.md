@@ -1,0 +1,25 @@
+SCRUM MEETINGS
+
+2024/11/20 Dimitri
+1. Done since last scrum
+- First scrum
+2. Plan until next Scrum
+- 
+3. Need assistance / figure things out
+- 
+
+2024/11/20 Alexandre
+1. Done since last scrum
+- First scrum
+2. Plan until next Scrum
+- 
+3. Need assistance / figure things out
+- 
+
+2024/11/20 Michael
+1. Done since last scrum
+- First scrum
+2. Plan until next Scrum
+- Work on the custom views for account based on user status
+3. Need assistance / figure things out
+- 
