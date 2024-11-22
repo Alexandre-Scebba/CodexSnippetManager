@@ -55,3 +55,31 @@ ________________________________________________________________________________
 - working on modern UI
 3. Need assistance / figure things out
 - C# part of custom views
+________________________________________________________________________________________
+
+2024/11/22 Dimitri
+1. Done since last scrum
+- 
+- 
+2. Plan until next Scrum
+- 
+- 
+3. Need assistance / figure things out
+- 
+
+2024/11/21 Alexandre
+1. Done since last scrum
+- 
+- 
+2. Plan until next Scrum
+-  
+3. Need assistance / figure things out
+
+2024/11/20 Michael
+1. Done since last scrum
+- Modern UI research and started to implement
+2. Plan until next Scrum
+- Continue work on the custom views for account based on user status
+- working on modern UI
+3. Need assistance / figure things out
+- C# part of custom views
