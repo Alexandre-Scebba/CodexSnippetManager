@@ -11,7 +11,7 @@ public partial class Category
 
     public string Name { get; set; }
 
-    public string Description { get; set; }
+    public string Type { get; set; }
 
     public virtual ICollection<Snippet> Snippets { get; set; } = new List<Snippet>();
 }

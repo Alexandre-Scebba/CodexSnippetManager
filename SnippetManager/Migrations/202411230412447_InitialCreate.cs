@@ -13,7 +13,7 @@
                     {
                         CategoryId = c.Int(nullable: false, identity: true),
                         Name = c.String(),
-                        Description = c.String(),
+                        Type = c.String(),
                     })
                 .PrimaryKey(t => t.CategoryId);
             

@@ -27,7 +27,7 @@ public partial class codexDBContext : DbContext
         {
             entity.HasKey(e => e.CategoryId).HasName("PK__Categori__19093A0B9A1C16FD");
 
-            entity.Property(e => e.Description).HasMaxLength(256);
+            entity.Property(e => e.Type).HasMaxLength(256);
             entity.Property(e => e.Name)
                 .IsRequired()
                 .HasMaxLength(100);

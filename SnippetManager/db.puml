@@ -28,7 +28,7 @@ entity Categories {
   +CategoryId: int <<PK>>
   --
   Name: string
-  Description: string
+  Type: string
 }
 
 Users ||--o{ Snippets : owns
