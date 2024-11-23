@@ -8,6 +8,7 @@
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="EntityFramework" Version="6.5.1" />
+		<PackageReference Include="EPP.PresentationCore" Version="1.0.0" />
 		<PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.2" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.11" />
 		<PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.0" />
@@ -16,5 +17,8 @@
 		<PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="9.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.0" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
+		<PackageReference Include="PresentationFramework" Version="4.6.0" />
+		<PackageReference Include="System.Runtime.WindowsRuntime.UI.Xaml" Version="4.7.0" />
+		<PackageReference Include="WindowsBase_Core.STW" Version="4.0.30319.1" />
 	</ItemGroup>
 </Project>
