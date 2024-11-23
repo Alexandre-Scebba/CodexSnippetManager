@@ -1,6 +1,5 @@
 using System.Data.Entity;
 using SnippetManager.Models;
-using Microsoft.Data.SqlClient;
 
 namespace SnippetManager.Data
 {
@@ -12,9 +11,7 @@ namespace SnippetManager.Data
 
         public DbSet<User> Users { get; set; }
         public DbSet<Snippet> Snippets { get; set; }
-        public DbSet<Tag> Tags { get; set; }
-        public DbSet<SnippetTag> SnippetTags { get; set; }
-        public DbSet<CloudSync> CloudSyncs { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -26,34 +23,38 @@ namespace SnippetManager.Data
                 .HasForeignKey(s => s.UserId)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<User>()
-                .HasMany(u => u.CloudSyncs)
-                .WithRequired(cs => cs.User)
-                .HasForeignKey(cs => cs.UserId)
+            modelBuilder.Entity<Snippet>()
+                .HasOptional(s => s.Category)
+                .WithMany(c => c.Snippets)
+                .HasForeignKey(s => s.CategoryId)
                 .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<User>()
+                .Property(u => u.CreatedAt)
+                .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Computed);
+
+            modelBuilder.Entity<User>()
+                .Property(u => u.UpdatedAt)
+                .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Computed);
 
             modelBuilder.Entity<Snippet>()
-                .HasMany(s => s.SnippetTags)
-                .WithRequired(st => st.Snippet)
-                .HasForeignKey(st => st.SnippetId)
-                .WillCascadeOnDelete(false);
+                .Property(s => s.CreatedAt)
+                .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Computed);
 
-            modelBuilder.Entity<Tag>()
-                .HasMany(t => t.SnippetTags)
-                .WithRequired(st => st.Tag)
-                .HasForeignKey(st => st.TagId)
-                .WillCascadeOnDelete(false);
+            modelBuilder.Entity<Snippet>()
+                .Property(s => s.UpdatedAt)
+                .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Computed);
 
-            modelBuilder.Entity<CloudSync>()
-                .HasRequired(cs => cs.Snippet)
-                .WithMany()
-                .HasForeignKey(cs => cs.SnippetId)
-                .WillCascadeOnDelete(false);
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.Email)
+                .IsUnique();
 
-            modelBuilder.Entity<CloudSync>() // CloudSync primary key
-                .HasKey(cs => cs.SyncId);
+            modelBuilder.Entity<Snippet>()
+                .HasIndex(s => s.Title);
+
+            modelBuilder.Entity<Snippet>()
+                .HasIndex(s => s.Language);
         }
-
 
         public bool CanConnect()
         {
@@ -69,5 +70,4 @@ namespace SnippetManager.Data
             }
         }
     }
-
 }

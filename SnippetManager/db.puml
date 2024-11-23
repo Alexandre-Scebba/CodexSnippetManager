@@ -17,36 +17,21 @@ entity Snippets {
   Title: string
   Description: string
   Language: string
+  Tags: string <<nullable>>
   Content: text
+  isSynced: bool
   CreatedAt: datetime
   UpdatedAt: datetime
 }
 
-entity Tags {
-  +TagId: int <<PK>>
+entity Categories {
+  +CategoryId: int <<PK>>
   --
   Name: string
-}
-
-entity SnippetTags {
-  +SnippetTagId: int <<PK>>
-  --
-  SnippetId: int <<FK>>
-  TagId: int <<FK>>
-}
-
-entity CloudSync {
-  +SyncId: int <<PK>>
-  --
-  UserId: int <<FK>>
-  SnippetId: int <<FK>>
-  SyncedAt: datetime
-  Status: string
+  Description: string
 }
 
 Users ||--o{ Snippets : owns
-Snippets ||--o{ SnippetTags : links
-Tags ||--o{ SnippetTags : links
-Users ||--o{ CloudSync : has
+Categories ||--o{ Snippets : categorizes
 
 @enduml

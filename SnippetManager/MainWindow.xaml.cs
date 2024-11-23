@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Text;
 using System.Windows;
@@ -26,13 +27,21 @@ namespace SnippetManager
             _isLoggedIn = isLoggedIn;
             DataContext = new MainViewModel();
 
-            if (_isLoggedIn && _context != null && _context.CanConnect())
+            CheckDatabaseConnection();
+            Debug.WriteLine("MainWindow initialized.");
+        }
+
+        private void CheckDatabaseConnection()
+        {
+            if (_context.CanConnect())
             {
                 MessageBox.Show("Database connection is available.");
+                Debug.WriteLine("Database connection is available.");
             }
-            else if (_isLoggedIn)
+            else
             {
                 MessageBox.Show("Failed to connect to the database.");
+                Debug.WriteLine("Failed to connect to the database.");
             }
         }
 
@@ -41,6 +50,7 @@ namespace SnippetManager
             if (DataContext is MainViewModel viewModel)
             {
                 viewModel.Password = ((PasswordBox)sender).Password;
+                Debug.WriteLine("PasswordBox_PasswordChanged event triggered.");
             }
         }
 
@@ -49,6 +59,7 @@ namespace SnippetManager
             if (DataContext is MainViewModel viewModel)
             {
                 viewModel.ConfirmPassword = ((PasswordBox)sender).Password;
+                Debug.WriteLine("ConfirmPasswordBox_PasswordChanged event triggered.");
             }
         }
 
@@ -59,6 +70,7 @@ namespace SnippetManager
                 if (viewModel.Password != viewModel.ConfirmPassword)
                 {
                     MessageBox.Show("Passwords do not match.");
+                    Debug.WriteLine("Passwords do not match.");
                     return;
                 }
 
@@ -75,6 +87,7 @@ namespace SnippetManager
                 _context.SaveChanges();
 
                 MessageBox.Show("Registration successful.");
+                Debug.WriteLine("Registration successful.");
             }
         }
 
@@ -88,6 +101,7 @@ namespace SnippetManager
                 {
                     builder.Append(b.ToString("x2"));
                 }
+                Debug.WriteLine("Password hashed.");
                 return builder.ToString();
             }
         }

@@ -7,13 +7,13 @@
     <StackPanel Margin="10">
         <StackPanel Margin="5">
             <Label Content="Email:" />
-            <TextBox x:Name="EmailTextBox" Width="200" />
+            <TextBox x:Name="EmailTextBox" Width="200" Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}" />
         </StackPanel>
         <StackPanel Margin="5">
             <Label Content="Password:" />
-            <PasswordBox x:Name="PasswordBox" Width="200" />
+            <PasswordBox x:Name="PasswordBox" Width="200" PasswordChanged="PasswordBox_PasswordChanged" />
         </StackPanel>
         <Button Content="Login" Margin="5" Command="{Binding LoginCommand}" Width="100" />
-        <Button Content="Register" Margin="5" Command="{Binding RegisterCommand}" Width="100" />
+        <Button Content="Register" Margin="5" Command="{Binding ShowRegisterViewCommand}" Width="100" />
     </StackPanel>
 </UserControl>
