@@ -104,77 +104,24 @@
                     </StackPanel>
 
                     <!-- Code Input Area -->
-                    <TextBox Grid.Row="1" x:Name="CodeInput" Text="{Binding NewSnippet.Content}" 
-                             AcceptsReturn="True" VerticalScrollBarVisibility="Auto"
-                             TextWrapping="NoWrap" FontFamily="Consolas" FontSize="14"
-                             Background="#f9f9f9" BorderBrush="#ccc" BorderThickness="1" />
+                    <RichTextBox Grid.Row="1" x:Name="CodeInput" 
+                                 VerticalScrollBarVisibility="Auto"
+                                 FontFamily="Consolas" FontSize="14"
+                                 Background="#f9f9f9" BorderBrush="#ccc" BorderThickness="1"
+                                 AcceptsReturn="True">
+                        <RichTextBox.Document>
+                            <FlowDocument>
+                                
+                            </FlowDocument>
+                        </RichTextBox.Document>
+                    </RichTextBox>
                 </Grid>
             </TabItem>
 
             <!-- Login/Register Tab -->
-            <TabItem Header="Account">
+            <TabItem Header="Account" Height="20" VerticalAlignment="Top">
                 <Grid Margin="10">
-                    <StackPanel>
-                        <Grid Margin="5">
-                            <TextBox x:Name="Username" Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"/>
-                            <TextBlock Text="Username" 
-                           IsHitTestVisible="False" 
-                           Foreground="Gray" 
-                           VerticalAlignment="Center" 
-                           Margin="5,0,0,0">
-                                <TextBlock.Style>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, ElementName=Username}" Value="">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </Grid>
-                        <Grid Margin="5">
-                            <PasswordBox x:Name="PasswordBox" PasswordChanged="PasswordBox_PasswordChanged"/>
-                            <TextBlock Text="Password" 
-                           IsHitTestVisible="False" 
-                           Foreground="Gray" 
-                           VerticalAlignment="Center" 
-                           Margin="5,0,0,0">
-                                <TextBlock.Style>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Password, ElementName=PasswordBox}" Value="">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </Grid>
-                        <Grid Margin="5">
-                            <PasswordBox x:Name="ConfirmPasswordBox" PasswordChanged="ConfirmPasswordBox_PasswordChanged"/>
-                            <TextBlock Text="Confirm Password" 
-                           IsHitTestVisible="False" 
-                           Foreground="Gray" 
-                           VerticalAlignment="Center" 
-                           Margin="5,0,0,0">
-                                <TextBlock.Style>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Password, ElementName=ConfirmPasswordBox}" Value="">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </Grid>
-                        <Button Content="Login" Margin="5"/>
-                        <Button Content="Register" Margin="5" Click="RegisterButton_Click"/>
-                    </StackPanel>
+                    <ContentControl Content="{Binding CurrentView}" />
                 </Grid>
             </TabItem>
 
