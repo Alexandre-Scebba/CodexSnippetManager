@@ -145,7 +145,7 @@ namespace SnippetManager.ViewModels
                 MessageBox.Show("Login successful.");
                 Debug.WriteLine("Login successful.");
                 // Switch to the main view or dashboard
-                // CurrentView = new MainView { DataContext = this };
+                CurrentView = new Dashboard { DataContext = this };
             }
             else
             {
