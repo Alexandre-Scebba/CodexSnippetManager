@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
@@ -22,6 +23,13 @@ namespace SnippetManager.ViewModels
         private object _currentView;
         private bool _isLoggedIn;
 
+        //dummy data test
+        //public ObservableCollection<string> AvailableLanguages { get; set; }
+        //public ObservableCollection<string> SelectedLanguages { get; set; }
+        //public ObservableCollection<string> Tags { get; set; }
+
+
+
         public MainViewModel()
         {
             _context = new ApplicationDbContext();
@@ -30,8 +38,32 @@ namespace SnippetManager.ViewModels
             ShowRegisterViewCommand = new RelayCommand(_ => ShowRegisterView());
             CurrentView = new DefaultView { DataContext = this };
 
+
+            //dummy data test
+    //        AvailableLanguages = new ObservableCollection<string>
+    //{
+    //    "C#",
+    //    "Java",
+    //    "Python",
+    //    "JavaScript",
+    //    "HTML",
+    //    "CSS"
+    //};
+
+    //        SelectedLanguages = new ObservableCollection<string>();
+
+    //        Tags = new ObservableCollection<string>
+    //{
+    //    "Backend",
+    //    "Frontend",
+    //    "Database",
+    //    "UI",
+    //    "API"
+    //};
+
             Debug.WriteLine("MainViewModel initialized.");
         }
+
 
         public string Username
         {

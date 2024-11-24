@@ -2,6 +2,7 @@
 using System.Windows;
 using SnippetManager.Data;
 using SnippetManager.Models;
+using SnippetManager.ViewModels;
 
 namespace SnippetManager
 {
@@ -15,32 +16,59 @@ namespace SnippetManager
         public CreateSnippet(ApplicationDbContext context)
         {
             InitializeComponent();
-            _context = context;
+            _context = context ?? throw new ArgumentNullException(nameof(context), "Database context cannot be null.");
+
+            //load dummy data
+          //  DataContext = new MainViewModel();
+
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            string title = TitleTextBox.Text;
-            string content = ContentTextBox.Text;
-
-            if (string.IsNullOrWhiteSpace(title) || string.IsNullOrWhiteSpace(content))
+            try
             {
-                MessageBox.Show("Title and content cannot be empty.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
+                string title = TitleTextBox.Text?.Trim();
+
+                string content = new System.Windows.Documents.TextRange(ContentRichTextBox.Document.ContentStart, ContentRichTextBox.Document.ContentEnd)
+                    .Text?.Trim();
+
+                if (string.IsNullOrWhiteSpace(title))
+                {
+                    MessageBox.Show("Title cannot be empty.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(content))
+                {
+                    MessageBox.Show("Content cannot be empty.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                // save as comma-separated 
+                //string selectedLanguages = SelectedLanguages != null ? string.Join(",", SelectedLanguages) : string.Empty;
+                //string selectedTags = SelectedTags != null ? string.Join(",", SelectedTags) : string.Empty;
+
+
+                Snippet newSnippet = new()
+                {
+                    Title = title,
+                    Content = content,
+                    //Language = selectedLanguages, // save as comma-separated 
+                    //Tags = selectedTags,
+                    CreatedAt = DateTime.Now,
+                    UpdatedAt = DateTime.Now
+                };
+
+                _context.Snippets.Add(newSnippet);
+                _context.SaveChanges();
+
+                MessageBox.Show("Snippet saved successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                this.Close();
             }
-
-            Snippet newSnippet = new()
+            catch (Exception ex)
             {
-                Title = title,
-                Content = content,
-                CreatedAt = DateTime.Now
-            };
-
-            _context.Snippets.Add(newSnippet);
-            _context.SaveChanges();
-
-            MessageBox.Show("Snippet saved successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-            this.Close();
+                MessageBox.Show($"An error occurred while saving the snippet: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }

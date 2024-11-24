@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<OutputType>WinExe</OutputType>
 		<TargetFramework>net8.0-windows</TargetFramework>
@@ -9,6 +9,7 @@
 	<ItemGroup>
 		<PackageReference Include="EntityFramework" Version="6.5.1" />
 		<PackageReference Include="EPP.PresentationCore" Version="1.0.0" />
+		<PackageReference Include="Extended.Wpf.Toolkit" Version="4.6.1" />
 		<PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.2" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.11" />
 		<PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.0" />
