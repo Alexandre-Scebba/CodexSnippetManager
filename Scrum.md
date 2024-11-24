@@ -1,6 +1,6 @@
 SCRUM MEETINGS
 ---- ---- ----TEMPLATE ---- ---- ----
-2024/11/XX Dimitri
+- - - 2024/11/XX Dimitri - - - - - - - - - - - - - - - - 
 1. Done since last scrum
 - 
 - 
@@ -8,7 +8,7 @@ SCRUM MEETINGS
 -
 3. Need assistance / figure things out
 -
-2024/11/XX Alexandre
+- - - 2024/11/XX Alexandre - - - - - - - - - - - - - - - - 
 1. Done since last scrum
 - 
 - 
@@ -16,7 +16,7 @@ SCRUM MEETINGS
 -
 3. Need assistance / figure things out
 -
-2024/11/XX Michael
+- - - 2024/11/XX Michael - - - - - - - - - - - - - - - - -
 1. Done since last scrum
 - 
 - 
@@ -24,6 +24,8 @@ SCRUM MEETINGS
 -
 3. Need assistance / figure things out
 -
+________________________________________________________________________________________
+
 ---- ---- ----TEMPLATE ---- ---- ----
    
 2024/11/20 Dimitri
