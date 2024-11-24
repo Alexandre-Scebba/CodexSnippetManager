@@ -115,8 +115,10 @@ ________________________________________________________________________________
 ________________________________________________________________________________________
 2024/11/23 Dimitri
 1. Done since last scrum
-- 
-- 
+- Fixewd db tables
+- Made sure models are correct
+- fixed migration
+- Login Register
 2. Plan until next Scrum
 -
 3. Need assistance / figure things out
