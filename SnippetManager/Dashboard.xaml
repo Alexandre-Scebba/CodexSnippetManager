@@ -6,8 +6,35 @@
              xmlns:local="clr-namespace:SnippetManager"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="800">
-    <DockPanel>
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <local:StringIsNullOrEmptyConverter x:Key="StringIsNullOrEmptyConverter"/>
+            <Style TargetType="TextBox" x:Key="WatermarkTextBoxStyle">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="TextBox">
+                            <Grid>
+                                <TextBox x:Name="InnerTextBox"
+                                         Text="{Binding Text, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                         Background="Transparent"
+                                         BorderBrush="{TemplateBinding BorderBrush}"
+                                         Foreground="{TemplateBinding Foreground}"
+                                         Padding="5" />
+                                <TextBlock Text="{TemplateBinding Tag}"
+                                           Foreground="Gray"
+                                           Padding="5"
+                                           IsHitTestVisible="False"
+                                           Visibility="{Binding Text, ElementName=InnerTextBox, Converter={StaticResource StringIsNullOrEmptyConverter}}"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
 
+    <DockPanel>
+        
 
         <!-- Main Content Area -->
         <Grid>
@@ -20,24 +47,32 @@
             </Grid.ColumnDefinitions>
 
             <!-- Left Panel -->
-            <StackPanel Grid.Column="0" Background="#E0E0E0" Margin="5">
-                <TextBlock Text="Languages" FontWeight="Bold" Margin="5"/>
-                <!-- Area for selecting languages (initially empty) -->
-                <ListBox x:Name="LanguagesListBox" Margin="5" Height="100"/>
-                <!-- Input textbox for new language -->
-                <TextBox x:Name="LanguageInputTextBox" Margin="5" Height="30" Text="Enter new language..."/>
-                <Button Content="Add Language" Margin="5" Height="30" Click="AddLanguageButton_Click"/>
+            <Grid Grid.Column="0" Margin="5" Background="LightGray">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <!-- Content area -->
+                    <RowDefinition Height="Auto"/>
+                    <!-- Fixed bottom area -->
+                </Grid.RowDefinitions>
 
-                <TextBlock Text="Tags" FontWeight="Bold" Margin="5,10,5,5"/>
-                <!-- Area for selecting tags (initially empty) -->
-                <ListBox x:Name="TagsListBox" Margin="5" Height="100"/>
-                <!-- Input textbox for new tag -->
-                <TextBox x:Name="TagInputTextBox" Margin="5" Height="30" Text="Enter new tag..."/>
-                <Button Content="Add Tag" Margin="5" Height="30" Click="AddTagButton_Click"/>
+                <StackPanel Grid.Row="0">
+                    <TextBlock Text="Languages" FontWeight="Bold" Margin="5,10,5,5"/>
+                    <ListBox x:Name="LanguagesListBox" Margin="5" Height="100"/>
+                    <TextBox x:Name="LanguageInputTextBox" Style="{StaticResource WatermarkTextBoxStyle}" Margin="5" Height="30" Tag="Enter new language..."/>
+                    <Button Content="Add Language" Margin="5" Height="30" Click="AddLanguageButton_Click"/>
 
-                <Button Content="New Snippet" Margin="5,30,5,5" Height="40" Click="NewSnippetButton_Click"/>
-                <Button Content="Settings" Margin="5" Height="40"/>
-            </StackPanel>
+                    <TextBlock Text="Tags" FontWeight="Bold" Margin="5,10,5,5"/>
+                    <ListBox x:Name="TagsListBox" Margin="5" Height="100"/>
+                    <TextBox x:Name="TagInputTextBox" Style="{StaticResource WatermarkTextBoxStyle}" Margin="5" Height="30" Tag="Enter new tag..."/>
+                    <Button Content="Add Tag" Margin="5" Height="30" Click="AddTagButton_Click"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" Orientation="Vertical" VerticalAlignment="Bottom" Margin="5">
+                    <Button Content="New Snippet" Margin="5" Height="40" Click="NewSnippetButton_Click"/>
+                    <Button Content="Settings" Margin="5" Height="40"/>
+                </StackPanel>
+            </Grid>
+
 
             <!-- Main Content Area -->
             <StackPanel Grid.Column="1" Margin="5">
