@@ -85,11 +85,12 @@ ________________________________________________________________________________
 
 2024/11/22 Dimitri
 1. Done since last scrum
-- 
-- 
+- set up strings
+- made file structure for project
+- fixed package errors
 2. Plan until next Scrum
-- 
-- 
+- rework azure db to match puml
+- fix azure server to new credentials
 3. Need assistance / figure things out
 - 
 
