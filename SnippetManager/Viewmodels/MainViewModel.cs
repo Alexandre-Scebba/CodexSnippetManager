@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
 using SnippetManager.Data;
@@ -139,6 +140,20 @@ namespace SnippetManager.ViewModels
         {
             Debug.WriteLine("Register command executed.");
 
+            if (!IsValidEmail(Email))
+            {
+                MessageBox.Show("Invalid email format.");
+                Debug.WriteLine("Invalid email format.");
+                return;
+            }
+
+            if (!IsValidPassword(Password))
+            {
+                MessageBox.Show("Password must be at least 8 characters long, include an uppercase letter, a digit, and a special character.");
+                Debug.WriteLine("Password does not meet requirements.");
+                return;
+            }
+
             if (Password != ConfirmPassword)
             {
                 MessageBox.Show("Passwords do not match.");
@@ -162,6 +177,19 @@ namespace SnippetManager.ViewModels
             MessageBox.Show("Registration successful.");
             Debug.WriteLine("Registration successful.");
             CurrentView = new DefaultView { DataContext = this };
+        }
+
+        private bool IsValidEmail(string email)
+        {
+            var emailPattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
+            return Regex.IsMatch(email, emailPattern);
+        }
+
+        private bool IsValidPassword(string password)
+        {
+            // Minimum 8 characters, at least one uppercase, one lowercase, one digit, one special character
+            var passwordPattern = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$";
+            return Regex.IsMatch(password, passwordPattern);
         }
 
         private void Login()
