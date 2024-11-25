@@ -8,6 +8,7 @@ using SnippetManager.ViewModels;
 using System.Globalization;
 using System.Windows.Data;
 using System.Diagnostics;
+using Microsoft.EntityFrameworkCore;
 
 namespace SnippetManager
 {
@@ -25,7 +26,6 @@ namespace SnippetManager
 
             //add
             DataContext = new MainViewModel();
-
         }
 
         //added
@@ -73,8 +73,6 @@ namespace SnippetManager
             }
         }
 
-
-
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -82,8 +80,7 @@ namespace SnippetManager
                 // get user inputs
                 string title = TitleTextBox.Text?.Trim() ?? string.Empty;
                 string content = ContentEditor.Text?.Trim() ?? string.Empty;
-                string availableLanguages = LanguageDropdown.SelectedItem?.ToString() ?? string.Empty;
-                ; // Dropdown for language
+                string availableLanguages = LanguageDropdown.SelectedItem?.ToString() ?? string.Empty; // Dropdown for language
                 string selectedTags = string.Join(",", TagsListBox.SelectedItems.Cast<string>()); // ListBox for tags
 
                 // validate 
@@ -124,13 +121,22 @@ namespace SnippetManager
                 MessageBox.Show("Snippet saved successfully!");
                 this.Close();
             }
+            catch (DbUpdateException ex)
+            {
+                MessageBox.Show($"Error saving snippet: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                Debug.WriteLine($"Error saving snippet: {ex.Message}");
+                if (ex.InnerException != null)
+                {
+                    Debug.WriteLine($"Inner exception: {ex.InnerException.Message}");
+                }
+            }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error saving snippet: {ex.Message}", "Error", MessageBoxButton.OK,
-                    MessageBoxImage.Error);
+                MessageBox.Show($"Error saving snippet: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 Debug.WriteLine($"Error saving snippet: {ex.Message}");
             }
         }
+
         private int GetCurrentUserId()
         {
             if (MainViewModel.CurrentUser == null)
@@ -142,4 +148,3 @@ namespace SnippetManager
         }
     }
 }
-

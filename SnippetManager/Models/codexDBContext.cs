@@ -46,7 +46,6 @@ public partial class codexDBContext : DbContext
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
             entity.Property(e => e.Description).HasMaxLength(256);
-            entity.Property(e => e.IsSynced).HasColumnName("isSynced");
             entity.Property(e => e.Language)
                 .IsRequired()
                 .HasMaxLength(50);

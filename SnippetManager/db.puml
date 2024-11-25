@@ -19,7 +19,6 @@ entity Snippets {
   Language: string
   Tags: string <<nullable>>
   Content: text
-  isSynced: bool
   CreatedAt: datetime
   UpdatedAt: datetime
 }
