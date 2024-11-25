@@ -40,6 +40,7 @@ namespace SnippetManager
             _context = new codexDBContext(optionsBuilder.Options);
 
             LoadCategories();
+            LoadSnippets();
         }
 
         private void LoadCategories()
@@ -56,6 +57,15 @@ namespace SnippetManager
             foreach (var tag in tags)
             {
                 TagsListBox.Items.Add(tag.Name);
+            }
+        }
+
+        private void LoadSnippets()
+        {
+            var snippets = _context.Snippets.ToList();
+            foreach (var snippet in snippets)
+            {
+                SnippetsListBox.Items.Add(snippet.Title);
             }
         }
 
