@@ -165,7 +165,7 @@ ________________________________________________________________________________
 3. Need assistance / figure things out
 -
 
-- - - 2024/11/XX Alexandre - - - - - - - - - - - - - - - -
+- - - 2024/11/25 Alexandre - - - - - - - - - - - - - - - -
       
 1. Done since last scrum
 -Snippet creation main functions integrated.
@@ -182,12 +182,17 @@ ________________________________________________________________________________
 5. Need assistance / figure things out
 -Want to make sure codexDBContext works consistently without breaking existing functionality.
 
-- - - 2024/11/XX Michael - - - - - - - - - - - - - - - - -
+- - - 2024/11/25 Michael - - - - - - - - - - - - - - - - -
 1. Done since last scrum
-- 
-- 
+- Settings page
+- started remember me
 2. Plan until next Scrum
--
+- make it so that you dont have to manually press login (keydown)
+- display snippets
+- fix search bar greyout
+- filtering snippets by fields (title, desc., tags, languages, content) alphabetically (reversible)
+- search function
+- soft delete
 3. Need assistance / figure things out
 -
 ________________________________________________________________________________________
