@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -14,7 +13,6 @@ using Microsoft.EntityFrameworkCore;
 using SnippetManager.Data;
 using SnippetManager.Models;
 using System.Configuration;
-
 
 namespace SnippetManager.ViewModels
 {
@@ -30,6 +28,7 @@ namespace SnippetManager.ViewModels
                 // Notify property changed if needed
             }
         }
+
         //added to allow null
         private string _username = string.Empty;
         private string _email = string.Empty;
@@ -40,18 +39,16 @@ namespace SnippetManager.ViewModels
         private bool _isLoggedIn;
         private bool _rememberMe;
 
-      
         //added
         public ObservableCollection<string> AvailableLanguages { get; set; } = new ObservableCollection<string>
-{
-    "C#",
-    "Java",
-    "Python",
-    "JavaScript",
-    "HTML",
-    "CSS"
-};
-
+        {
+            "C#",
+            "Java",
+            "Python",
+            "JavaScript",
+            "HTML",
+            "CSS"
+        };
 
         //added
         // load additional languages dynamically from the database
@@ -70,25 +67,6 @@ namespace SnippetManager.ViewModels
             Debug.WriteLine($"Loaded languages: {string.Join(", ", dbLanguages)}");
         }
 
-
-
-        //added
-
-        //(if we refactor later to support multiple languages)
-        //languages
-
-        //private ObservableCollection<string> _selectedLanguages = new ObservableCollection<string>();
-        //public ObservableCollection<string> SelectedLanguages
-        //{
-        //    get => _selectedLanguages;
-        //    set
-        //    {
-        //        _selectedLanguages = value;
-        //        OnPropertyChanged(nameof(SelectedLanguages));
-        //    }
-        //}
-
-
         //tags
         private ObservableCollection<string> _availableTags = new ObservableCollection<string>();
         public ObservableCollection<string> AvailableTags
@@ -100,7 +78,6 @@ namespace SnippetManager.ViewModels
                 OnPropertyChanged(nameof(AvailableTags));
             }
         }
-
 
         public void LoadTags(IEnumerable<string> tags)
         {
@@ -118,20 +95,15 @@ namespace SnippetManager.ViewModels
             var dbTags = _context.Categories
                 .Where(c => c.Type == "Tag")
                 .Select(c => c.Name)
-                 .Except(AvailableTags)
+                .Except(AvailableTags)
                 .ToList();
 
             foreach (var tag in dbTags)
-            
-           
-                {
-                    AvailableTags.Add(tag);
-                }
+            {
+                AvailableTags.Add(tag);
+            }
             Debug.WriteLine($"Loaded tags: {string.Join(", ", dbTags)}");
-
         }
-
-
 
         private ObservableCollection<string> _selectedTags = new ObservableCollection<string>();
         public ObservableCollection<string> SelectedTags
@@ -158,7 +130,6 @@ namespace SnippetManager.ViewModels
             AvailableLanguages.Add(customLanguage);
         }
 
-
         public void AddCustomTag(string customTag)
         {
             if (AvailableTags.Contains(customTag))
@@ -171,19 +142,16 @@ namespace SnippetManager.ViewModels
             SelectedTags.Add(customTag);
         }
 
-
-
-        //syntax highlight locig
+        //syntax highlight logic
         private Dictionary<string, string> SyntaxHighlightRules = new Dictionary<string, string>
-{
-    { "C#", "C#" },
-    { "Java", "Java" },
-    { "Python", "Python" },
-    { "JavaScript", "JavaScript" },
-    { "HTML", "HTML" },
-    { "CSS", "CSS" }
-};
-
+        {
+            { "C#", "C#" },
+            { "Java", "Java" },
+            { "Python", "Python" },
+            { "JavaScript", "JavaScript" },
+            { "HTML", "HTML" },
+            { "CSS", "CSS" }
+        };
 
         private string _selectedSyntaxHighlighting = "PlainText";
         public string SelectedSyntaxHighlighting
@@ -208,18 +176,14 @@ namespace SnippetManager.ViewModels
             }
         }
 
-
-
-
         public MainViewModel()
         {
-
             //added 
             var optionsBuilder = new DbContextOptionsBuilder<codexDBContext>();
             var connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             optionsBuilder.UseSqlServer(connectionString);
             _context = new codexDBContext(optionsBuilder.Options);
-            
+
             RegisterCommand = new RelayCommand(_ => Register());
             LoginCommand = new RelayCommand(_ => Login());
             ShowRegisterViewCommand = new RelayCommand(_ => ShowRegisterView());
@@ -232,24 +196,8 @@ namespace SnippetManager.ViewModels
             LoadLanguagesFromDatabase();
             LoadTagsFromDatabase();
 
-            //added
-
-            //(if we refactor later to support multiple languages)
-            // subscribe to CollectionChanged for dynamic updates 
-
-            //_selectedLanguages.CollectionChanged += (sender, args) =>
-            //{
-            //    if (_selectedLanguages.Any())
-            //    {
-            //        SelectedSyntaxHighlighting = SyntaxHighlightRules.TryGetValue(_selectedLanguages.First(), out var rulesPath)
-            //            ? rulesPath
-            //            : "PlainText";
-            //    }
-            //    else
-            //    {
-            //        SelectedSyntaxHighlighting = "PlainText";
-            //    }
-            //};
+            // Load Remember Me info
+            LoadRememberMeInfo();
 
             Debug.WriteLine("MainViewModel initialized.");
         }
@@ -320,16 +268,16 @@ namespace SnippetManager.ViewModels
             }
         }
 
-        //public User User
-        //{
-        //    get => _user;
-        //    set
-        //    {
-        //        _user = value;
-        //        OnPropertyChanged(nameof(User));
-        //        Debug.WriteLine($"User info updated: Username: {_user?.Username}, Email: {_user?.Email}");
-        //    }
-        //}
+        public bool RememberMe
+        {
+            get => _rememberMe;
+            set
+            {
+                _rememberMe = value;
+                OnPropertyChanged(nameof(RememberMe));
+                Debug.WriteLine($"RememberMe set to: {_rememberMe}");
+            }
+        }
 
         public ICommand RegisterCommand { get; }
         public ICommand LoginCommand { get; }
@@ -404,15 +352,12 @@ namespace SnippetManager.ViewModels
                 MainViewModel.CurrentUser = user; //set current user
                 MessageBox.Show("Login successful.");
                 Debug.WriteLine("Login successful.");
-                
-                //if (RememberMe)
-                //{
-                //    string token = GenerateRememberMeToken();
-                //    user.RememberMeToken = token;
-                //    _context.SaveChanges();
 
-                //    SaveRememberMeInfo(user.Username, token);
-                //}
+                if (RememberMe)
+                {
+                    string token = GenerateRememberMeToken();
+                    SaveRememberMeInfo(user.Username, token);
+                }
 
                 // Switch to the main view or dashboard
                 CurrentView = new Dashboard { DataContext = this };
@@ -445,7 +390,7 @@ namespace SnippetManager.ViewModels
             }
         }
 
-        //added delegate to supress null warning
+        //added delegate to suppress null warning
         public event PropertyChangedEventHandler? PropertyChanged = delegate { };
 
         //added
@@ -467,51 +412,39 @@ namespace SnippetManager.ViewModels
             Debug.WriteLine($"PropertyChanged: {propertyName}");
         }
 
-        //public bool RememberMe
-        //{
-        //    get => _rememberMe;
-        //    set
-        //    {
-        //        _rememberMe = value;
-        //        OnPropertyChanged(nameof(RememberMe));
-        //        Debug.WriteLine($"RememberMe set to: {_rememberMe}");
-        //    }
-        //}
+        private void SaveRememberMeInfo(string username, string token)
+        {
+            string filePath = "remember_me.txt";
+            File.WriteAllText(filePath, $"{username}\n{token}");
+        }
 
-        //private string GenerateRememberMeToken()
-        //{
-        //    return Guid.NewGuid().ToString();
-        //}
+        private string GenerateRememberMeToken()
+        {
+            return Guid.NewGuid().ToString();
+        }
 
-        //private void SaveRememberMeInfo(string username, string token)
-        //{
-        //    string filePath = "remember_me.txt";
-        //    File.WriteAllText(filePath, $"{username}\n{token}");
-        //}
+        private void LoadRememberMeInfo()
+        {
+            string filePath = "remember_me.txt";
+            if (File.Exists(filePath))
+            {
+                var lines = File.ReadAllLines(filePath);
+                if (lines.Length == 2)
+                {
+                    string savedUsername = lines[0];
+                    string savedToken = lines[1];
 
-        //private void LoadRememberMeInfo()
-        //{
-        //    string filePath = "remember_me.txt";
-        //    if (File.Exists(filePath))
-        //    {
-        //        var lines = File.ReadAllLines(filePath);
-        //        if (lines.Length == 2)
-        //        {
-        //            string savedUsername = lines[0];
-        //            string savedToken = lines[1];
-
-        //            var user = _context.Users.FirstOrDefault(u => u.Username == savedUsername && u.RememberMeToken == savedToken);
-        //            if (user != null)
-        //            {
-        //                Username = user.Username;
-        //                IsLoggedIn = true;
-        //                CurrentView = new Dashboard { DataContext = this };
-        //                MessageBox.Show("Logged in with Remember Me");
-        //            }
-        //        }
-        //    }
-        //}
-
-
+                    var user = _context.Users.FirstOrDefault(u => u.Username == savedUsername);
+                    if (user != null && !IsLoggedIn)
+                    {
+                        Username = user.Username;
+                        IsLoggedIn = true;
+                        MainViewModel.CurrentUser = user; // Set current user
+                        CurrentView = new Dashboard { DataContext = this };
+                        Debug.WriteLine("Logged in with Remember Me");
+                    }
+                }
+            }
+        }
     }
 }
