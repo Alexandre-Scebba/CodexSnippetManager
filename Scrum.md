@@ -1,6 +1,6 @@
 SCRUM MEETINGS
 ---- ---- ----TEMPLATE ---- ---- ----
-2024/11/XX Dimitri
+- - - 2024/11/XX Dimitri - - - - - - - - - - - - - - - - 
 1. Done since last scrum
 - 
 - 
@@ -8,7 +8,7 @@ SCRUM MEETINGS
 -
 3. Need assistance / figure things out
 -
-2024/11/XX Alexandre
+- - - 2024/11/XX Alexandre - - - - - - - - - - - - - - - - 
 1. Done since last scrum
 - 
 - 
@@ -16,7 +16,7 @@ SCRUM MEETINGS
 -
 3. Need assistance / figure things out
 -
-2024/11/XX Michael
+- - - 2024/11/XX Michael - - - - - - - - - - - - - - - - -
 1. Done since last scrum
 - 
 - 
@@ -24,6 +24,8 @@ SCRUM MEETINGS
 -
 3. Need assistance / figure things out
 -
+________________________________________________________________________________________
+
 ---- ---- ----TEMPLATE ---- ---- ----
    
 2024/11/20 Dimitri
@@ -85,11 +87,12 @@ ________________________________________________________________________________
 
 2024/11/22 Dimitri
 1. Done since last scrum
-- 
-- 
+- set up strings
+- made file structure for project
+- fixed package errors
 2. Plan until next Scrum
-- 
-- 
+- rework azure db to match puml
+- fix azure server to new credentials
 3. Need assistance / figure things out
 - 
 
@@ -113,17 +116,18 @@ ________________________________________________________________________________
 3. Need assistance / figure things out
 - C# part of custom views
 ________________________________________________________________________________________
-2024/11/23 Dimitri
+2024/11/24 Dimitri
 1. Done since last scrum
-- 
-- 
+- Fixewd db tables
+- Made sure models are correct
+- fixed migration
+- Login Register
 2. Plan until next Scrum
--
+- Assisting with issues on snippet creation
 3. Need assistance / figure things out
 -
---------------------------------------------
 
-2024/11/23 Alexandre
+2024/11/24 Alexandre
 1. Done since last scrum
 - continued basic UI implementation
 - Researched dependency compatibility issues for syntax highlighting frameworks.
@@ -132,17 +136,21 @@ ________________________________________________________________________________
 - resolve warnings related to package compatibility with .NET 9.0.
 - improve MainViewModel logic to eliminate nullable errors and unused fields.
 - continue UI integration
+- snippet creation
+3. Need assistance / figure things out
+- snippet creation
 
-3. Need assistance / figure things out
-- 
---------------------------------------------
-2024/11/23 Michael
+2024/11/24 Michael
 1. Done since last scrum
-- 
-- 
+- UI redesign
+- Login redirects to dashboard
+- tag and language creation (frontend)
+- new snippet popup
+- fixing textbox issue
 2. Plan until next Scrum
--
+- settings page creation
+- MUI work
 3. Need assistance / figure things out
--
+- MUI
 ________________________________________________________________________________________
 
