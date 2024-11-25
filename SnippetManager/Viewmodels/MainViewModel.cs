@@ -9,62 +9,239 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
+using Microsoft.EntityFrameworkCore;
 using SnippetManager.Data;
 using SnippetManager.Models;
+using System.Configuration;
+
 
 namespace SnippetManager.ViewModels
 {
     public class MainViewModel : INotifyPropertyChanged
     {
-        private string _username;
-        private string _email;
-        private string _password;
-        private string _confirmPassword;
-        private readonly ApplicationDbContext _context;
-        private object _currentView;
+
+        //added to allow null
+        private string _username = string.Empty;
+        private string _email = string.Empty;
+        private string _password = string.Empty;
+        private string _confirmPassword = string.Empty;
+        private readonly codexDBContext _context;
+        private object _currentView = null!;
         private bool _isLoggedIn;
 
-        //dummy data test
-        //public ObservableCollection<string> AvailableLanguages { get; set; }
-        //public ObservableCollection<string> SelectedLanguages { get; set; }
-        //public ObservableCollection<string> Tags { get; set; }
+      
+        //added
+        public ObservableCollection<string> AvailableLanguages { get; set; } = new ObservableCollection<string>
+{
+    "C#",
+    "Java",
+    "Python",
+    "JavaScript",
+    "HTML",
+    "CSS"
+};
+
+
+        //added
+        // load additional languages dynamically from the database
+        public void LoadLanguagesFromDatabase()
+        {
+            var dbLanguages = _context.Categories
+                .Where(c => c.Type == "Language")
+                .Select(c => c.Name)
+                .Except(AvailableLanguages)
+                .ToList();
+
+            foreach (var lang in dbLanguages)
+            {
+                AvailableLanguages.Add(lang);
+            }
+            Debug.WriteLine($"Loaded languages: {string.Join(", ", dbLanguages)}");
+        }
+
+
+
+        //added
+
+        //(if we refactor later to support multiple languages)
+        //languages
+
+        //private ObservableCollection<string> _selectedLanguages = new ObservableCollection<string>();
+        //public ObservableCollection<string> SelectedLanguages
+        //{
+        //    get => _selectedLanguages;
+        //    set
+        //    {
+        //        _selectedLanguages = value;
+        //        OnPropertyChanged(nameof(SelectedLanguages));
+        //    }
+        //}
+
+
+        //tags
+        private ObservableCollection<string> _availableTags = new ObservableCollection<string>();
+        public ObservableCollection<string> AvailableTags
+        {
+            get => _availableTags;
+            set
+            {
+                _availableTags = value;
+                OnPropertyChanged(nameof(AvailableTags));
+            }
+        }
+
+
+        public void LoadTags(IEnumerable<string> tags)
+        {
+            AvailableTags.Clear();
+            foreach (var tag in tags)
+            {
+                AvailableTags.Add(tag);
+            }
+        }
+
+        //added
+        // load tags dynamically from db
+        public void LoadTagsFromDatabase()
+        {
+            var dbTags = _context.Categories
+                .Where(c => c.Type == "Tag")
+                .Select(c => c.Name)
+                 .Except(AvailableTags)
+                .ToList();
+
+            foreach (var tag in dbTags)
+            
+           
+                {
+                    AvailableTags.Add(tag);
+                }
+            Debug.WriteLine($"Loaded tags: {string.Join(", ", dbTags)}");
+
+        }
+
+
+
+        private ObservableCollection<string> _selectedTags = new ObservableCollection<string>();
+        public ObservableCollection<string> SelectedTags
+        {
+            get => _selectedTags;
+            set
+            {
+                _selectedTags = value;
+                OnPropertyChanged(nameof(SelectedTags));
+            }
+        }
+
+        //dynamic additions of language and tags
+        //added error notify user if [] already exists
+
+        public void AddCustomLanguage(string customLanguage)
+        {
+            if (AvailableLanguages.Contains(customLanguage))
+            {
+                MessageBox.Show("This language already exists.", "Duplicate Language", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            AvailableLanguages.Add(customLanguage);
+        }
+
+
+        public void AddCustomTag(string customTag)
+        {
+            if (AvailableTags.Contains(customTag))
+            {
+                MessageBox.Show("This tag already exists.", "Duplicate Tag", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            AvailableTags.Add(customTag);
+            SelectedTags.Add(customTag);
+        }
+
+
+
+        //syntax highlight locig
+        private Dictionary<string, string> SyntaxHighlightRules = new Dictionary<string, string>
+{
+    { "C#", "C#" },
+    { "Java", "Java" },
+    { "Python", "Python" },
+    { "JavaScript", "JavaScript" },
+    { "HTML", "HTML" },
+    { "CSS", "CSS" }
+};
+
+
+        private string _selectedSyntaxHighlighting = "PlainText";
+        public string SelectedSyntaxHighlighting
+        {
+            get => _selectedSyntaxHighlighting;
+            set
+            {
+                _selectedSyntaxHighlighting = value;
+                OnPropertyChanged(nameof(SelectedSyntaxHighlighting));
+            }
+        }
+
+        public void ApplySyntaxHighlighting(string selectedLanguage)
+        {
+            if (SyntaxHighlightRules.TryGetValue(selectedLanguage, out var rulesPath))
+            {
+                SelectedSyntaxHighlighting = rulesPath;
+            }
+            else
+            {
+                SelectedSyntaxHighlighting = "PlainText";
+            }
+        }
+
 
 
 
         public MainViewModel()
         {
-            _context = new ApplicationDbContext();
+
+            //added 
+            var optionsBuilder = new DbContextOptionsBuilder<codexDBContext>();
+            var connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            optionsBuilder.UseSqlServer(connectionString);
+            _context = new codexDBContext(optionsBuilder.Options);
+            
             RegisterCommand = new RelayCommand(_ => Register());
             LoginCommand = new RelayCommand(_ => Login());
             ShowRegisterViewCommand = new RelayCommand(_ => ShowRegisterView());
             CurrentView = new DefaultView { DataContext = this };
 
+            //set default syntax highlighting
+            SelectedSyntaxHighlighting = "PlainText";
 
-            //dummy data test
-    //        AvailableLanguages = new ObservableCollection<string>
-    //{
-    //    "C#",
-    //    "Java",
-    //    "Python",
-    //    "JavaScript",
-    //    "HTML",
-    //    "CSS"
-    //};
+            // load available languages and tags from db
+            LoadLanguagesFromDatabase();
+            LoadTagsFromDatabase();
 
-    //        SelectedLanguages = new ObservableCollection<string>();
+            //added
 
-    //        Tags = new ObservableCollection<string>
-    //{
-    //    "Backend",
-    //    "Frontend",
-    //    "Database",
-    //    "UI",
-    //    "API"
-    //};
+            //(if we refactor later to support multiple languages)
+            // subscribe to CollectionChanged for dynamic updates 
+
+            //_selectedLanguages.CollectionChanged += (sender, args) =>
+            //{
+            //    if (_selectedLanguages.Any())
+            //    {
+            //        SelectedSyntaxHighlighting = SyntaxHighlightRules.TryGetValue(_selectedLanguages.First(), out var rulesPath)
+            //            ? rulesPath
+            //            : "PlainText";
+            //    }
+            //    else
+            //    {
+            //        SelectedSyntaxHighlighting = "PlainText";
+            //    }
+            //};
 
             Debug.WriteLine("MainViewModel initialized.");
         }
-
 
         public string Username
         {
@@ -235,7 +412,22 @@ namespace SnippetManager.ViewModels
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        //added delegate to supress null warning
+        public event PropertyChangedEventHandler? PropertyChanged = delegate { };
+
+        //added
+        public void ApplyHighlighting(string rulesPath)
+        {
+            // logic for applying syntax highlight rules
+            Debug.WriteLine($"Applying syntax highlighting using rules from: {rulesPath}");
+        }
+
+        public void ApplyPlainText()
+        {
+            // logic for default plain text
+            Debug.WriteLine("Applying plain text formatting.");
+        }
+
         protected void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

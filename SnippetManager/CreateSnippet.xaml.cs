@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Input;
+using System.Windows.Controls;
 using SnippetManager.Data;
 using SnippetManager.Models;
 using SnippetManager.ViewModels;
+using System.Globalization;
+using System.Windows.Data;
 
 namespace SnippetManager
 {
@@ -11,64 +15,118 @@ namespace SnippetManager
     /// </summary>
     public partial class CreateSnippet : Window
     {
-        private readonly ApplicationDbContext _context;
+        private readonly codexDBContext _context;
 
-        public CreateSnippet(ApplicationDbContext context)
+        public CreateSnippet(codexDBContext context)
         {
             InitializeComponent();
             _context = context ?? throw new ArgumentNullException(nameof(context), "Database context cannot be null.");
 
-            //load dummy data
-          //  DataContext = new MainViewModel();
+            //add
+            DataContext = new MainViewModel();
 
         }
+
+        //added
+        private void LanguagesListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (DataContext is MainViewModel viewModel)
+            {
+                foreach (string added in e.AddedItems)
+                {
+                    if (!viewModel.AvailableLanguages.Contains(added))
+                    {
+                        viewModel.AvailableLanguages.Add(added);
+                    }
+                }
+
+                foreach (string removed in e.RemovedItems)
+                {
+                    if (viewModel.AvailableLanguages.Contains(removed))
+                    {
+                        viewModel.AvailableLanguages.Remove(removed);
+                    }
+                }
+            }
+        }
+
+        private void TagsListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (DataContext is MainViewModel viewModel)
+            {
+                foreach (string added in e.AddedItems)
+                {
+                    if (!viewModel.SelectedTags.Contains(added))
+                    {
+                        viewModel.SelectedTags.Add(added);
+                    }
+                }
+
+                foreach (string removed in e.RemovedItems)
+                {
+                    if (viewModel.SelectedTags.Contains(removed))
+                    {
+                        viewModel.SelectedTags.Remove(removed);
+                    }
+                }
+            }
+        }
+
+
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                string title = TitleTextBox.Text?.Trim();
+                // get user inputs
+                string title = TitleTextBox.Text?.Trim() ?? string.Empty;
+                string content = ContentEditor.Text?.Trim() ?? string.Empty;
+                string AvailableLanguages = LanguageDropdown.SelectedItem?.ToString() ?? string.Empty; ; // Dropdown for language
+                string selectedTags = string.Join(",", TagsListBox.SelectedItems.Cast<string>()); // ListBox for tags
 
-                string content = new System.Windows.Documents.TextRange(ContentRichTextBox.Document.ContentStart, ContentRichTextBox.Document.ContentEnd)
-                    .Text?.Trim();
-
-                if (string.IsNullOrWhiteSpace(title))
+                // validate 
+                if (string.IsNullOrWhiteSpace(title) || string.IsNullOrWhiteSpace(content))
                 {
-                    MessageBox.Show("Title cannot be empty.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Title and content cannot be empty.");
                     return;
                 }
 
-                if (string.IsNullOrWhiteSpace(content))
+                // find CategoryId for the selected language
+                var category = _context.Categories
+                                       .FirstOrDefault(c => c.Name == AvailableLanguages && c.Type == "Language");
+                if (category == null)
                 {
-                    MessageBox.Show("Content cannot be empty.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show($"Error: Language '{AvailableLanguages}' is not available.");
                     return;
                 }
 
-                // save as comma-separated 
-                //string selectedLanguages = SelectedLanguages != null ? string.Join(",", SelectedLanguages) : string.Empty;
-                //string selectedTags = SelectedTags != null ? string.Join(",", SelectedTags) : string.Empty;
-
-
-                Snippet newSnippet = new()
+                // create snippet
+                Snippet newSnippet = new Snippet
                 {
                     Title = title,
                     Content = content,
-                    //Language = selectedLanguages, // save as comma-separated 
-                    //Tags = selectedTags,
+                    Language = AvailableLanguages,
+                    Tags = selectedTags,
+                    CategoryId = category.CategoryId,
                     CreatedAt = DateTime.Now,
                     UpdatedAt = DateTime.Now
                 };
 
+                // save to db
                 _context.Snippets.Add(newSnippet);
                 _context.SaveChanges();
 
-                MessageBox.Show("Snippet saved successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Snippet saved successfully!");
                 this.Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"An error occurred while saving the snippet: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Error saving snippet: {ex.Message}");
             }
         }
+
+
+
     }
 }
+
