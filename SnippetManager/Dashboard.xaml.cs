@@ -171,10 +171,22 @@ namespace SnippetManager
             var snippetsCollection = new ObservableCollection<Snippet>(_context.Snippets.ToList());
             CreateSnippet createSnippetWindow = new CreateSnippet(new codexDBContext(optionsBuilder.Options), snippetsCollection);
 
+            // Subscribe to the SnippetCreated event
+            createSnippetWindow.SnippetCreated += CreateSnippetWindow_SnippetCreated;
+
             // Show the window
             createSnippetWindow.Show();
             Debug.WriteLine("New snippet window shown.");
         }
+
+        private void CreateSnippetWindow_SnippetCreated(object sender, Snippet e)
+        {
+            // Add the new snippet to the Snippets collection
+            Snippets.Add(new SnippetViewModel { Snippet = e });
+            SnippetsDataGrid.Items.Refresh();
+            Debug.WriteLine($"New snippet added: {e.Title}");
+        }
+
 
         private void NewSettingsButton_Click(object sender, RoutedEventArgs e)
         {

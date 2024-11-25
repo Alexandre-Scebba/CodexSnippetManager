@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Windows;
-using System.Windows.Input;
 using System.Windows.Controls;
+using System.Linq;
 using SnippetManager.Data;
 using SnippetManager.Models;
 using SnippetManager.ViewModels;
-using System.Globalization;
-using System.Windows.Data;
 using System.Diagnostics;
 using Microsoft.EntityFrameworkCore;
-using ICSharpCode.AvalonEdit.Snippets;
 using System.Collections.ObjectModel;
 
 namespace SnippetManager
@@ -20,20 +17,18 @@ namespace SnippetManager
     public partial class CreateSnippet : Window
     {
         private readonly codexDBContext _context;
-        private readonly ObservableCollection<SnippetManager.Models.Snippet> _snippets;
+        private readonly ObservableCollection<Snippet> _snippets;
 
+        public event EventHandler<Snippet> SnippetCreated;
 
-
-        public CreateSnippet(codexDBContext context, ObservableCollection<SnippetManager.Models.Snippet> snippets)
+        public CreateSnippet(codexDBContext context, ObservableCollection<Snippet> snippets)
         {
             InitializeComponent();
             _context = context ?? throw new ArgumentNullException(nameof(context), "Database context cannot be null.");
             _snippets = snippets ?? throw new ArgumentNullException(nameof(snippets), "Snippets collection cannot be null.");
-            //add
             DataContext = new MainViewModel();
         }
 
-        //added
         private void LanguagesListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (DataContext is MainViewModel viewModel)
@@ -107,7 +102,7 @@ namespace SnippetManager
                 int userId = GetCurrentUserId();
 
                 // create snippet
-                SnippetManager.Models.Snippet newSnippet = new SnippetManager.Models.Snippet
+                Snippet newSnippet = new Snippet
                 {
                     UserId = userId,
                     Title = title,
@@ -125,6 +120,9 @@ namespace SnippetManager
 
                 // Add to ObservableCollection to update the UI dynamically
                 _snippets.Add(newSnippet);
+
+                // Raise the event
+                OnSnippetCreated(newSnippet);
 
                 MessageBox.Show("Snippet saved successfully!");
                 this.Close();
@@ -153,6 +151,11 @@ namespace SnippetManager
             }
 
             return MainViewModel.CurrentUser.UserId;
+        }
+
+        private void OnSnippetCreated(Snippet snippet)
+        {
+            SnippetCreated?.Invoke(this, snippet);
         }
     }
 }
