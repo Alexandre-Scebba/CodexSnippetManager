@@ -16,6 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Configuration;
+using SnippetManager.ViewModels;
 
 
 namespace SnippetManager
@@ -62,8 +63,19 @@ namespace SnippetManager
 
         private void LoadSnippets()
         {
-            var snippets = _context.Snippets.ToList();
-            SnippetsDataGrid.ItemsSource = snippets;
+            if (MainViewModel.CurrentUser != null)
+            {
+                int currentUserId = MainViewModel.CurrentUser.UserId; // Assuming UserId is the primary key for the User model
+
+                var snippets = _context.Snippets
+                                       .Where(s => s.UserId == currentUserId)
+                                       .ToList();
+                SnippetsDataGrid.ItemsSource = snippets; // Bind the list of snippets to the DataGrid
+            }
+            else
+            {
+                MessageBox.Show("No user is currently logged in.");
+            }
         }
 
         //private void SnippetsListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
