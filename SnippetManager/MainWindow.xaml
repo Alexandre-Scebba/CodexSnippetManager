@@ -3,6 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:SnippetManager"
         xmlns:viewModels="clr-namespace:SnippetManager.ViewModels"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="CanResize"
+        SizeToContent="Manual"
         Title="Snippet Manager" Height="600" Width="800">
     <Window.DataContext>
         <viewModels:MainViewModel />

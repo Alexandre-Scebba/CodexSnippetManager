@@ -63,11 +63,20 @@ namespace SnippetManager
         private void LoadSnippets()
         {
             var snippets = _context.Snippets.ToList();
-            foreach (var snippet in snippets)
-            {
-                SnippetsListBox.Items.Add(snippet.Title);
-            }
+            SnippetsDataGrid.ItemsSource = snippets;
         }
+
+        //private void SnippetsListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    if (SnippetsDataGrid.SelectedItem is Snippet selectedSnippet)
+        //    {
+        //        // You can use these details to display in text blocks or take other actions
+        //        DescriptionTextBlock.Text = selectedSnippet.Description ?? "No description available";
+        //        LanguageTextBlock.Text = selectedSnippet.Language ?? "Unknown";
+        //        TagsTextBlock.Text = selectedSnippet.Tags ?? "No tags available";
+        //        ContentTextBlock.Text = selectedSnippet.Content ?? "No content available";
+        //    }
+        //}
 
         private void AddTagButton_Click(object sender, RoutedEventArgs e)
         {

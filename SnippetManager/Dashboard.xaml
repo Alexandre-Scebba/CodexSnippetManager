@@ -5,6 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SnippetManager"
              mc:Ignorable="d" 
+             HorizontalAlignment="Stretch"
+             VerticalAlignment="Stretch"
              d:DesignHeight="600" d:DesignWidth="800">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -34,7 +36,7 @@
     </UserControl.Resources>
 
     <DockPanel>
-        
+
 
         <!-- Main Content Area -->
         <Grid>
@@ -81,14 +83,14 @@
                      VerticalAlignment="Top" Tag="Search snippets..."/>
 
                 <!-- Table -->
-                <DataGrid AutoGenerateColumns="False" Margin="5" CanUserAddRows="False">
+                <DataGrid x:Name="SnippetsDataGrid" HorizontalAlignment="Stretch" AutoGenerateColumns="False" VerticalAlignment="Stretch">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Title" Width="*" MinWidth="100" MaxWidth="200"/>
-                        <DataGridTextColumn Header="Description" Width="2*" MinWidth="100" MaxWidth="600"/>
-                        <DataGridTextColumn Header="Tags" Width="*" MinWidth="100" MaxWidth="300"/>
-                        <DataGridTextColumn Header="Languages" Width="*" MinWidth="100" MaxWidth="300"/>
+                        <DataGridTextColumn Header="Title" Binding="{Binding Title}" Width="*"/>
+                        <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="*"/>
+                        <DataGridTextColumn Header="Language" Binding="{Binding Language}" Width="*"/>
+                        <DataGridTextColumn Header="Tags" Binding="{Binding Tags}" Width="*"/>
+                        <DataGridTextColumn Header="Content" Binding="{Binding Content}" Width="*"/>
                     </DataGrid.Columns>
-                    <ListBox x:Name="SnippetsListBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Height="300"/>
                 </DataGrid>
             </StackPanel>
         </Grid>
