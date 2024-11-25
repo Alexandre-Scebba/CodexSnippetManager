@@ -157,10 +157,11 @@ ________________________________________________________________________________
 - - - 2024/11/25 - - -
 - - -  Dimitri - - - - - - - - - - - - - - - - 
 1. Done since last scrum
-- 
-- 
+- Saving snippet to db
+- adding currentuserid
 2. Plan until next Scrum
--
+- fix remember me option to login automatically
+- add a logout button somewhere
 3. Need assistance / figure things out
 -
 
