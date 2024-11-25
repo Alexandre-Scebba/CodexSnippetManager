@@ -20,7 +20,16 @@ namespace SnippetManager.ViewModels
 {
     public class MainViewModel : INotifyPropertyChanged
     {
-
+        private static User _currentUser;
+        public static User CurrentUser
+        {
+            get => _currentUser;
+            set
+            {
+                _currentUser = value;
+                // Notify property changed if needed
+            }
+        }
         //added to allow null
         private string _username = string.Empty;
         private string _email = string.Empty;
@@ -392,6 +401,7 @@ namespace SnippetManager.ViewModels
             if (user != null)
             {
                 IsLoggedIn = true;
+                MainViewModel.CurrentUser = user; //set current user
                 MessageBox.Show("Login successful.");
                 Debug.WriteLine("Login successful.");
                 

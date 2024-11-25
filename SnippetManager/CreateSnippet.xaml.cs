@@ -7,6 +7,7 @@ using SnippetManager.Models;
 using SnippetManager.ViewModels;
 using System.Globalization;
 using System.Windows.Data;
+using System.Diagnostics;
 
 namespace SnippetManager
 {
@@ -81,7 +82,8 @@ namespace SnippetManager
                 // get user inputs
                 string title = TitleTextBox.Text?.Trim() ?? string.Empty;
                 string content = ContentEditor.Text?.Trim() ?? string.Empty;
-                string AvailableLanguages = LanguageDropdown.SelectedItem?.ToString() ?? string.Empty; ; // Dropdown for language
+                string availableLanguages = LanguageDropdown.SelectedItem?.ToString() ?? string.Empty;
+                ; // Dropdown for language
                 string selectedTags = string.Join(",", TagsListBox.SelectedItems.Cast<string>()); // ListBox for tags
 
                 // validate 
@@ -93,19 +95,22 @@ namespace SnippetManager
 
                 // find CategoryId for the selected language
                 var category = _context.Categories
-                                       .FirstOrDefault(c => c.Name == AvailableLanguages && c.Type == "Language");
+                    .FirstOrDefault(c => c.Name == availableLanguages && c.Type == "Language");
                 if (category == null)
                 {
-                    MessageBox.Show($"Error: Language '{AvailableLanguages}' is not available.");
+                    MessageBox.Show($"Error: Language '{availableLanguages}' is not available.");
                     return;
                 }
+
+                int userId = GetCurrentUserId();
 
                 // create snippet
                 Snippet newSnippet = new Snippet
                 {
+                    UserId = userId,
                     Title = title,
                     Content = content,
-                    Language = AvailableLanguages,
+                    Language = availableLanguages,
                     Tags = selectedTags,
                     CategoryId = category.CategoryId,
                     CreatedAt = DateTime.Now,
@@ -121,12 +126,20 @@ namespace SnippetManager
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error saving snippet: {ex.Message}");
+                MessageBox.Show($"Error saving snippet: {ex.Message}", "Error", MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+                Debug.WriteLine($"Error saving snippet: {ex.Message}");
             }
         }
+        private int GetCurrentUserId()
+        {
+            if (MainViewModel.CurrentUser == null)
+            {
+                throw new InvalidOperationException("No user is currently logged in.");
+            }
 
-
-
+            return MainViewModel.CurrentUser.UserId;
+        }
     }
 }
 
