@@ -90,5 +90,12 @@ namespace SnippetManager
             // Show the window
             createSnippetWindow.Show();
         }
+
+        private void NewSettingsButton_Click(object sender, RoutedEventArgs e)
+        {
+            Settings createSettingsWindow = new Settings();
+
+            createSettingsWindow.Show();
+        }
     }
 }

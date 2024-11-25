@@ -11,8 +11,9 @@
         </StackPanel>
         <StackPanel Margin="5">
             <Label Content="Password:" />
-            <PasswordBox x:Name="PasswordBox" Width="200" PasswordChanged="PasswordBox_PasswordChanged" />
+            <PasswordBox x:Name="PasswordBox" Width="200" PasswordChanged="PasswordBox_PasswordChanged" KeyDown="PasswordBox_KeyDown" />
         </StackPanel>
+        <CheckBox x:Name="RememberMeCheckBox" Content="Remember Me" IsChecked="{Binding RememberMe}" Margin="0,90,0,0" />
         <Button Content="Login" Margin="5" Command="{Binding LoginCommand}" Width="100" />
         <Button Content="Register" Margin="5" Command="{Binding ShowRegisterViewCommand}" Width="100" />
     </StackPanel>

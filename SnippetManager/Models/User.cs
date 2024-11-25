@@ -14,5 +14,5 @@ public partial class User
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
     public virtual ICollection<Snippet> Snippets { get; set; }
-
+    //public string RememberMeToken { get; set; }
 }

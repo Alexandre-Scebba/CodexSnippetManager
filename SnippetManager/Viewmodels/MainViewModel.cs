@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -22,7 +23,9 @@ namespace SnippetManager.ViewModels
         private string _confirmPassword;
         private readonly ApplicationDbContext _context;
         private object _currentView;
+        private User _user;
         private bool _isLoggedIn;
+        private bool _rememberMe;
 
         //dummy data test
         //public ObservableCollection<string> AvailableLanguages { get; set; }
@@ -39,28 +42,30 @@ namespace SnippetManager.ViewModels
             ShowRegisterViewCommand = new RelayCommand(_ => ShowRegisterView());
             CurrentView = new DefaultView { DataContext = this };
 
+            LoadUserInfo();
+            //LoadRememberMeInfo();
 
             //dummy data test
-    //        AvailableLanguages = new ObservableCollection<string>
-    //{
-    //    "C#",
-    //    "Java",
-    //    "Python",
-    //    "JavaScript",
-    //    "HTML",
-    //    "CSS"
-    //};
+            //        AvailableLanguages = new ObservableCollection<string>
+            //{
+            //    "C#",
+            //    "Java",
+            //    "Python",
+            //    "JavaScript",
+            //    "HTML",
+            //    "CSS"
+            //};
 
-    //        SelectedLanguages = new ObservableCollection<string>();
+            //        SelectedLanguages = new ObservableCollection<string>();
 
-    //        Tags = new ObservableCollection<string>
-    //{
-    //    "Backend",
-    //    "Frontend",
-    //    "Database",
-    //    "UI",
-    //    "API"
-    //};
+            //        Tags = new ObservableCollection<string>
+            //{
+            //    "Backend",
+            //    "Frontend",
+            //    "Database",
+            //    "UI",
+            //    "API"
+            //};
 
             Debug.WriteLine("MainViewModel initialized.");
         }
@@ -131,6 +136,17 @@ namespace SnippetManager.ViewModels
                 Debug.WriteLine($"IsLoggedIn set to: {_isLoggedIn}");
             }
         }
+
+        //public User User
+        //{
+        //    get => _user;
+        //    set
+        //    {
+        //        _user = value;
+        //        OnPropertyChanged(nameof(User));
+        //        Debug.WriteLine($"User info updated: Username: {_user?.Username}, Email: {_user?.Email}");
+        //    }
+        //}
 
         public ICommand RegisterCommand { get; }
         public ICommand LoginCommand { get; }
@@ -204,6 +220,16 @@ namespace SnippetManager.ViewModels
                 IsLoggedIn = true;
                 MessageBox.Show("Login successful.");
                 Debug.WriteLine("Login successful.");
+                
+                //if (RememberMe)
+                //{
+                //    string token = GenerateRememberMeToken();
+                //    user.RememberMeToken = token;
+                //    _context.SaveChanges();
+
+                //    SaveRememberMeInfo(user.Username, token);
+                //}
+
                 // Switch to the main view or dashboard
                 CurrentView = new Dashboard { DataContext = this };
             }
@@ -241,5 +267,52 @@ namespace SnippetManager.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
             Debug.WriteLine($"PropertyChanged: {propertyName}");
         }
+
+        //public bool RememberMe
+        //{
+        //    get => _rememberMe;
+        //    set
+        //    {
+        //        _rememberMe = value;
+        //        OnPropertyChanged(nameof(RememberMe));
+        //        Debug.WriteLine($"RememberMe set to: {_rememberMe}");
+        //    }
+        //}
+
+        //private string GenerateRememberMeToken()
+        //{
+        //    return Guid.NewGuid().ToString();
+        //}
+
+        //private void SaveRememberMeInfo(string username, string token)
+        //{
+        //    string filePath = "remember_me.txt";
+        //    File.WriteAllText(filePath, $"{username}\n{token}");
+        //}
+
+        //private void LoadRememberMeInfo()
+        //{
+        //    string filePath = "remember_me.txt";
+        //    if (File.Exists(filePath))
+        //    {
+        //        var lines = File.ReadAllLines(filePath);
+        //        if (lines.Length == 2)
+        //        {
+        //            string savedUsername = lines[0];
+        //            string savedToken = lines[1];
+
+        //            var user = _context.Users.FirstOrDefault(u => u.Username == savedUsername && u.RememberMeToken == savedToken);
+        //            if (user != null)
+        //            {
+        //                Username = user.Username;
+        //                IsLoggedIn = true;
+        //                CurrentView = new Dashboard { DataContext = this };
+        //                MessageBox.Show("Logged in with Remember Me");
+        //            }
+        //        }
+        //    }
+        //}
+
+
     }
 }

@@ -69,7 +69,7 @@
 
                 <StackPanel Grid.Row="1" Orientation="Vertical" VerticalAlignment="Bottom" Margin="5">
                     <Button Content="New Snippet" Margin="5" Height="40" Click="NewSnippetButton_Click"/>
-                    <Button Content="Settings" Margin="5" Height="40"/>
+                    <Button Content="Settings" Margin="5" Height="40" Click="NewSettingsButton_Click"/>
                 </StackPanel>
             </Grid>
 
