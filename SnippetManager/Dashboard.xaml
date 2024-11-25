@@ -36,8 +36,6 @@
     </UserControl.Resources>
 
     <DockPanel>
-
-
         <!-- Main Content Area -->
         <Grid>
             <!-- Define Columns and Rows -->
@@ -75,25 +73,44 @@
                 </StackPanel>
             </Grid>
 
-
             <!-- Main Content Area -->
             <StackPanel Grid.Column="1" Margin="5">
-                <StackPanel Orientation="Horizontal" Margin="10">
-                    <!-- Search Box -->
-                    <TextBox x:Name="SearchTextBox" Width="300" Style="{StaticResource WatermarkTextBoxStyle}" Margin="5" HorizontalAlignment="Left" VerticalAlignment="Top" Tag="Search snippets..." TextChanged="SearchTextBox_TextChanged"/>
-                </StackPanel>
+                <!-- Search Box and Buttons -->
+                <Grid Margin="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox Width="300" Style="{StaticResource WatermarkTextBoxStyle}" Margin="5" HorizontalAlignment="Left" 
+                             VerticalAlignment="Top" Tag="Search snippets..."/>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Grid.Column="1" Margin="5,0,0,0">
+                        <Button Content="Import" Click="ImportButton_Click" Width="100" Margin="0,0,5,0" Height="21"/>
+                        <Button Content="Export" Click="ExportButton_Click" Width="100"/>
+                    </StackPanel>
+                </Grid>
 
                 
                 <!-- Table -->
                 <DataGrid x:Name="SnippetsDataGrid" HorizontalAlignment="Stretch" AutoGenerateColumns="False" VerticalAlignment="Stretch">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Title" Binding="{Binding Title}" Width="*"/>
-                        <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="*"/>
-                        <DataGridTextColumn Header="Language" Binding="{Binding Language}" Width="*"/>
-                        <DataGridTextColumn Header="Tags" Binding="{Binding Tags}" Width="*"/>
-                        <DataGridTextColumn Header="Content" Binding="{Binding Content}" Width="*"/>
+                        <DataGridTemplateColumn>
+                            <DataGridTemplateColumn.Header>
+                                <CheckBox Click="SelectAllCheckBox_Click"/>
+                            </DataGridTemplateColumn.Header>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}" Click="IndividualCheckBox_Click"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Header="Title" Binding="{Binding Snippet.Title}" Width="*"/>
+                        <DataGridTextColumn Header="Description" Binding="{Binding Snippet.Description}" Width="*"/>
+                        <DataGridTextColumn Header="Language" Binding="{Binding Snippet.Language}" Width="*"/>
+                        <DataGridTextColumn Header="Tags" Binding="{Binding Snippet.Tags}" Width="*"/>
+                        <DataGridTextColumn Header="Content" Binding="{Binding Snippet.Content}" Width="*"/>
                     </DataGrid.Columns>
                 </DataGrid>
+
             </StackPanel>
         </Grid>
     </DockPanel>
