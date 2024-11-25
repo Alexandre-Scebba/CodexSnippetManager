@@ -93,7 +93,7 @@
 
                 
                 <!-- Table -->
-                <DataGrid x:Name="SnippetsDataGrid" HorizontalAlignment="Stretch" AutoGenerateColumns="False" VerticalAlignment="Stretch">
+                <DataGrid x:Name="SnippetsDataGrid" HorizontalAlignment="Stretch" AutoGenerateColumns="False" VerticalAlignment="Stretch" MouseDoubleClick="SnippetsDataGrid_MouseDoubleClick">
                     <DataGrid.Columns>
                         <DataGridTemplateColumn>
                             <DataGridTemplateColumn.Header>
@@ -112,6 +112,7 @@
                         <DataGridTextColumn Header="Content" Binding="{Binding Snippet.Content}" Width="*"/>
                     </DataGrid.Columns>
                 </DataGrid>
+
 
             </StackPanel>
         </Grid>

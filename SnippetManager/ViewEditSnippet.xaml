@@ -1,0 +1,43 @@
+﻿<Window x:Class="SnippetManager.ViewEditSnippet"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:SnippetManager"
+        Title="View/Edit Snippet" Height="435" Width="600">
+    <Window.Resources>
+        <local:StringIsNullOrEmptyConverter x:Key="StringIsNullOrEmptyConverter"/>
+        <Style TargetType="TextBox" x:Key="WatermarkTextBoxStyle">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Grid>
+                            <TextBox x:Name="InnerTextBox"
+                                     Text="{Binding Text, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                     Background="Transparent"
+                                     BorderBrush="{TemplateBinding BorderBrush}"
+                                     Foreground="{TemplateBinding Foreground}"
+                                     Padding="5" />
+                            <TextBlock Text="{TemplateBinding Tag}"
+                                       Foreground="Gray"
+                                       Padding="5"
+                                       IsHitTestVisible="False"
+                                       Visibility="{Binding Text, ElementName=InnerTextBox, Converter={StaticResource StringIsNullOrEmptyConverter}}"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid Height="417" VerticalAlignment="Top">
+        <StackPanel Margin="10,10,10,0">
+            <TextBox x:Name="TitleTextBox" Margin="5" Tag="Title" Style="{StaticResource WatermarkTextBoxStyle}"/>
+            <TextBox x:Name="DescriptionTextBox" Margin="5" Tag="Description" Style="{StaticResource WatermarkTextBoxStyle}"/>
+            <TextBox x:Name="LanguageTextBox" Margin="5" Tag="Language" Style="{StaticResource WatermarkTextBoxStyle}"/>
+            <TextBox x:Name="TagsTextBox" Margin="5" Tag="Tags" Style="{StaticResource WatermarkTextBoxStyle}"/>
+            <TextBox x:Name="ContentTextBox" Margin="5" Tag="Content" Style="{StaticResource WatermarkTextBoxStyle}" AcceptsReturn="True" Height="200"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="Save" Margin="5" Click="SaveButton_Click" Width="60"/>
+                <Button Content="Cancel" Margin="5" Click="CancelButton_Click" Width="60"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>
