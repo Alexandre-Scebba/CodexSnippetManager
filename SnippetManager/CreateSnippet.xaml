@@ -1,55 +1,46 @@
 ﻿<Window x:Class="SnippetManager.CreateSnippet"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
+        xmlns:local="clr-namespace:SnippetManager"
         Title="Create Snippet" Height="600" Width="800">
-    
+ 
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel Margin="20">
-            
-        <!-- Title -->
-<Grid Margin="0,0,0,10">
-    <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="Auto"/> <!-- Label -->
-        <ColumnDefinition Width="*"/>   <!-- TextBox -->
-    </Grid.ColumnDefinitions>
-    <Label Content="Title:" VerticalAlignment="Center" Grid.Column="0" Margin="0,0,5,0"/>
-    <TextBox x:Name="TitleTextBox" Grid.Column="1" Width="400"/>
-</Grid>
 
+            <!-- Title -->
+            <Grid Margin="0,0,0,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <!-- Label -->
+                    <ColumnDefinition Width="*"/>
+                    <!-- TextBox -->
+                </Grid.ColumnDefinitions>
+                <Label Content="Title:" VerticalAlignment="Center" Grid.Column="0" Margin="0,0,5,0"/>
+                <TextBox x:Name="TitleTextBox" Grid.Column="1" Width="400"/>
+            </Grid>
 
-            <!-- Languages -->
-            <Label Content="Languages:" />
-            <ComboBox x:Name="LanguagesComboBox" 
-                      Width="400" 
-                      Height="30" 
-                      Margin="0,0,0,10" 
-                      IsEditable="True">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <CheckBox Content="{Binding}" IsChecked="{Binding RelativeSource={RelativeSource AncestorType=ComboBox}, Path=SelectedItem, Mode=TwoWay}" />
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
+            <!--Language-->
+            <Label Content="Language:" Margin="0,10,0,5" />
+            <ComboBox x:Name="LanguageDropdown" ItemsSource="{Binding AvailableLanguages}" 
+                        SelectedItem="{Binding AvailableLanguages}" Width="400" />
+
+            <!--Tags-->
+            <Label Content="Tags:" Margin="0,10,0,5" />
+            <ListBox x:Name="TagsListBox" ItemsSource="{Binding AvailableTags}" 
+                    SelectionMode="Multiple" Width="400" Height="100" />
+
 
 
             <!-- Content -->
             <Label Content="Content:" />
-            <xctk:RichTextBox x:Name="ContentRichTextBox" 
-                              Width="400" 
-                              Height="150" 
-                              Margin="0,0,0,10" />
+            <avalonedit:TextEditor x:Name="ContentEditor"
+                                   Width="400" 
+                                   Height="150" 
+                                   Margin="0,0,0,10"
+                                   SyntaxHighlighting="{Binding SelectedSyntaxHighlighting}" />
 
-            <!-- Tags -->
-            <Label Content="Tags:" />
-            <ComboBox x:Name="TagsComboBox" Width="400" Height="30" Margin="0,0,0,10" IsEditable="True">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <CheckBox Content="{Binding}" />
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
-
+          
 
             <!-- Save Button -->
             <Button Content="Save Snippet" Click="SaveButton_Click" 

@@ -4,26 +4,40 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using Microsoft.EntityFrameworkCore;
 using SnippetManager.Data;
 using SnippetManager.Models;
 using SnippetManager.ViewModels;
+using System.Configuration;
+
 
 namespace SnippetManager
 {
     public partial class MainWindow : Window
     {
-        private readonly ApplicationDbContext _context;
+        private readonly codexDBContext _context = null!;
         private readonly bool _isLoggedIn;
 
-        public MainWindow() : this(null, false)
+        //added codexdb EF Core fix
+        public MainWindow() : this(
+            new codexDBContext(new DbContextOptionsBuilder<codexDBContext>()
+            .UseSqlServer(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString)
+            .Options), false
+            )
         {
             // This constructor calls the parameterized constructor
         }
 
-        public MainWindow(ApplicationDbContext context, bool isLoggedIn)
+        public MainWindow(codexDBContext context, bool isLoggedIn)
         {
             InitializeComponent();
-            _context = context ?? new ApplicationDbContext();
+            //added 
+            // configure DbContext
+            var optionsBuilder = new DbContextOptionsBuilder<codexDBContext>();
+            var connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            optionsBuilder.UseSqlServer(connectionString);
+            _context = new codexDBContext(optionsBuilder.Options);
+
             _isLoggedIn = isLoggedIn;
             DataContext = new MainViewModel();
 
@@ -31,19 +45,30 @@ namespace SnippetManager
             Debug.WriteLine("MainWindow initialized.");
         }
 
-        private void CheckDatabaseConnection()
+        //added a-sync run to avoid block UI thread
+        private async void CheckDatabaseConnection()
         {
-            if (_context.CanConnect())
+            try
             {
-                MessageBox.Show("Database connection is available.");
-                Debug.WriteLine("Database connection is available.");
+                bool canConnect = await Task.Run(() => _context.Database.CanConnect());
+                if (canConnect)
+                {
+                    MessageBox.Show("Database connection is available.");
+                    Debug.WriteLine("Database connection is available.");
+                }
+                else
+                {
+                    MessageBox.Show("Failed to connect to the database.");
+                    Debug.WriteLine("Failed to connect to the database.");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Failed to connect to the database.");
-                Debug.WriteLine("Failed to connect to the database.");
+                MessageBox.Show($"Error checking database connection: {ex.Message}\n{ex.InnerException?.Message}");
+                Debug.WriteLine($"Error checking database connection: {ex.Message}\n{ex.InnerException?.Message}");
             }
         }
+
 
         private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
@@ -67,6 +92,14 @@ namespace SnippetManager
         {
             if (DataContext is MainViewModel viewModel)
             {
+                //added validation
+                if (string.IsNullOrWhiteSpace(viewModel.Username) || string.IsNullOrWhiteSpace(viewModel.Password))
+                {
+                    MessageBox.Show("Username and Password cannot be empty.");
+                    Debug.WriteLine("Username or Password is empty.");
+                    return;
+                }
+
                 if (viewModel.Password != viewModel.ConfirmPassword)
                 {
                     MessageBox.Show("Passwords do not match.");

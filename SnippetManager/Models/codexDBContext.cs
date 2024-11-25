@@ -15,8 +15,6 @@ public partial class codexDBContext : DbContext
 
     public virtual DbSet<Category> Categories { get; set; }
 
-    public virtual DbSet<MigrationHistory> MigrationHistories { get; set; }
-
     public virtual DbSet<Snippet> Snippets { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
@@ -25,31 +23,17 @@ public partial class codexDBContext : DbContext
     {
         modelBuilder.Entity<Category>(entity =>
         {
-            entity.HasKey(e => e.CategoryId).HasName("PK__Categori__19093A0B9A1C16FD");
+            entity.HasKey(e => e.CategoryId).HasName("PK__Categori__19093A0B9020FAFB");
 
-            entity.Property(e => e.Type).HasMaxLength(256);
             entity.Property(e => e.Name)
                 .IsRequired()
                 .HasMaxLength(100);
-        });
-
-        modelBuilder.Entity<MigrationHistory>(entity =>
-        {
-            entity.HasKey(e => new { e.MigrationId, e.ContextKey }).HasName("PK_dbo.__MigrationHistory");
-
-            entity.ToTable("__MigrationHistory");
-
-            entity.Property(e => e.MigrationId).HasMaxLength(150);
-            entity.Property(e => e.ContextKey).HasMaxLength(300);
-            entity.Property(e => e.Model).IsRequired();
-            entity.Property(e => e.ProductVersion)
-                .IsRequired()
-                .HasMaxLength(32);
+            entity.Property(e => e.Type).HasMaxLength(256);
         });
 
         modelBuilder.Entity<Snippet>(entity =>
         {
-            entity.HasKey(e => e.SnippetId).HasName("PK__Snippets__5A394B4A0E7B0BC9");
+            entity.HasKey(e => e.SnippetId).HasName("PK__Snippets__5A394B4A5C2C7A7D");
 
             entity.HasIndex(e => e.Language, "IDX_Snippets_Language");
 
@@ -86,7 +70,7 @@ public partial class codexDBContext : DbContext
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.UserId).HasName("PK__Users__1788CC4CA71A864C");
+            entity.HasKey(e => e.UserId).HasName("PK__Users__1788CC4C2C0072BB");
 
             entity.HasIndex(e => e.Email, "IDX_Users_Email");
 

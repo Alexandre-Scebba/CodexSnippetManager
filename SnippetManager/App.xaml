@@ -4,6 +4,14 @@
              xmlns:local="clr-namespace:SnippetManager"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <SolidColorBrush x:Key="ComboBoxPopupBorderBrush" Color="Gray" />
+        <SolidColorBrush x:Key="ComboBoxPopupBackground" Color="White" />
+        <ControlTemplate x:Key="ComboBoxToggleButton" TargetType="ToggleButton">
+            <Grid>
+                <Rectangle Fill="Transparent" />
+                <Path Fill="Black" Data="M 0 0 L 4 4 L 8 0 Z" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            </Grid>
+        </ControlTemplate>
     </Application.Resources>
+
 </Application>
