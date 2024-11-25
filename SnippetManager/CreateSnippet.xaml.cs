@@ -9,6 +9,8 @@ using System.Globalization;
 using System.Windows.Data;
 using System.Diagnostics;
 using Microsoft.EntityFrameworkCore;
+using ICSharpCode.AvalonEdit.Snippets;
+using System.Collections.ObjectModel;
 
 namespace SnippetManager
 {
@@ -18,12 +20,15 @@ namespace SnippetManager
     public partial class CreateSnippet : Window
     {
         private readonly codexDBContext _context;
+        private readonly ObservableCollection<SnippetManager.Models.Snippet> _snippets;
 
-        public CreateSnippet(codexDBContext context)
+
+
+        public CreateSnippet(codexDBContext context, ObservableCollection<SnippetManager.Models.Snippet> snippets)
         {
             InitializeComponent();
             _context = context ?? throw new ArgumentNullException(nameof(context), "Database context cannot be null.");
-
+            _snippets = snippets ?? throw new ArgumentNullException(nameof(snippets), "Snippets collection cannot be null.");
             //add
             DataContext = new MainViewModel();
         }
@@ -81,7 +86,7 @@ namespace SnippetManager
                 string title = TitleTextBox.Text?.Trim() ?? string.Empty;
                 string content = ContentEditor.Text?.Trim() ?? string.Empty;
                 string availableLanguages = LanguageDropdown.SelectedItem?.ToString() ?? string.Empty; // Dropdown for language
-                string selectedTags = string.Join(",", TagsListBox.SelectedItems.Cast<string>()); // ListBox for tags
+                string selectedTags = string.Join(", ", TagsListBox.SelectedItems.Cast<string>()); // ListBox for tags
 
                 // validate 
                 if (string.IsNullOrWhiteSpace(title) || string.IsNullOrWhiteSpace(content))
@@ -102,7 +107,7 @@ namespace SnippetManager
                 int userId = GetCurrentUserId();
 
                 // create snippet
-                Snippet newSnippet = new Snippet
+                SnippetManager.Models.Snippet newSnippet = new SnippetManager.Models.Snippet
                 {
                     UserId = userId,
                     Title = title,
@@ -117,6 +122,9 @@ namespace SnippetManager
                 // save to db
                 _context.Snippets.Add(newSnippet);
                 _context.SaveChanges();
+
+                // Add to ObservableCollection to update the UI dynamically
+                _snippets.Add(newSnippet);
 
                 MessageBox.Show("Snippet saved successfully!");
                 this.Close();

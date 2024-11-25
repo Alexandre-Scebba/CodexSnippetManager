@@ -17,6 +17,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Configuration;
 using SnippetManager.ViewModels;
+using System.Collections.ObjectModel;
 
 
 namespace SnippetManager
@@ -61,34 +62,54 @@ namespace SnippetManager
             }
         }
 
+        private ObservableCollection<SnippetManager.Models.Snippet> _snippets;
+        public ObservableCollection<SnippetManager.Models.Snippet> Snippets
+        {
+            get => _snippets;
+            set
+            {
+                _snippets = value;
+                SnippetsDataGrid.ItemsSource = _snippets; 
+            }
+        }
+
         private void LoadSnippets()
         {
             if (MainViewModel.CurrentUser != null)
             {
-                int currentUserId = MainViewModel.CurrentUser.UserId; // Assuming UserId is the primary key for the User model
+                int currentUserId = MainViewModel.CurrentUser.UserId;
 
-                var snippets = _context.Snippets
-                                       .Where(s => s.UserId == currentUserId)
-                                       .ToList();
-                SnippetsDataGrid.ItemsSource = snippets; // Bind the list of snippets to the DataGrid
+                var snippetsFromDb = _context.Snippets
+                                                .Where(s => s.UserId == currentUserId)  // TODO: add " && !s.IsDeleted"
+                                                .ToList();
+
+                Snippets = new ObservableCollection<Snippet>(snippetsFromDb);
             }
             else
             {
-                MessageBox.Show("No user is currently logged in.");
+                MessageBox.Show("No user is currently logged in");
             }
         }
 
-        //private void SnippetsListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        //{
-        //    if (SnippetsDataGrid.SelectedItem is Snippet selectedSnippet)
-        //    {
-        //        // You can use these details to display in text blocks or take other actions
-        //        DescriptionTextBlock.Text = selectedSnippet.Description ?? "No description available";
-        //        LanguageTextBlock.Text = selectedSnippet.Language ?? "Unknown";
-        //        TagsTextBlock.Text = selectedSnippet.Tags ?? "No tags available";
-        //        ContentTextBlock.Text = selectedSnippet.Content ?? "No content available";
-        //    }
-        //}
+        private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string searchTerm = SearchTextBox.Text.ToLower();
+
+            if (MainViewModel.CurrentUser != null)
+            {
+                int currentUserId = MainViewModel.CurrentUser.UserId;
+
+                var filteredSnippets = _snippets
+                    .Where(s => s.UserId == currentUserId &&
+                                //!s.IsDeleted &&
+                                ((s.Title?.ToLower().Contains(searchTerm) ?? false) ||
+                                 (s.Description?.ToLower().Contains(searchTerm) ?? false) ||
+                                 (s.Tags?.ToLower().Contains(searchTerm) ?? false)))
+                    .ToList();
+
+                SnippetsDataGrid.ItemsSource = filteredSnippets;
+            }
+        }
 
         private void AddTagButton_Click(object sender, RoutedEventArgs e)
         {
@@ -133,7 +154,7 @@ namespace SnippetManager
             optionsBuilder.UseSqlServer(connectionString);
 
             // Pass the configured context to CreateSnippet
-            CreateSnippet createSnippetWindow = new CreateSnippet(new codexDBContext(optionsBuilder.Options));
+            CreateSnippet createSnippetWindow = new CreateSnippet(new codexDBContext(optionsBuilder.Options), Snippets);
 
             // Show the window
             createSnippetWindow.Show();
@@ -144,6 +165,23 @@ namespace SnippetManager
             Settings createSettingsWindow = new Settings();
 
             createSettingsWindow.Show();
+        }
+
+        private void DeleteSelectedSnippetButton_Click(object sender, RoutedEventArgs e)
+        {
+            //if (SnippetsDataGrid.SelectedItem is Snippet selectedSnippet)
+            //{
+            //    // Set IsDeleted to true to mark it as deleted
+            //    selectedSnippet.IsDeleted = true;
+            //    _context.SaveChanges();
+
+            //    // Refresh the DataGrid to exclude deleted snippets
+            //    LoadSnippets();
+            //}
+            //else
+            //{
+            //    MessageBox.Show("Please select a snippet to delete.");
+            //}
         }
     }
 }
