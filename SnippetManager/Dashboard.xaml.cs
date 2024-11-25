@@ -187,6 +187,32 @@ namespace SnippetManager
             Debug.WriteLine($"New snippet added: {e.Title}");
         }
 
+        private void DeleteSelectedButton_Click(object sender, RoutedEventArgs e)
+        {
+            Debug.WriteLine("Deleting selected snippets...");
+
+            var selectedSnippets = Snippets.Where(s => s.IsSelected).ToList();
+
+            if (selectedSnippets.Any())
+            {
+                foreach (var snippetViewModel in selectedSnippets)
+                {
+                    _context.Snippets.Remove(snippetViewModel.Snippet);
+                    Snippets.Remove(snippetViewModel);
+                    Debug.WriteLine($"Deleted snippet: {snippetViewModel.Snippet.Title}");
+                }
+
+                _context.SaveChanges();
+                SnippetsDataGrid.Items.Refresh();
+                MessageBox.Show("Selected snippets deleted successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                Debug.WriteLine("Selected snippets deleted and changes saved to database.");
+            }
+            else
+            {
+                MessageBox.Show("No snippets selected for deletion.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                Debug.WriteLine("No snippets selected for deletion.");
+            }
+        }
 
         private void NewSettingsButton_Click(object sender, RoutedEventArgs e)
         {
