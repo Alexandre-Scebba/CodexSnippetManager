@@ -423,6 +423,15 @@ namespace SnippetManager.ViewModels
             return Guid.NewGuid().ToString();
         }
 
+        public static void ClearRememberMeInfo()
+        {
+            string filePath = "remember_me.txt";
+            if (File.Exists(filePath))
+            {
+                File.Delete(filePath);
+            }
+        }
+
         private void LoadRememberMeInfo()
         {
             string filePath = "remember_me.txt";
