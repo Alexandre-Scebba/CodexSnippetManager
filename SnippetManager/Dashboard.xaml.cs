@@ -12,7 +12,6 @@ using System.Windows.Controls;
 using System.Configuration;
 using SnippetManager.ViewModels;
 using System.Collections.ObjectModel;
-
 using SnippetManager.Dtos;
 using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
 using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
@@ -42,6 +41,7 @@ namespace SnippetManager
             _context = new codexDBContext(optionsBuilder.Options);
             Debug.WriteLine("Database context initialized.");
 
+            Snippets = new ObservableCollection<SnippetViewModel>();
             LoadCategories();
             LoadSnippets();
         }
@@ -66,14 +66,14 @@ namespace SnippetManager
             }
         }
 
-        private ObservableCollection<SnippetManager.Models.Snippet> _snippets;
-        public ObservableCollection<SnippetManager.Models.Snippet> Snippets
+        private ObservableCollection<SnippetViewModel> _snippets;
+        public ObservableCollection<SnippetViewModel> Snippets
         {
             get => _snippets;
             set
             {
                 _snippets = value;
-                SnippetsDataGrid.ItemsSource = _snippets; 
+                SnippetsDataGrid.ItemsSource = _snippets;
             }
         }
 
@@ -88,11 +88,14 @@ namespace SnippetManager
                                                 .Where(s => s.UserId == currentUserId)  // TODO: add " && !s.IsDeleted"
                                                 .ToList();
 
-                Snippets = new ObservableCollection<Snippet>(snippetsFromDb);
+                var snippetViewModels = snippetsFromDb.Select(s => new SnippetViewModel { Snippet = s }).ToList();
+                Snippets = new ObservableCollection<SnippetViewModel>(snippetViewModels);
+                Debug.WriteLine($"Loaded {Snippets.Count} snippets for user ID {currentUserId}.");
             }
             else
             {
                 MessageBox.Show("No user is currently logged in");
+                Debug.WriteLine("No user is currently logged in.");
             }
         }
 
@@ -104,15 +107,16 @@ namespace SnippetManager
             {
                 int currentUserId = MainViewModel.CurrentUser.UserId;
 
-                var filteredSnippets = _snippets
-                    .Where(s => s.UserId == currentUserId &&
-                                //!s.IsDeleted &&
-                                ((s.Title?.ToLower().Contains(searchTerm) ?? false) ||
-                                 (s.Description?.ToLower().Contains(searchTerm) ?? false) ||
-                                 (s.Tags?.ToLower().Contains(searchTerm) ?? false)))
+                var filteredSnippets = Snippets
+                    .Where(s => s.Snippet.UserId == currentUserId &&
+                                //!s.Snippet.IsDeleted &&
+                                ((s.Snippet.Title?.ToLower().Contains(searchTerm) ?? false) ||
+                                 (s.Snippet.Description?.ToLower().Contains(searchTerm) ?? false) ||
+                                 (s.Snippet.Tags?.ToLower().Contains(searchTerm) ?? false)))
                     .ToList();
 
-                SnippetsDataGrid.ItemsSource = filteredSnippets;
+                SnippetsDataGrid.ItemsSource = new ObservableCollection<SnippetViewModel>(filteredSnippets);
+                Debug.WriteLine($"Filtered {filteredSnippets.Count} snippets for search term '{searchTerm}'.");
             }
         }
 
@@ -164,7 +168,8 @@ namespace SnippetManager
             optionsBuilder.UseSqlServer(connectionString);
 
             // Pass the configured context to CreateSnippet
-            CreateSnippet createSnippetWindow = new CreateSnippet(new codexDBContext(optionsBuilder.Options), Snippets);
+            var snippetsCollection = new ObservableCollection<Snippet>(_context.Snippets.ToList());
+            CreateSnippet createSnippetWindow = new CreateSnippet(new codexDBContext(optionsBuilder.Options), snippetsCollection);
 
             // Show the window
             createSnippetWindow.Show();
@@ -232,9 +237,6 @@ namespace SnippetManager
             }
         }
 
-
-
-
         private void ExportButton_Click(object sender, RoutedEventArgs e)
         {
             Debug.WriteLine("Exporting snippets...");
@@ -247,7 +249,7 @@ namespace SnippetManager
             {
                 string filePath = saveFileDialog.FileName;
                 Debug.WriteLine($"Selected file for export: {filePath}");
-                var selectedSnippets = ((List<SnippetViewModel>)SnippetsDataGrid.ItemsSource)
+                var selectedSnippets = Snippets
                     .Where(s => s.IsSelected)
                     .Select(s => new SnippetDto
                     {
@@ -268,10 +270,6 @@ namespace SnippetManager
                 Debug.WriteLine("Selected snippets exported to file.");
             }
         }
-
-
-
-
 
         private void SelectAllCheckBox_Click(object sender, RoutedEventArgs e)
         {
@@ -298,7 +296,5 @@ namespace SnippetManager
                 Debug.WriteLine($"Snippet '{snippetViewModel.Snippet.Title}' selection changed to: {snippetViewModel.IsSelected}");
             }
         }
-
-
     }
 }
