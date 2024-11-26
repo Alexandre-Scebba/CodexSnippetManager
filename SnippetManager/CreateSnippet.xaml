@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
         xmlns:local="clr-namespace:SnippetManager"
-        Title="Create Snippet" Height="621" Width="800">
+        Title="Create Snippet" Height="850" Width="850">
     <Window.Resources>
         <local:StringIsNullOrEmptyConverter x:Key="StringIsNullOrEmptyConverter"/>
         <Style TargetType="TextBox" x:Key="WatermarkTextBoxStyle">
@@ -54,46 +54,30 @@
             </Setter>
         </Style>
     </Window.Resources>
-    <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,0,0,-16">
-        <StackPanel Margin="20" Height="581">
-            <!-- Title -->
-            <Grid Margin="0,0,0,10">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <!-- Label -->
-                    <ColumnDefinition Width="*"/>
-                    <!-- TextBox -->
-                </Grid.ColumnDefinitions>
-                <Label Content="Title:" VerticalAlignment="Center" Grid.Column="0" Margin="0,0,5,0"/>
-                <TextBox x:Name="TitleTextBox" Grid.Column="1" Width="400"/>
-            </Grid>
-
-            <!--Languages-->
+    <Grid Margin="0,0,10,-6">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel Margin="10,10,10,10" Grid.Row="0">
+            <TextBox x:Name="TitleTextBox" Margin="5" Tag="Title" Style="{StaticResource WatermarkTextBoxStyle}"/>
+            <TextBox x:Name="DescriptionTextBox" Margin="5" Tag="Description" Style="{StaticResource WatermarkTextBoxStyle}"/>
             <Label Content="Languages:" Margin="0,10,0,5" />
             <TextBlock Text="{Binding SelectedLanguagesText}" Margin="0,0,0,5" Foreground="Blue"/>
             <ListBox x:Name="LanguagesListBox" ItemsSource="{Binding AvailableLanguages}" 
                      SelectionMode="Multiple" Width="400" Height="100" SelectionChanged="LanguagesListBox_SelectionChanged"
                      ItemContainerStyle="{StaticResource CustomListBoxItemStyle}"/>
-
-            <!--Tags-->
             <Label Content="Tags:" Margin="0,10,0,5" />
             <TextBlock Text="{Binding SelectedTagsText}" Margin="0,0,0,5" Foreground="Blue"/>
             <ListBox x:Name="TagsListBox" ItemsSource="{Binding AvailableTags}" 
                      SelectionMode="Multiple" Width="400" Height="100" SelectionChanged="TagsListBox_SelectionChanged"
                      ItemContainerStyle="{StaticResource CustomListBoxItemStyle}"/>
-
-            <!-- Content -->
-            <Label Content="Content:" />
-            <avalonedit:TextEditor x:Name="ContentEditor"
-                                   Width="400" 
-                                   Height="150" 
-                                   Margin="0,0,0,10"
-                                   SyntaxHighlighting="{Binding SelectedSyntaxHighlighting}" />
-            <Button Content="Save Snippet" Click="SaveButton_Click" 
-                    Width="120" 
-                    />
-
-            <!-- Save Button -->
         </StackPanel>
-    </ScrollViewer>
+        <avalonedit:TextEditor x:Name="ContentEditor" Margin="5" ShowLineNumbers="True" Grid.Row="1" VerticalAlignment="Stretch"/>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Height="50" Width="160" VerticalAlignment="Bottom" Margin="0,0,0,10">
+            <Button Content="Save" Margin="5" Click="SaveButton_Click" Width="70"/>
+            <Button Content="Cancel" Margin="5" Click="CancelButton_Click" Width="70"/>
+        </StackPanel>
+    </Grid>
 </Window>

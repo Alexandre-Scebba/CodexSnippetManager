@@ -152,6 +152,10 @@ namespace SnippetManager
             SnippetCreated?.Invoke(this, snippet);
         }
 
+d        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
         private void SetSyntaxHighlighting(string language)
         {
             //switch (language.ToLower())
