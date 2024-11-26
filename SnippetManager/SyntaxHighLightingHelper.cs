@@ -133,9 +133,6 @@ namespace SnippetManager
                 case "modula-2":
                 case "modula":
                     return HighlightingManager.Instance.GetDefinition("Modula-2");
-                case "pl/i":
-                case "pli":
-                    return HighlightingManager.Instance.GetDefinition("PL/I");
 
                 // Game development and graphics scripting languages
                 case "gml":
@@ -326,7 +323,6 @@ namespace SnippetManager
                 default:
                     return null;
             }
-
         }
     }
 }
