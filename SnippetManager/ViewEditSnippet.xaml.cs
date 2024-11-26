@@ -113,12 +113,12 @@ namespace SnippetManager
         {
             foreach (string addedItem in e.AddedItems)
             {
-                _viewModel.SelectedTags.Add(addedItem);
+                _viewModel.ToggleTagSelection(addedItem);
             }
 
             foreach (string removedItem in e.RemovedItems)
             {
-                _viewModel.SelectedTags.Remove(removedItem);
+                _viewModel.ToggleTagSelection(removedItem);
             }
 
             _viewModel.OnPropertyChanged(nameof(MainViewModel.SelectedTagsText));
