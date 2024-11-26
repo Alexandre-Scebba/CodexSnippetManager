@@ -96,7 +96,15 @@
                 </Grid>
 
                 <!-- Table -->
-                <DataGrid x:Name="SnippetsDataGrid" HorizontalAlignment="Stretch" AutoGenerateColumns="False" VerticalAlignment="Stretch" MouseDoubleClick="SnippetsDataGrid_MouseDoubleClick">
+                <DataGrid x:Name="SnippetsDataGrid" HorizontalAlignment="Stretch" 
+                          AutoGenerateColumns="False" 
+                          VerticalAlignment="Stretch"
+                          MouseDoubleClick="SnippetsDataGrid_MouseDoubleClick" 
+                          MaxHeight="800"
+                          MaxWidth="1800"
+                          ScrollViewer.CanContentScroll="False"
+                          VerticalScrollBarVisibility="Visible"
+                          HorizontalScrollBarVisibility="Visible">
                     <DataGrid.Columns>
                         <DataGridTemplateColumn>
                             <DataGridTemplateColumn.Header>
@@ -112,20 +120,7 @@
                         <DataGridTextColumn Header="Description" Binding="{Binding Snippet.Description}" Width="*"/>
                         <DataGridTextColumn Header="Language" Binding="{Binding Snippet.Language}" Width="*"/>
                         <DataGridTextColumn Header="Tags" Binding="{Binding Snippet.Tags}" Width="*"/>
-                        <DataGridTemplateColumn Header="Content" Width="*">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <avalonedit:TextEditor ShowLineNumbers="True" IsReadOnly="True">
-                                        <b:Interaction.Behaviors>
-                                            <behaviors:TextEditorBindingBehavior Text="{Binding Snippet.Content, Mode=TwoWay}" />
-                                        </b:Interaction.Behaviors>
-                                        <avalonedit:TextEditor.SyntaxHighlighting>
-                                            <Binding Path="Snippet.Language" Converter="{StaticResource LanguageToSyntaxHighlightingConverter}" />
-                                        </avalonedit:TextEditor.SyntaxHighlighting>
-                                    </avalonedit:TextEditor>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Header="Content" Binding="{Binding Snippet.Content}" Width="*"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </StackPanel>
