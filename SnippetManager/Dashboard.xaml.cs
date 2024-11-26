@@ -216,12 +216,16 @@ namespace SnippetManager
 
         private void NewSettingsButton_Click(object sender, RoutedEventArgs e)
         {
-            Debug.WriteLine("Opening settings...");
-            Settings createSettingsWindow = new Settings();
+            var optionsBuilder = new DbContextOptionsBuilder<codexDBContext>();
+            var connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            optionsBuilder.UseSqlServer(connectionString);
 
+            var mainViewModel = (MainViewModel)DataContext;
+            Settings createSettingsWindow = new Settings(optionsBuilder.Options, mainViewModel);
             createSettingsWindow.Show();
-            Debug.WriteLine("Settings window shown.");
         }
+
+
 
         private void ImportButton_Click(object sender, RoutedEventArgs e)
         {

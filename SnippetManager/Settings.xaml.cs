@@ -1,7 +1,9 @@
-﻿using SnippetManager.ViewModels;
+﻿using SnippetManager.Models;
+using SnippetManager.ViewModels;
 using System;
 using System.Windows;
 using System.Windows.Controls;
+using Microsoft.EntityFrameworkCore;
 
 namespace SnippetManager
 {
@@ -10,9 +12,14 @@ namespace SnippetManager
     /// </summary>
     public partial class Settings : Window
     {
-        public Settings()
+        private readonly codexDBContext _context;
+        private readonly MainViewModel _mainViewModel;
+
+        public Settings(DbContextOptions<codexDBContext> options, MainViewModel mainViewModel)
         {
             InitializeComponent();
+            _context = new codexDBContext(options);
+            _mainViewModel = mainViewModel;
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
@@ -38,10 +45,30 @@ namespace SnippetManager
                 return;
             }
 
-            // space to handle updating the user settings in your application
+            // Update user settings
+            var currentUser = MainViewModel.CurrentUser;
+            if (currentUser != null)
+            {
+                if (currentUser.PasswordHash == HashPassword(oldPassword))
+                {
+                    currentUser.Username = username;
+                    currentUser.PasswordHash = HashPassword(newPassword);
+                    // Save changes to the database
+                    _context.Users.Update(currentUser);
+                    _context.SaveChanges();
 
-            MessageBox.Show("User account settings saved successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-            this.Close();
+                    MessageBox.Show("User account settings saved successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Old password is incorrect.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("No user is currently logged in.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void LogoutButton_Click(object sender, RoutedEventArgs e)
@@ -51,7 +78,23 @@ namespace SnippetManager
             MainViewModel.ClearRememberMeInfo();
             MessageBox.Show("You have been logged out.", "Logout", MessageBoxButton.OK, MessageBoxImage.Information);
 
-            Application.Current.Shutdown();
+            // Switch to the login view
+            _mainViewModel.CurrentView = new DefaultView { DataContext = _mainViewModel };
+            this.Close();
+        }
+
+        private string HashPassword(string password)
+        {
+            using (var sha256 = System.Security.Cryptography.SHA256.Create())
+            {
+                var bytes = sha256.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+                var builder = new System.Text.StringBuilder();
+                foreach (var b in bytes)
+                {
+                    builder.Append(b.ToString("x2"));
+                }
+                return builder.ToString();
+            }
         }
     }
 }
