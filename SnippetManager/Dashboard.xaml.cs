@@ -181,17 +181,31 @@ namespace SnippetManager
 
             if (selectedSnippets.Any())
             {
-                foreach (var snippetViewModel in selectedSnippets)
-                {
-                    _context.Snippets.Remove(snippetViewModel.Snippet);
-                    Snippets.Remove(snippetViewModel);
-                    Debug.WriteLine($"Deleted snippet: {snippetViewModel.Snippet.Title}");
-                }
+                MessageBoxResult result = MessageBox.Show(
+                    "Are you sure you want to delete the selected snippets?",
+                    "Confirm Deletion",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Warning
+                );
 
-                _context.SaveChanges();
-                CommitAndRefreshDataGrid();
-                MessageBox.Show("Selected snippets deleted successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                Debug.WriteLine("Selected snippets deleted and changes saved to database.");
+                if (result == MessageBoxResult.Yes)
+                {
+                    foreach (var snippetViewModel in selectedSnippets)
+                    {
+                        _context.Snippets.Remove(snippetViewModel.Snippet);
+                        Snippets.Remove(snippetViewModel);
+                        Debug.WriteLine($"Deleted snippet: {snippetViewModel.Snippet.Title}");
+                    }
+
+                    _context.SaveChanges();
+                    CommitAndRefreshDataGrid();
+                    MessageBox.Show("Selected snippets deleted successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                    Debug.WriteLine("Selected snippets deleted and changes saved to database.");
+                }
+                else
+                {
+                    Debug.WriteLine("Snippet deletion was cancelled by the user.");
+                }
             }
             else
             {
