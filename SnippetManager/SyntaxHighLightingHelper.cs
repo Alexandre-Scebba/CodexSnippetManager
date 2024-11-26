@@ -13,45 +13,26 @@ namespace SnippetManager
         {
             switch (language.ToLower())
             {
+                // General-purpose and popular programming languages
                 case "c#":
                 case "csharp":
                     return HighlightingManager.Instance.GetDefinition("C#");
-                case "xml":
-                    return HighlightingManager.Instance.GetDefinition("XML");
-                case "html":
-                    return HighlightingManager.Instance.GetDefinition("HTML");
-                case "javascript":
-                case "js":
-                    return HighlightingManager.Instance.GetDefinition("JavaScript");
-                case "typescript":
-                case "ts":
-                    return HighlightingManager.Instance.GetDefinition("TypeScript");
-                case "python":
-                    return HighlightingManager.Instance.GetDefinition("Python");
-                case "sql":
-                    return HighlightingManager.Instance.GetDefinition("SQL");
-                case "java":
-                    return HighlightingManager.Instance.GetDefinition("Java");
-                case "css":
-                    return HighlightingManager.Instance.GetDefinition("CSS");
-                case "php":
-                    return HighlightingManager.Instance.GetDefinition("PHP");
-                case "ruby":
-                    return HighlightingManager.Instance.GetDefinition("Ruby");
-                case "json":
-                    return HighlightingManager.Instance.GetDefinition("JSON");
-                case "markdown":
-                case "md":
-                    return HighlightingManager.Instance.GetDefinition("Markdown");
-                case "vb":
-                case "visualbasic":
-                    return HighlightingManager.Instance.GetDefinition("VBNET");
                 case "c++":
                 case "cpp":
                 case "cplusplus":
                     return HighlightingManager.Instance.GetDefinition("C++");
                 case "c":
                     return HighlightingManager.Instance.GetDefinition("C");
+                case "java":
+                    return HighlightingManager.Instance.GetDefinition("Java");
+                case "python":
+                    return HighlightingManager.Instance.GetDefinition("Python");
+                case "javascript":
+                case "js":
+                    return HighlightingManager.Instance.GetDefinition("JavaScript");
+                case "typescript":
+                case "ts":
+                    return HighlightingManager.Instance.GetDefinition("TypeScript");
                 case "go":
                 case "golang":
                     return HighlightingManager.Instance.GetDefinition("Go");
@@ -59,10 +40,33 @@ namespace SnippetManager
                     return HighlightingManager.Instance.GetDefinition("Swift");
                 case "kotlin":
                     return HighlightingManager.Instance.GetDefinition("Kotlin");
-                case "r":
-                    return HighlightingManager.Instance.GetDefinition("R");
+                case "php":
+                    return HighlightingManager.Instance.GetDefinition("PHP");
+                case "ruby":
+                    return HighlightingManager.Instance.GetDefinition("Ruby");
                 case "perl":
                     return HighlightingManager.Instance.GetDefinition("Perl");
+                case "rust":
+                    return HighlightingManager.Instance.GetDefinition("Rust");
+                case "r":
+                    return HighlightingManager.Instance.GetDefinition("R");
+                case "haskell":
+                    return HighlightingManager.Instance.GetDefinition("Haskell");
+                case "scala":
+                    return HighlightingManager.Instance.GetDefinition("Scala");
+                case "lua":
+                    return HighlightingManager.Instance.GetDefinition("Lua");
+                case "vb":
+                case "visualbasic":
+                case "vbnet":
+                    return HighlightingManager.Instance.GetDefinition("VBNET");
+                case "fsharp":
+                case "f#":
+                    return HighlightingManager.Instance.GetDefinition("F#");
+                case "objective-c":
+                case "objc":
+                case "objectivec":
+                    return HighlightingManager.Instance.GetDefinition("Objective-C");
                 case "shell":
                 case "bash":
                 case "sh":
@@ -70,228 +74,259 @@ namespace SnippetManager
                 case "powershell":
                 case "ps":
                     return HighlightingManager.Instance.GetDefinition("PowerShell");
+                case "matlab":
+                    return HighlightingManager.Instance.GetDefinition("MATLAB");
+                case "groovy":
+                    return HighlightingManager.Instance.GetDefinition("Groovy");
+                case "delphi":
+                    return HighlightingManager.Instance.GetDefinition("Delphi");
+                case "ada":
+                    return HighlightingManager.Instance.GetDefinition("Ada");
+                case "fortran":
+                    return HighlightingManager.Instance.GetDefinition("Fortran");
+
+                // Markup, query, and scripting languages
+                case "html":
+                    return HighlightingManager.Instance.GetDefinition("HTML");
+                case "xml":
+                    return HighlightingManager.Instance.GetDefinition("XML");
                 case "yaml":
                 case "yml":
                     return HighlightingManager.Instance.GetDefinition("YAML");
-                case "dockerfile":
-                case "docker":
-                    return HighlightingManager.Instance.GetDefinition("Dockerfile");
-                case "haskell":
-                    return HighlightingManager.Instance.GetDefinition("Haskell");
-                case "lua":
-                    return HighlightingManager.Instance.GetDefinition("Lua");
-                case "scala":
-                    return HighlightingManager.Instance.GetDefinition("Scala");
-                case "rust":
-                    return HighlightingManager.Instance.GetDefinition("Rust");
-                case "objective-c":
-                case "objc":
-                case "objectivec":
-                    return HighlightingManager.Instance.GetDefinition("Objective-C");
-                case "groovy":
-                    return HighlightingManager.Instance.GetDefinition("Groovy");
-                case "dart":
-                    return HighlightingManager.Instance.GetDefinition("Dart");
-                case "sqlpl":
-                case "plsql":
-                    return HighlightingManager.Instance.GetDefinition("PL/SQL");
-                case "matlab":
-                    return HighlightingManager.Instance.GetDefinition("MATLAB");
-                case "fsharp":
-                case "f#":
-                    return HighlightingManager.Instance.GetDefinition("F#");
-                case "lisp":
-                case "commonlisp":
-                    return HighlightingManager.Instance.GetDefinition("Lisp");
-                case "clojure":
-                    return HighlightingManager.Instance.GetDefinition("Clojure");
-                case "vbscript":
-                case "vbs":
-                    return HighlightingManager.Instance.GetDefinition("VBScript");
+                case "json":
+                    return HighlightingManager.Instance.GetDefinition("JSON");
+                case "sql":
+                    return HighlightingManager.Instance.GetDefinition("SQL");
+                case "graphql":
+                    return HighlightingManager.Instance.GetDefinition("GraphQL");
+                case "css":
+                    return HighlightingManager.Instance.GetDefinition("CSS");
                 case "sass":
                 case "scss":
                     return HighlightingManager.Instance.GetDefinition("Sass");
-                case "coffeescript":
-                case "coffee":
-                    return HighlightingManager.Instance.GetDefinition("CoffeeScript");
-                case "erlang":
-                    return HighlightingManager.Instance.GetDefinition("Erlang");
-                case "elixir":
-                    return HighlightingManager.Instance.GetDefinition("Elixir");
-                case "fortran":
-                    return HighlightingManager.Instance.GetDefinition("Fortran");
-                case "ada":
-                    return HighlightingManager.Instance.GetDefinition("Ada");
-                case "verilog":
-                    return HighlightingManager.Instance.GetDefinition("Verilog");
-                case "vhdl":
-                    return HighlightingManager.Instance.GetDefinition("VHDL");
-                case "protobuf":
-                case "proto":
-                    return HighlightingManager.Instance.GetDefinition("Protocol Buffers");
-                case "solidity":
-                    return HighlightingManager.Instance.GetDefinition("Solidity");
-                case "tcl":
-                    return HighlightingManager.Instance.GetDefinition("Tcl");
-                case "awk":
-                    return HighlightingManager.Instance.GetDefinition("AWK");
-                case "nim":
-                    return HighlightingManager.Instance.GetDefinition("Nim");
+                case "markdown":
+                case "md":
+                    return HighlightingManager.Instance.GetDefinition("Markdown");
+                case "ini":
+                    return HighlightingManager.Instance.GetDefinition("INI");
+                case "csv":
+                    return HighlightingManager.Instance.GetDefinition("CSV");
+
+                // Historical and niche languages
                 case "pascal":
                     return HighlightingManager.Instance.GetDefinition("Pascal");
-                case "haxe":
-                    return HighlightingManager.Instance.GetDefinition("Haxe");
-                case "ocaml":
-                    return HighlightingManager.Instance.GetDefinition("OCaml");
-                case "racket":
-                    return HighlightingManager.Instance.GetDefinition("Racket");
-                case "crystal":
-                    return HighlightingManager.Instance.GetDefinition("Crystal");
-                case "rexx":
-                    return HighlightingManager.Instance.GetDefinition("REXX");
-                case "smalltalk":
-                    return HighlightingManager.Instance.GetDefinition("Smalltalk");
-                case "vbnet":
-                    return HighlightingManager.Instance.GetDefinition("VB.NET");
-                case "actionscript":
-                case "as":
-                    return HighlightingManager.Instance.GetDefinition("ActionScript");
-                case "delphi":
-                    return HighlightingManager.Instance.GetDefinition("Delphi");
-                case "nimrod":
-                    return HighlightingManager.Instance.GetDefinition("Nimrod");
-                case "applescript":
-                    return HighlightingManager.Instance.GetDefinition("AppleScript");
-                case "purebasic":
-                    return HighlightingManager.Instance.GetDefinition("PureBasic");
-                case "autoit":
-                    return HighlightingManager.Instance.GetDefinition("AutoIt");
-                case "dot":
-                case "graphviz":
-                    return HighlightingManager.Instance.GetDefinition("DOT");
-                case "sed":
-                    return HighlightingManager.Instance.GetDefinition("Sed");
-                case "abap":
-                    return HighlightingManager.Instance.GetDefinition("ABAP");
-                case "postscript":
-                case "pscript":
-                    return HighlightingManager.Instance.GetDefinition("PostScript");
-                case "maxscript":
-                    return HighlightingManager.Instance.GetDefinition("MaxScript");
-                case "red":
-                    return HighlightingManager.Instance.GetDefinition("Red");
-                case "mermaid":
-                    return HighlightingManager.Instance.GetDefinition("Mermaid");
-                case "haml":
-                    return HighlightingManager.Instance.GetDefinition("Haml");
-                case "puppet":
-                    return HighlightingManager.Instance.GetDefinition("Puppet");
+                case "cobol":
+                    return HighlightingManager.Instance.GetDefinition("COBOL");
+                case "lisp":
+                case "commonlisp":
+                    return HighlightingManager.Instance.GetDefinition("Lisp");
                 case "scheme":
                     return HighlightingManager.Instance.GetDefinition("Scheme");
-                case "janet":
-                    return HighlightingManager.Instance.GetDefinition("Janet");
-                case "idris":
-                    return HighlightingManager.Instance.GetDefinition("Idris");
-                case "zig":
-                    return HighlightingManager.Instance.GetDefinition("Zig");
-                case "turing":
-                    return HighlightingManager.Instance.GetDefinition("Turing");
-                case "pike":
-                    return HighlightingManager.Instance.GetDefinition("Pike");
-                case "eiffel":
-                    return HighlightingManager.Instance.GetDefinition("Eiffel");
-                case "julia":
-                    return HighlightingManager.Instance.GetDefinition("Julia");
-                case "nasm":
-                case "assembly":
-                case "asm":
-                    return HighlightingManager.Instance.GetDefinition("Assembly");
-                case "groff":
-                case "roff":
-                    return HighlightingManager.Instance.GetDefinition("Groff");
-                case "bc":
-                    return HighlightingManager.Instance.GetDefinition("BC");
-                case "gml":
-                    return HighlightingManager.Instance.GetDefinition("GameMaker Language");
-                case "ampl":
-                    return HighlightingManager.Instance.GetDefinition("AMPL");
-                case "sml":
-                case "standardml":
-                    return HighlightingManager.Instance.GetDefinition("Standard ML");
-                case "blitzmax":
-                    return HighlightingManager.Instance.GetDefinition("BlitzMax");
-                case "clarion":
-                    return HighlightingManager.Instance.GetDefinition("Clarion");
-                case "modula-2":
-                case "modula":
-                    return HighlightingManager.Instance.GetDefinition("Modula-2");
-                case "icon":
-                    return HighlightingManager.Instance.GetDefinition("Icon");
-                case "genie":
-                    return HighlightingManager.Instance.GetDefinition("Genie");
-                case "xslt":
-                    return HighlightingManager.Instance.GetDefinition("XSLT");
-                case "boo":
-                    return HighlightingManager.Instance.GetDefinition("Boo");
-                case "pawn":
-                    return HighlightingManager.Instance.GetDefinition("Pawn");
-                case "povray":
-                case "pov":
-                    return HighlightingManager.Instance.GetDefinition("POV-Ray");
-                case "rex":
-                    return HighlightingManager.Instance.GetDefinition("REXX");
-                case "v":
-                    return HighlightingManager.Instance.GetDefinition("V");
-                case "logtalk":
-                    return HighlightingManager.Instance.GetDefinition("Logtalk");
-                case "factor":
-                    return HighlightingManager.Instance.GetDefinition("Factor");
-                case "rexxt":
-                    return HighlightingManager.Instance.GetDefinition("REXXT");
-                case "picat":
-                    return HighlightingManager.Instance.GetDefinition("Picat");
+                case "forth":
+                    return HighlightingManager.Instance.GetDefinition("Forth");
                 case "algol":
                 case "algol60":
                 case "algol68":
                     return HighlightingManager.Instance.GetDefinition("ALGOL");
-                case "forth":
-                    return HighlightingManager.Instance.GetDefinition("Forth");
-                case "coq":
-                    return HighlightingManager.Instance.GetDefinition("Coq");
-                case "vb6":
-                case "visualbasic6":
-                    return HighlightingManager.Instance.GetDefinition("Visual Basic 6");
-                case "bcpl":
-                    return HighlightingManager.Instance.GetDefinition("BCPL");
-                case "promela":
-                    return HighlightingManager.Instance.GetDefinition("Promela");
-                case "ml":
-                    return HighlightingManager.Instance.GetDefinition("ML");
-                case "spice":
-                    return HighlightingManager.Instance.GetDefinition("SPICE");
-                case "autohotkey":
-                case "ahk":
-                    return HighlightingManager.Instance.GetDefinition("AutoHotkey");
+                case "smalltalk":
+                    return HighlightingManager.Instance.GetDefinition("Smalltalk");
+                case "modula-2":
+                case "modula":
+                    return HighlightingManager.Instance.GetDefinition("Modula-2");
+                case "pl/i":
+                case "pli":
+                    return HighlightingManager.Instance.GetDefinition("PL/I");
+
+                // Game development and graphics scripting languages
+                case "gml":
+                    return HighlightingManager.Instance.GetDefinition("GameMaker Language");
+                case "povray":
+                case "pov":
+                    return HighlightingManager.Instance.GetDefinition("POV-Ray");
+                case "glsl":
+                    return HighlightingManager.Instance.GetDefinition("GLSL");
+                case "hlsl":
+                    return HighlightingManager.Instance.GetDefinition("HLSL");
+                case "godot":
+                case "gdscript":
+                    return HighlightingManager.Instance.GetDefinition("GDScript");
+
+                // Configuration and data serialization languages
+                case "dockerfile":
+                case "docker":
+                    return HighlightingManager.Instance.GetDefinition("Dockerfile");
+                case "toml":
+                    return HighlightingManager.Instance.GetDefinition("TOML");
+                case "protobuf":
+                case "proto":
+                    return HighlightingManager.Instance.GetDefinition("Protocol Buffers");
+
+                // More popular languages
+                case "clojure":
+                    return HighlightingManager.Instance.GetDefinition("Clojure");
+                case "erlang":
+                    return HighlightingManager.Instance.GetDefinition("Erlang");
+                case "elixir":
+                    return HighlightingManager.Instance.GetDefinition("Elixir");
+                case "nim":
+                    return HighlightingManager.Instance.GetDefinition("Nim");
+                case "crystal":
+                    return HighlightingManager.Instance.GetDefinition("Crystal");
+                case "tcl":
+                    return HighlightingManager.Instance.GetDefinition("Tcl");
+                case "coffeescript":
+                case "coffee":
+                    return HighlightingManager.Instance.GetDefinition("CoffeeScript");
+                case "red":
+                    return HighlightingManager.Instance.GetDefinition("Red");
+                case "julia":
+                    return HighlightingManager.Instance.GetDefinition("Julia");
+                case "elm":
+                    return HighlightingManager.Instance.GetDefinition("Elm");
+                case "haxe":
+                    return HighlightingManager.Instance.GetDefinition("Haxe");
+                case "janet":
+                    return HighlightingManager.Instance.GetDefinition("Janet");
+                case "zig":
+                    return HighlightingManager.Instance.GetDefinition("Zig");
+
+                // Specialized and domain-specific languages
+                case "vhdl":
+                    return HighlightingManager.Instance.GetDefinition("VHDL");
+                case "verilog":
+                    return HighlightingManager.Instance.GetDefinition("Verilog");
+                case "abap":
+                    return HighlightingManager.Instance.GetDefinition("ABAP");
+                case "puppet":
+                    return HighlightingManager.Instance.GetDefinition("Puppet");
+                case "ansible":
+                    return HighlightingManager.Instance.GetDefinition("Ansible");
+                case "solidity":
+                    return HighlightingManager.Instance.GetDefinition("Solidity");
+                case "purebasic":
+                    return HighlightingManager.Instance.GetDefinition("PureBasic");
+                case "xslt":
+                    return HighlightingManager.Instance.GetDefinition("XSLT");
+                case "dot":
+                case "graphviz":
+                    return HighlightingManager.Instance.GetDefinition("DOT");
                 case "capnproto":
                 case "capnp":
                     return HighlightingManager.Instance.GetDefinition("Cap'n Proto");
                 case "gherkin":
                     return HighlightingManager.Instance.GetDefinition("Gherkin");
-                case "idl":
-                    return HighlightingManager.Instance.GetDefinition("IDL");
-                case "idl4":
-                    return HighlightingManager.Instance.GetDefinition("IDL4");
-                case "grip":
-                    return HighlightingManager.Instance.GetDefinition("GRIP");
-                case "plc":
-                    return HighlightingManager.Instance.GetDefinition("PLC");
-                case "cnc":
-                    return HighlightingManager.Instance.GetDefinition("CNC");
-                case "parrot":
-                    return HighlightingManager.Instance.GetDefinition("Parrot");
+                case "maxscript":
+                    return HighlightingManager.Instance.GetDefinition("MaxScript");
+                case "eiffel":
+                    return HighlightingManager.Instance.GetDefinition("Eiffel");
+
+                // Assembly and machine code
+                case "nasm":
+                case "asm":
+                case "assembly":
+                    return HighlightingManager.Instance.GetDefinition("Assembly");
+
+                // Functional languages
+                case "ocaml":
+                    return HighlightingManager.Instance.GetDefinition("OCaml");
+                case "racket":
+                    return HighlightingManager.Instance.GetDefinition("Racket");
+                case "sml":
+                case "standardml":
+                    return HighlightingManager.Instance.GetDefinition("Standard ML");
+
+                // Logic and constraint programming languages
+                case "prolog":
+                    return HighlightingManager.Instance.GetDefinition("Prolog");
+                case "mercury":
+                    return HighlightingManager.Instance.GetDefinition("Mercury");
+
+                // Experimental and new languages
+                case "bosque":
+                    return HighlightingManager.Instance.GetDefinition("Bosque");
+                case "gleam":
+                    return HighlightingManager.Instance.GetDefinition("Gleam");
+                case "grain":
+                    return HighlightingManager.Instance.GetDefinition("Grain");
+                case "mint":
+                    return HighlightingManager.Instance.GetDefinition("Mint");
+
+                // High-level scripting and automation languages
+                case "autohotkey":
+                case "ahk":
+                    return HighlightingManager.Instance.GetDefinition("AutoHotkey");
+                case "autoit":
+                    return HighlightingManager.Instance.GetDefinition("AutoIt");
+                case "applescript":
+                    return HighlightingManager.Instance.GetDefinition("AppleScript");
+                case "sed":
+                    return HighlightingManager.Instance.GetDefinition("Sed");
+                case "awk":
+                    return HighlightingManager.Instance.GetDefinition("AWK");
+
+                // Legacy and obscure languages
+                case "bcpl":
+                    return HighlightingManager.Instance.GetDefinition("BCPL");
+                case "apl":
+                    return HighlightingManager.Instance.GetDefinition("APL");
+                case "euphoria":
+                    return HighlightingManager.Instance.GetDefinition("Euphoria");
+                case "mirah":
+                    return HighlightingManager.Instance.GetDefinition("Mirah");
+                case "nemerle":
+                    return HighlightingManager.Instance.GetDefinition("Nemerle");
+                case "rexx":
+                    return HighlightingManager.Instance.GetDefinition("REXX");
+                case "bliss":
+                    return HighlightingManager.Instance.GetDefinition("BLISS");
+                case "blitzmax":
+                    return HighlightingManager.Instance.GetDefinition("BlitzMax");
+
+                // Numeric and scientific languages
+                case "rpl":
+                    return HighlightingManager.Instance.GetDefinition("RPL");
+                case "spice":
+                    return HighlightingManager.Instance.GetDefinition("SPICE");
+
+                // Machine learning and statistical languages
+                case "stan":
+                    return HighlightingManager.Instance.GetDefinition("Stan");
+                case "greta":
+                    return HighlightingManager.Instance.GetDefinition("Greta");
+
+                // Web-related and templating languages
+                case "liquid":
+                    return HighlightingManager.Instance.GetDefinition("Liquid");
+                case "haml":
+                    return HighlightingManager.Instance.GetDefinition("Haml");
+                case "twig":
+                    return HighlightingManager.Instance.GetDefinition("Twig");
+                case "mustache":
+                    return HighlightingManager.Instance.GetDefinition("Mustache");
+
+                // Declarative and markup languages
+                case "latex":
+                case "tex":
+                    return HighlightingManager.Instance.GetDefinition("LaTeX");
+
+                // Blockchain and smart contract languages
+                case "vyper":
+                    return HighlightingManager.Instance.GetDefinition("Vyper");
+
+                // Miscellaneous
+                case "promela":
+                    return HighlightingManager.Instance.GetDefinition("Promela");
+                case "picat":
+                    return HighlightingManager.Instance.GetDefinition("Picat");
+                case "rebol":
+                    return HighlightingManager.Instance.GetDefinition("Rebol");
+                case "riot":
+                    return HighlightingManager.Instance.GetDefinition("Riot");
+
                 default:
                     return null;
             }
+
         }
     }
 }
