@@ -20,6 +20,11 @@ using System.Windows.Input;
 using ICSharpCode.AvalonEdit.Highlighting;
 using System.Globalization;
 using System.Windows.Data;
+using System.Windows.Media;
+using ICSharpCode.AvalonEdit;
+using ICSharpCode.AvalonEdit.Editing;
+
+
 
 namespace SnippetManager
 {
@@ -378,6 +383,15 @@ namespace SnippetManager
         private void SnippetsDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
+        }
+
+        private void CopyToClipboard_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button button && button.Tag is string contentToCopy)
+            {
+                Clipboard.SetText(contentToCopy);
+                MessageBox.Show("Content copied to clipboard!", "Copy", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
     }
 }
