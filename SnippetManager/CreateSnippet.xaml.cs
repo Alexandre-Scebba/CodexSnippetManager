@@ -152,7 +152,7 @@ namespace SnippetManager
             SnippetCreated?.Invoke(this, snippet);
         }
 
-d        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
