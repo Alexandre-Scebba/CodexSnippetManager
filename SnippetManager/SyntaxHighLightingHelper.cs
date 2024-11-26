@@ -46,6 +46,10 @@ namespace SnippetManager
                 case "vb":
                 case "visualbasic":
                     return HighlightingManager.Instance.GetDefinition("VBNET");
+                case "c++":
+                case "cpp":
+                case "cplusplus":
+                    return HighlightingManager.Instance.GetDefinition("C++");
                 default:
                     return null;
             }
