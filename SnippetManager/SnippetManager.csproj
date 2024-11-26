@@ -8,6 +8,7 @@
 		<ApplicationIcon>Assets\icon.ico</ApplicationIcon>
 	</PropertyGroup>
 	<ItemGroup>
+	  <None Remove="Assets\icon.ico" />
 	  <None Remove="Assets\icon2.ico" />
 	  <None Remove="Assets\icon3.ico" />
 	</ItemGroup>
@@ -31,6 +32,9 @@
 		<PackageReference Include="NUnit3TestAdapter" Version="4.6.0" />
 	</ItemGroup>
 	<ItemGroup>
+	  <Resource Include="Assets\icon.ico">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Resource>
 	  <Resource Include="Assets\icon2.ico" />
 	  <Resource Include="Assets\icon3.ico" />
 	</ItemGroup>
