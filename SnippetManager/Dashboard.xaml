@@ -119,10 +119,8 @@
                     </DataGrid.Resources>
                     <DataGrid.RowStyle>
                         <Style TargetType="DataGridRow">
-                            <Setter Property="MinHeight" Value="40" />
-                            <!-- Sets the minimum row height -->
-                            <Setter Property="MaxHeight" Value="100" />
-                            <!-- Sets the maximum row height -->
+                            <Setter Property="MinHeight" Value="40" />                              <!-- Sets the minimum row height -->
+                            <Setter Property="MaxHeight" Value="100" />                             <!-- Sets the maximum row height -->
                             <Setter Property="Background" Value="White" />
                             <Setter Property="Foreground" Value="Black" />
                             <Setter Property="FontWeight" Value="Normal" />
@@ -166,7 +164,7 @@
                                 </Style>
                             </DataGridTextColumn.ElementStyle>
                         </DataGridTextColumn>
-                        <DataGridTextColumn Header="Language" Binding="{Binding Snippet.Language}" Width="*" MaxWidth="200">
+                        <DataGridTextColumn Header="Language" Binding="{Binding Snippet.Language}" Width="*" MaxWidth="100">
                             <DataGridTextColumn.ElementStyle>
                                 <Style TargetType="TextBlock">
                                     <Setter Property="TextWrapping" Value="Wrap" />
@@ -174,7 +172,7 @@
                                 </Style>
                             </DataGridTextColumn.ElementStyle>
                         </DataGridTextColumn>
-                        <DataGridTextColumn Header="Tags" Binding="{Binding Snippet.Tags}" Width="*" MaxWidth="200">
+                        <DataGridTextColumn Header="Tags" Binding="{Binding Snippet.Tags}" Width="*" MaxWidth="100">
                             <DataGridTextColumn.ElementStyle>
                                 <Style TargetType="TextBlock">
                                     <Setter Property="TextWrapping" Value="Wrap" />
@@ -182,7 +180,7 @@
                                 </Style>
                             </DataGridTextColumn.ElementStyle>
                         </DataGridTextColumn>
-                        <DataGridTemplateColumn Header="Content" Width="*" MaxWidth="800">
+                        <DataGridTemplateColumn Header="Content" Width="*" MaxWidth="1000">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <avalonedit:TextEditor ShowLineNumbers="True" IsReadOnly="True">
