@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using SnippetManager.Data;
 using SnippetManager.Models;
 using System.Configuration;
+using System.Windows.Controls;
 
 namespace SnippetManager.ViewModels
 {
@@ -67,6 +68,38 @@ namespace SnippetManager.ViewModels
             Debug.WriteLine($"Loaded languages: {string.Join(", ", dbLanguages)}");
         }
 
+        public void ToggleLanguageSelection(string language)
+        {
+            if (SelectedLanguages.Contains(language))
+            {
+                SelectedLanguages.Remove(language);
+            }
+            else
+            {
+                SelectedLanguages.Add(language);
+            }
+            OnPropertyChanged(nameof(SelectedLanguages));
+            OnPropertyChanged(nameof(SelectedLanguagesText));
+        }
+
+
+
+        public void LoadSnippet(Snippet snippet)
+        {
+            SelectedLanguages.Clear();
+            var snippetLanguages = snippet.Language.Split(',').Select(lang => lang.Trim());
+            foreach (var lang in snippetLanguages)
+            {
+                if (AvailableLanguages.Contains(lang))
+                {
+                    SelectedLanguages.Add(lang);
+                }
+            }
+            OnPropertyChanged(nameof(SelectedLanguages));
+            OnPropertyChanged(nameof(SelectedLanguagesText));
+        }
+
+
         //tags
         private ObservableCollection<string> _availableTags = new ObservableCollection<string>();
         public ObservableCollection<string> AvailableTags
@@ -115,6 +148,21 @@ namespace SnippetManager.ViewModels
                 OnPropertyChanged(nameof(SelectedTags));
             }
         }
+
+        private ObservableCollection<string> _selectedLanguages = new ObservableCollection<string>();
+        public ObservableCollection<string> SelectedLanguages
+        {
+            get => _selectedLanguages;
+            set
+            {
+                _selectedLanguages = value;
+                OnPropertyChanged(nameof(SelectedLanguages));
+            }
+        }
+
+        public string SelectedLanguagesText => string.Join(", ", SelectedLanguages);
+        public string SelectedTagsText => string.Join(", ", SelectedTags);
+
 
         //dynamic additions of language and tags
         //added error notify user if [] already exists
@@ -406,7 +454,7 @@ namespace SnippetManager.ViewModels
             Debug.WriteLine("Applying plain text formatting.");
         }
 
-        protected void OnPropertyChanged(string propertyName)
+        public void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
             Debug.WriteLine($"PropertyChanged: {propertyName}");

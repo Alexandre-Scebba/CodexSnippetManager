@@ -8,6 +8,7 @@ using SnippetManager.ViewModels;
 using System.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
+using ICSharpCode.AvalonEdit.Highlighting;
 
 namespace SnippetManager
 {
@@ -18,37 +19,39 @@ namespace SnippetManager
     {
         private readonly codexDBContext _context;
         private readonly ObservableCollection<Snippet> _snippets;
+        private readonly MainViewModel _viewModel;
 
-        public event EventHandler<Snippet> SnippetCreated;
+        public event EventHandler<Snippet>? SnippetCreated;
 
         public CreateSnippet(codexDBContext context, ObservableCollection<Snippet> snippets)
         {
             InitializeComponent();
             _context = context ?? throw new ArgumentNullException(nameof(context), "Database context cannot be null.");
             _snippets = snippets ?? throw new ArgumentNullException(nameof(snippets), "Snippets collection cannot be null.");
-            DataContext = new MainViewModel();
+            _viewModel = new MainViewModel();
+            DataContext = _viewModel;
         }
 
         private void LanguagesListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (DataContext is MainViewModel viewModel)
+            foreach (string addedItem in e.AddedItems)
             {
-                foreach (string added in e.AddedItems)
+                if (!_viewModel.SelectedLanguages.Contains(addedItem))
                 {
-                    if (!viewModel.AvailableLanguages.Contains(added))
-                    {
-                        viewModel.AvailableLanguages.Add(added);
-                    }
-                }
-
-                foreach (string removed in e.RemovedItems)
-                {
-                    if (viewModel.AvailableLanguages.Contains(removed))
-                    {
-                        viewModel.AvailableLanguages.Remove(removed);
-                    }
+                    _viewModel.SelectedLanguages.Add(addedItem);
                 }
             }
+
+            foreach (string removedItem in e.RemovedItems)
+            {
+                _viewModel.SelectedLanguages.Remove(removedItem);
+            }
+
+            if (LanguagesListBox.SelectedItems.Count > 0)
+            {
+                SetSyntaxHighlighting(LanguagesListBox.SelectedItems[0]?.ToString() ?? string.Empty);
+            }
+            _viewModel.OnPropertyChanged(nameof(MainViewModel.SelectedLanguagesText));
         }
 
         private void TagsListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -80,7 +83,7 @@ namespace SnippetManager
                 // get user inputs
                 string title = TitleTextBox.Text?.Trim() ?? string.Empty;
                 string content = ContentEditor.Text?.Trim() ?? string.Empty;
-                string availableLanguages = LanguageDropdown.SelectedItem?.ToString() ?? string.Empty; // Dropdown for language
+                string selectedLanguages = string.Join(", ", LanguagesListBox.SelectedItems.Cast<string>()); // ListBox for languages
                 string selectedTags = string.Join(", ", TagsListBox.SelectedItems.Cast<string>()); // ListBox for tags
 
                 // validate 
@@ -91,11 +94,12 @@ namespace SnippetManager
                 }
 
                 // find CategoryId for the selected language
+                var firstSelectedLanguage = selectedLanguages.Split(',').First().Trim();
                 var category = _context.Categories
-                    .FirstOrDefault(c => c.Name == availableLanguages && c.Type == "Language");
+                    .FirstOrDefault(c => c.Name == firstSelectedLanguage && c.Type == "Language");
                 if (category == null)
                 {
-                    MessageBox.Show($"Error: Language '{availableLanguages}' is not available.");
+                    MessageBox.Show($"Error: Language '{selectedLanguages}' is not available.");
                     return;
                 }
 
@@ -107,7 +111,7 @@ namespace SnippetManager
                     UserId = userId,
                     Title = title,
                     Content = content,
-                    Language = availableLanguages,
+                    Language = selectedLanguages,
                     Tags = selectedTags,
                     CategoryId = category.CategoryId,
                     CreatedAt = DateTime.Now,
@@ -156,6 +160,63 @@ namespace SnippetManager
         private void OnSnippetCreated(Snippet snippet)
         {
             SnippetCreated?.Invoke(this, snippet);
+        }
+
+        private void SetSyntaxHighlighting(string language)
+        {
+            switch (language.ToLower())
+            {
+                case "c#":
+                case "csharp":
+                    ContentEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("C#");
+                    break;
+                case "xml":
+                    ContentEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("XML");
+                    break;
+                case "html":
+                    ContentEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("HTML");
+                    break;
+                case "javascript":
+                case "js":
+                    ContentEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("JavaScript");
+                    break;
+                case "python":
+                    ContentEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("Python");
+                    break;
+                case "sql":
+                    ContentEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("SQL");
+                    break;
+                case "java":
+                    ContentEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("Java");
+                    break;
+                case "css":
+                    ContentEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("CSS");
+                    break;
+                case "php":
+                    ContentEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("PHP");
+                    break;
+                case "ruby":
+                    ContentEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("Ruby");
+                    break;
+                case "json":
+                    ContentEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("JSON");
+                    break;
+                case "typescript":
+                case "ts":
+                    ContentEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("TypeScript");
+                    break;
+                case "markdown":
+                case "md":
+                    ContentEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("Markdown");
+                    break;
+                case "vb":
+                case "visualbasic":
+                    ContentEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("VBNET");
+                    break;
+                default:
+                    ContentEditor.SyntaxHighlighting = null;
+                    break;
+            }
         }
     }
 }
