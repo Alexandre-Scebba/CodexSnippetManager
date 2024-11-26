@@ -13,9 +13,12 @@
              VerticalAlignment="Stretch"
              d:DesignHeight="600" d:DesignWidth="800">
     <UserControl.Resources>
+        
         <ResourceDictionary>
+            <local:HeightConverter x:Key="HeightConverter" />
             <local:StringIsNullOrEmptyConverter x:Key="StringIsNullOrEmptyConverter"/>
             <local:LanguageToSyntaxHighlightingConverter x:Key="LanguageToSyntaxHighlightingConverter"/>
+            
             <Style TargetType="TextBox" x:Key="WatermarkTextBoxStyle">
                 <Setter Property="Template">
                     <Setter.Value>
@@ -98,18 +101,17 @@
 
 
                 <!-- Table -->
-                <DataGrid x:Name="SnippetsDataGrid" HorizontalAlignment="Stretch" 
-          AutoGenerateColumns="False" 
-          VerticalAlignment="Stretch"
-          MouseDoubleClick="SnippetsDataGrid_MouseDoubleClick" 
-          MaxHeight="800"
-          MaxWidth="1800"
-          CanUserAddRows="False"
-          IsReadOnly="True"
-          ScrollViewer.CanContentScroll="False"
-          VerticalScrollBarVisibility="Visible"
-          HorizontalScrollBarVisibility="Visible"
-          SelectionUnit="FullRow">
+                <DataGrid x:Name="SnippetsDataGrid"
+              HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5"
+              AutoGenerateColumns="False" MouseDoubleClick="SnippetsDataGrid_MouseDoubleClick"
+              Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource HeightConverter}}"
+              CanUserAddRows="False" IsReadOnly="True"
+              HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+              CanUserResizeColumns="True" CanUserResizeRows="True"
+              ScrollViewer.CanContentScroll="False"
+              VerticalScrollBarVisibility="Visible"
+              HorizontalScrollBarVisibility="Visible"
+              SelectionUnit="FullRow">
                     <DataGrid.Resources>
                         <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="LightGray"/>
                         <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="LightGray"/>
@@ -148,10 +150,38 @@
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        <DataGridTextColumn Header="Title" Binding="{Binding Snippet.Title}" Width="*" MaxWidth="300"/>
-                        <DataGridTextColumn Header="Description" Binding="{Binding Snippet.Description}" Width="*" MaxWidth="300"/>
-                        <DataGridTextColumn Header="Language" Binding="{Binding Snippet.Language}" Width="*" MaxWidth="200"/>
-                        <DataGridTextColumn Header="Tags" Binding="{Binding Snippet.Tags}" Width="*" MaxWidth="200"/>
+                        <DataGridTextColumn Header="Title" Binding="{Binding Snippet.Title}" Width="*" MaxWidth="300">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="TextWrapping" Value="Wrap" />
+                                    <Setter Property="VerticalAlignment" Value="Center" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="Description" Binding="{Binding Snippet.Description}" Width="*" MaxWidth="300">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="TextWrapping" Value="Wrap" />
+                                    <Setter Property="VerticalAlignment" Value="Center" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="Language" Binding="{Binding Snippet.Language}" Width="*" MaxWidth="200">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="TextWrapping" Value="Wrap" />
+                                    <Setter Property="VerticalAlignment" Value="Center" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="Tags" Binding="{Binding Snippet.Tags}" Width="*" MaxWidth="200">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="TextWrapping" Value="Wrap" />
+                                    <Setter Property="VerticalAlignment" Value="Center" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
                         <DataGridTemplateColumn Header="Content" Width="*" MaxWidth="800">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
