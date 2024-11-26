@@ -4,6 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SnippetManager"
+             xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:behaviors="clr-namespace:SnippetManager.Behaviors"
+             xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d" 
              HorizontalAlignment="Stretch"
              VerticalAlignment="Stretch"
@@ -11,6 +15,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <local:StringIsNullOrEmptyConverter x:Key="StringIsNullOrEmptyConverter"/>
+            <local:LanguageToSyntaxHighlightingConverter x:Key="LanguageToSyntaxHighlightingConverter"/>
             <Style TargetType="TextBox" x:Key="WatermarkTextBoxStyle">
                 <Setter Property="Template">
                     <Setter.Value>
@@ -86,12 +91,10 @@
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Grid.Column="1" Margin="5,0,0,0">
                         <Button Content="Import" Click="ImportButton_Click" Width="100" Margin="0,0,5,0" Height="30"/>
                         <Button Content="Export Selected" Click="ExportButton_Click" Width="100" Margin="0,0,5,0" Height="30"/>
-                        <Button Content="Delete Selected" Click="DeleteSelectedButton_Click" Margin="5" Height="30" />  
-
+                        <Button Content="Delete Selected" Click="DeleteSelectedButton_Click" Margin="5" Height="30" />
                     </StackPanel>
                 </Grid>
 
-                
                 <!-- Table -->
                 <DataGrid x:Name="SnippetsDataGrid" HorizontalAlignment="Stretch" AutoGenerateColumns="False" VerticalAlignment="Stretch" MouseDoubleClick="SnippetsDataGrid_MouseDoubleClick">
                     <DataGrid.Columns>
@@ -109,11 +112,22 @@
                         <DataGridTextColumn Header="Description" Binding="{Binding Snippet.Description}" Width="*"/>
                         <DataGridTextColumn Header="Language" Binding="{Binding Snippet.Language}" Width="*"/>
                         <DataGridTextColumn Header="Tags" Binding="{Binding Snippet.Tags}" Width="*"/>
-                        <DataGridTextColumn Header="Content" Binding="{Binding Snippet.Content}" Width="*"/>
+                        <DataGridTemplateColumn Header="Content" Width="*">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <avalonedit:TextEditor ShowLineNumbers="True" IsReadOnly="True">
+                                        <b:Interaction.Behaviors>
+                                            <behaviors:TextEditorBindingBehavior Text="{Binding Snippet.Content, Mode=TwoWay}" />
+                                        </b:Interaction.Behaviors>
+                                        <avalonedit:TextEditor.SyntaxHighlighting>
+                                            <Binding Path="Snippet.Language" Converter="{StaticResource LanguageToSyntaxHighlightingConverter}" />
+                                        </avalonedit:TextEditor.SyntaxHighlighting>
+                                    </avalonedit:TextEditor>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
                     </DataGrid.Columns>
                 </DataGrid>
-
-
             </StackPanel>
         </Grid>
     </DockPanel>

@@ -17,12 +17,66 @@ using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
 using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
 using System.Diagnostics;
 using System.Windows.Input;
+using ICSharpCode.AvalonEdit.Highlighting;
+using System.Globalization;
+using System.Windows.Data;
 
 namespace SnippetManager
 {
-    /// <summary>
-    /// Interaction logic for Dashboard.xaml
-    /// </summary>
+    public class LanguageToSyntaxHighlightingConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is string language)
+            {
+                switch (language.ToLower())
+                {
+                    case "c#":
+                    case "csharp":
+                        return HighlightingManager.Instance.GetDefinition("C#");
+                    case "xml":
+                        return HighlightingManager.Instance.GetDefinition("XML");
+                    case "html":
+                        return HighlightingManager.Instance.GetDefinition("HTML");
+                    case "javascript":
+                    case "js":
+                        return HighlightingManager.Instance.GetDefinition("JavaScript");
+                    case "python":
+                        return HighlightingManager.Instance.GetDefinition("Python");
+                    case "sql":
+                        return HighlightingManager.Instance.GetDefinition("SQL");
+                    case "java":
+                        return HighlightingManager.Instance.GetDefinition("Java");
+                    case "css":
+                        return HighlightingManager.Instance.GetDefinition("CSS");
+                    case "php":
+                        return HighlightingManager.Instance.GetDefinition("PHP");
+                    case "ruby":
+                        return HighlightingManager.Instance.GetDefinition("Ruby");
+                    case "json":
+                        return HighlightingManager.Instance.GetDefinition("JSON");
+                    case "typescript":
+                    case "ts":
+                        return HighlightingManager.Instance.GetDefinition("TypeScript");
+                    case "markdown":
+                    case "md":
+                        return HighlightingManager.Instance.GetDefinition("Markdown");
+                    case "vb":
+                    case "visualbasic":
+                        return HighlightingManager.Instance.GetDefinition("VBNET");
+                    default:
+                        return null;
+                }
+            }
+            return null;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
     public partial class Dashboard : UserControl
     {
         private readonly codexDBContext _context;
@@ -224,8 +278,6 @@ namespace SnippetManager
             Settings createSettingsWindow = new Settings(optionsBuilder.Options, mainViewModel);
             createSettingsWindow.Show();
         }
-
-
 
         private void ImportButton_Click(object sender, RoutedEventArgs e)
         {
