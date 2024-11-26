@@ -9,6 +9,7 @@ using SnippetManager.Data;
 using SnippetManager.Models;
 using SnippetManager.ViewModels;
 using System.Configuration;
+using System.Windows.Media.Imaging;
 
 
 namespace SnippetManager

@@ -8,9 +8,11 @@
 		<ApplicationIcon>Assets\icon.ico</ApplicationIcon>
 	</PropertyGroup>
 	<ItemGroup>
-		<None Update="Assets\icon.ico">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-			</None>
+	  <None Remove="Assets\icon.ico" />
+	  <None Remove="Assets\icon2.ico" />
+	  <None Remove="Assets\icon3.ico" />
+	</ItemGroup>
+	<ItemGroup>
 		<!--  <PackageReference Include="EntityFramework" Version="6.5.1" />	added comment to remove EF conflicts with v8.0-->
 		<PackageReference Include="AvalonEdit" Version="6.3.0.90" />
 		<PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.2" />
@@ -27,5 +29,12 @@
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
 		<PackageReference Include="NUnit" Version="4.2.2" />
 		<PackageReference Include="NUnit3TestAdapter" Version="4.6.0" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Resource Include="Assets\icon.ico">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Resource>
+	  <Resource Include="Assets\icon2.ico" />
+	  <Resource Include="Assets\icon3.ico" />
 	</ItemGroup>
 </Project>

@@ -93,7 +93,15 @@
 
                 
                 <!-- Table -->
-                <DataGrid x:Name="SnippetsDataGrid" HorizontalAlignment="Stretch" AutoGenerateColumns="False" VerticalAlignment="Stretch" MouseDoubleClick="SnippetsDataGrid_MouseDoubleClick">
+                <DataGrid x:Name="SnippetsDataGrid" HorizontalAlignment="Stretch" 
+                          AutoGenerateColumns="False" 
+                          VerticalAlignment="Stretch"
+                          MouseDoubleClick="SnippetsDataGrid_MouseDoubleClick" 
+                          MaxHeight="800"
+                          MaxWidth="1800"
+                          ScrollViewer.CanContentScroll="False"
+                          VerticalScrollBarVisibility="Visible"
+                          HorizontalScrollBarVisibility="Visible">
                     <DataGrid.Columns>
                         <DataGridTemplateColumn>
                             <DataGridTemplateColumn.Header>
@@ -105,11 +113,11 @@
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        <DataGridTextColumn Header="Title" Binding="{Binding Snippet.Title}" Width="*"/>
-                        <DataGridTextColumn Header="Description" Binding="{Binding Snippet.Description}" Width="*"/>
-                        <DataGridTextColumn Header="Language" Binding="{Binding Snippet.Language}" Width="*"/>
-                        <DataGridTextColumn Header="Tags" Binding="{Binding Snippet.Tags}" Width="*"/>
-                        <DataGridTextColumn Header="Content" Binding="{Binding Snippet.Content}" Width="*"/>
+                        <DataGridTextColumn Header="Title" Binding="{Binding Snippet.Title}" Width="*" MaxWidth="300"/>
+                        <DataGridTextColumn Header="Description" Binding="{Binding Snippet.Description}" Width="*" MaxWidth="300"/>
+                        <DataGridTextColumn Header="Language" Binding="{Binding Snippet.Language}" Width="*" MaxWidth="200"/>
+                        <DataGridTextColumn Header="Tags" Binding="{Binding Snippet.Tags}" Width="*" MaxWidth="200"/>
+                        <DataGridTextColumn Header="Content" Binding="{Binding Snippet.Content}" Width="*" MaxWidth="800"/>
                     </DataGrid.Columns>
                 </DataGrid>
 

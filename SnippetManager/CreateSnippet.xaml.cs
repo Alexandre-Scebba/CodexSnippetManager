@@ -154,59 +154,61 @@ namespace SnippetManager
 
         private void SetSyntaxHighlighting(string language)
         {
-            switch (language.ToLower())
-            {
-                case "c#":
-                case "csharp":
-                    ContentEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("C#");
-                    break;
-                case "xml":
-                    ContentEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("XML");
-                    break;
-                case "html":
-                    ContentEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("HTML");
-                    break;
-                case "javascript":
-                case "js":
-                    ContentEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("JavaScript");
-                    break;
-                case "python":
-                    ContentEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("Python");
-                    break;
-                case "sql":
-                    ContentEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("SQL");
-                    break;
-                case "java":
-                    ContentEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("Java");
-                    break;
-                case "css":
-                    ContentEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("CSS");
-                    break;
-                case "php":
-                    ContentEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("PHP");
-                    break;
-                case "ruby":
-                    ContentEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("Ruby");
-                    break;
-                case "json":
-                    ContentEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("JSON");
-                    break;
-                case "typescript":
-                case "ts":
-                    ContentEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("TypeScript");
-                    break;
-                case "markdown":
-                case "md":
-                    ContentEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("Markdown");
-                    break;
-                case "vb":
-                case "visualbasic":
-                    ContentEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("VBNET");
-                    break;
-                default:
-                    ContentEditor.SyntaxHighlighting = null;
-                    break;
-            }
+            //switch (language.ToLower())
+            //{
+            //    case "c#":
+            //    case "csharp":
+            //        ContentEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("C#");
+            //        break;
+            //    case "xml":
+            //        ContentEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("XML");
+            //        break;
+            //    case "html":
+            //        ContentEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("HTML");
+            //        break;
+            //    case "javascript":
+            //    case "js":
+            //        ContentEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("JavaScript");
+            //        break;
+            //    case "python":
+            //        ContentEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("Python");
+            //        break;
+            //    case "sql":
+            //        ContentEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("SQL");
+            //        break;
+            //    case "java":
+            //        ContentEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("Java");
+            //        break;
+            //    case "css":
+            //        ContentEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("CSS");
+            //        break;
+            //    case "php":
+            //        ContentEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("PHP");
+            //        break;
+            //    case "ruby":
+            //        ContentEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("Ruby");
+            //        break;
+            //    case "json":
+            //        ContentEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("JSON");
+            //        break;
+            //    case "typescript":
+            //    case "ts":
+            //        ContentEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("TypeScript");
+            //        break;
+            //    case "markdown":
+            //    case "md":
+            //        ContentEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("Markdown");
+            //        break;
+            //    case "vb":
+            //    case "visualbasic":
+            //        ContentEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("VBNET");
+            //        break;
+            //    default:
+            //        ContentEditor.SyntaxHighlighting = null;
+            //        break;
+            //}
+
+            ContentEditor.SyntaxHighlighting = SyntaxHighLightingHelper.GetSyntaxHighlighting(language);
         }
     }
 }
