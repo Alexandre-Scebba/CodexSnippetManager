@@ -411,5 +411,10 @@ namespace SnippetManager
             SnippetsDataGrid.CommitEdit(DataGridEditingUnit.Row, true);
             SnippetsDataGrid.Items.Refresh();
         }
+
+        private void SnippetsDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
