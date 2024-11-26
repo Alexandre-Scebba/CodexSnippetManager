@@ -36,15 +36,12 @@ namespace SnippetManager
         {
             foreach (string addedItem in e.AddedItems)
             {
-                if (!_viewModel.SelectedLanguages.Contains(addedItem))
-                {
-                    _viewModel.SelectedLanguages.Add(addedItem);
-                }
+                _viewModel.ToggleLanguageSelection(addedItem);
             }
 
             foreach (string removedItem in e.RemovedItems)
             {
-                _viewModel.SelectedLanguages.Remove(removedItem);
+                _viewModel.ToggleLanguageSelection(removedItem);
             }
 
             if (LanguagesListBox.SelectedItems.Count > 0)
@@ -56,24 +53,17 @@ namespace SnippetManager
 
         private void TagsListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (DataContext is MainViewModel viewModel)
+            foreach (string addedItem in e.AddedItems)
             {
-                foreach (string added in e.AddedItems)
-                {
-                    if (!viewModel.SelectedTags.Contains(added))
-                    {
-                        viewModel.SelectedTags.Add(added);
-                    }
-                }
-
-                foreach (string removed in e.RemovedItems)
-                {
-                    if (viewModel.SelectedTags.Contains(removed))
-                    {
-                        viewModel.SelectedTags.Remove(removed);
-                    }
-                }
+                _viewModel.ToggleTagSelection(addedItem);
             }
+
+            foreach (string removedItem in e.RemovedItems)
+            {
+                _viewModel.ToggleTagSelection(removedItem);
+            }
+
+            _viewModel.OnPropertyChanged(nameof(MainViewModel.SelectedTagsText));
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
@@ -83,8 +73,8 @@ namespace SnippetManager
                 // get user inputs
                 string title = TitleTextBox.Text?.Trim() ?? string.Empty;
                 string content = ContentEditor.Text?.Trim() ?? string.Empty;
-                string selectedLanguages = string.Join(", ", LanguagesListBox.SelectedItems.Cast<string>()); // ListBox for languages
-                string selectedTags = string.Join(", ", TagsListBox.SelectedItems.Cast<string>()); // ListBox for tags
+                string selectedLanguages = string.Join(", ", _viewModel.SelectedLanguages); // ListBox for languages
+                string selectedTags = string.Join(", ", _viewModel.SelectedTags); // ListBox for tags
 
                 // validate 
                 if (string.IsNullOrWhiteSpace(title) || string.IsNullOrWhiteSpace(content))

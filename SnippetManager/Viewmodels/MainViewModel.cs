@@ -82,7 +82,19 @@ namespace SnippetManager.ViewModels
             OnPropertyChanged(nameof(SelectedLanguagesText));
         }
 
-
+        public void ToggleTagSelection(string tag)
+        {
+            if (SelectedTags.Contains(tag))
+            {
+                SelectedTags.Remove(tag);
+            }
+            else
+            {
+                SelectedTags.Add(tag);
+            }
+            OnPropertyChanged(nameof(SelectedTags));
+            OnPropertyChanged(nameof(SelectedTagsText));
+        }
 
         public void LoadSnippet(Snippet snippet)
         {
@@ -97,8 +109,9 @@ namespace SnippetManager.ViewModels
             }
             OnPropertyChanged(nameof(SelectedLanguages));
             OnPropertyChanged(nameof(SelectedLanguagesText));
+            OnPropertyChanged(nameof(SelectedTags));
+            OnPropertyChanged(nameof(SelectedTagsText));
         }
-
 
         //tags
         private ObservableCollection<string> _availableTags = new ObservableCollection<string>();
