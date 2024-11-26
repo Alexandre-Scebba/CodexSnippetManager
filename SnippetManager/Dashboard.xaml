@@ -89,13 +89,11 @@
                     <TextBox Width="300" Style="{StaticResource WatermarkTextBoxStyle}" Margin="5" HorizontalAlignment="Left" 
                              VerticalAlignment="Top" Tag="Search snippets..." TextChanged="SearchTextBox_TextChanged" x:Name="SearchTextBox" />
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Grid.Column="1" Margin="5,0,0,0">
-                        <Button Content="Import" Click="ImportButton_Click" Width="100" Margin="0,0,5,0" Height="30"/>
-                        <Button Content="Export Selected" Click="ExportButton_Click" Width="100" Margin="0,0,5,0" Height="30"/>
-                        <Button Content="Delete Selected" Click="DeleteSelectedButton_Click" Margin="5" Height="30" />
-
+                        <Button Content="Import" Click="ImportButton_Click" Width="80" Margin="0,0,5,0" Height="30"/>
+                        <Button Content="Export Selected" Click="ExportButton_Click" Width="80" Margin="0,0,5,0" Height="30"/>
+                        <Button Content="Delete Selected" Click="DeleteSelectedButton_Click" Width="80" Margin="5" Height="30" />
                     </StackPanel>
                 </Grid>
-
 
                 <!-- Table -->
                 <DataGrid x:Name="SnippetsDataGrid" HorizontalAlignment="Stretch" 
@@ -107,6 +105,8 @@
                           
                           ScrollViewer.CanContentScroll="False"
                           VerticalScrollBarVisibility="Visible"
+                          HorizontalScrollBarVisibility="Visible"
+                          CanUserAddRows="False">
                           HorizontalScrollBarVisibility="Visible">
                     <DataGrid.RowStyle>
                         <Style TargetType="DataGridRow">
@@ -175,8 +175,6 @@
                         </DataGridTemplateColumn>
                     </DataGrid.Columns>
                 </DataGrid>
-
-
             </StackPanel>
         </Grid>
     </DockPanel>
