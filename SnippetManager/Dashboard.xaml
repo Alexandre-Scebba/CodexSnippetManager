@@ -89,33 +89,54 @@
                     <TextBox Width="300" Style="{StaticResource WatermarkTextBoxStyle}" Margin="5" HorizontalAlignment="Left" 
                              VerticalAlignment="Top" Tag="Search snippets..." TextChanged="SearchTextBox_TextChanged" x:Name="SearchTextBox" />
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Grid.Column="1" Margin="5,0,0,0">
-                        <Button Content="Import" Click="ImportButton_Click" Width="80" Margin="0,0,5,0" Height="30"/>
-                        <Button Content="Export Selected" Click="ExportButton_Click" Width="80" Margin="0,0,5,0" Height="30"/>
-                        <Button Content="Delete Selected" Click="DeleteSelectedButton_Click" Width="80" Margin="5" Height="30" />
+                        <Button Content="Import" Click="ImportButton_Click" Width="100" Margin="0,0,5,0" Height="30"/>
+                        <Button Content="Export Selected" Click="ExportButton_Click" Width="100" Margin="0,0,5,0" Height="30"/>
+                        <Button Content="Delete Selected" Click="DeleteSelectedButton_Click" Margin="5" Height="30" />
+
                     </StackPanel>
                 </Grid>
 
+
                 <!-- Table -->
                 <DataGrid x:Name="SnippetsDataGrid" HorizontalAlignment="Stretch" 
-                          AutoGenerateColumns="False" 
-                          VerticalAlignment="Stretch"
-                          MouseDoubleClick="SnippetsDataGrid_MouseDoubleClick" 
-                          MaxHeight="800"
-                          MaxWidth="1800"
-                          
-                          ScrollViewer.CanContentScroll="False"
-                          VerticalScrollBarVisibility="Visible"
-                          HorizontalScrollBarVisibility="Visible"
-                          CanUserAddRows="False">
-                          HorizontalScrollBarVisibility="Visible">
+          AutoGenerateColumns="False" 
+          VerticalAlignment="Stretch"
+          MouseDoubleClick="SnippetsDataGrid_MouseDoubleClick" 
+          MaxHeight="800"
+          MaxWidth="1800"
+          CanUserAddRows="False"
+          IsReadOnly="True"
+          ScrollViewer.CanContentScroll="False"
+          VerticalScrollBarVisibility="Visible"
+          HorizontalScrollBarVisibility="Visible"
+          SelectionUnit="FullRow">
+                    <DataGrid.Resources>
+                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="LightGray"/>
+                        <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="LightGray"/>
+                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black"/>
+                    </DataGrid.Resources>
                     <DataGrid.RowStyle>
                         <Style TargetType="DataGridRow">
                             <Setter Property="MinHeight" Value="40" />
                             <!-- Sets the minimum row height -->
                             <Setter Property="MaxHeight" Value="100" />
                             <!-- Sets the maximum row height -->
+                            <Setter Property="Background" Value="White" />
+                            <Setter Property="Foreground" Value="Black" />
+                            <Setter Property="FontWeight" Value="Normal" />
+                            <Style.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="Background" Value="LightGray" />
+                                    <Setter Property="Foreground" Value="Black" />
+                                </Trigger>
+                            </Style.Triggers>
                         </Style>
                     </DataGrid.RowStyle>
+                    <DataGrid.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="BorderThickness" Value="0"/>
+                        </Style>
+                    </DataGrid.CellStyle>
                     <DataGrid.Columns>
                         <DataGridTemplateColumn>
                             <DataGridTemplateColumn.Header>
@@ -175,6 +196,13 @@
                         </DataGridTemplateColumn>
                     </DataGrid.Columns>
                 </DataGrid>
+
+
+
+
+
+
+
             </StackPanel>
         </Grid>
     </DockPanel>
