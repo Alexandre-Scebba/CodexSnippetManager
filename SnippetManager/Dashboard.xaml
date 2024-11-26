@@ -102,10 +102,20 @@
                           MouseDoubleClick="SnippetsDataGrid_MouseDoubleClick" 
                           MaxHeight="800"
                           MaxWidth="1800"
+                          
                           ScrollViewer.CanContentScroll="False"
                           VerticalScrollBarVisibility="Visible"
                           HorizontalScrollBarVisibility="Visible"
                           CanUserAddRows="False">
+                          HorizontalScrollBarVisibility="Visible">
+                    <DataGrid.RowStyle>
+                        <Style TargetType="DataGridRow">
+                            <Setter Property="MinHeight" Value="40" />
+                            <!-- Sets the minimum row height -->
+                            <Setter Property="MaxHeight" Value="100" />
+                            <!-- Sets the maximum row height -->
+                        </Style>
+                    </DataGrid.RowStyle>
                     <DataGrid.Columns>
                         <DataGridTemplateColumn>
                             <DataGridTemplateColumn.Header>

@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
         xmlns:local="clr-namespace:SnippetManager"
-        Title="View/Edit Snippet" Height="800" Width="800">
+        Title="View/Edit Snippet" Height="850" Width="850">
     <Window.Resources>
         <local:StringIsNullOrEmptyConverter x:Key="StringIsNullOrEmptyConverter"/>
         <Style TargetType="TextBox" x:Key="WatermarkTextBoxStyle">
