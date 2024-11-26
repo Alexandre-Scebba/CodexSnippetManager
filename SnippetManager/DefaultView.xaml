@@ -6,7 +6,7 @@
              mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="400">
     <StackPanel Margin="10">
         <StackPanel Margin="5">
-            <Label Content="Email:" />
+            <Label Content="Username:" />
             <TextBox x:Name="EmailTextBox" Width="200" Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}" />
         </StackPanel>
         <StackPanel Margin="5">
