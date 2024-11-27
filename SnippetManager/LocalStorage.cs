@@ -1,30 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Text.Json;
 using SnippetManager.Models;
 
-namespace SnippetManager.Data
+namespace SnippetManager.Data;
+
+public class LocalStorage
 {
-    public class LocalStorage
+    private const string FilePath = "snippets.json";
+
+    public void SaveSnippet(Snippet snippet)
     {
-        private const string FilePath = "snippets.json";
+        var snippets = LoadSnippets();
+        snippets.Add(snippet);
+        File.WriteAllText(FilePath, JsonSerializer.Serialize(snippets));
+    }
 
-        public void SaveSnippet(Snippet snippet)
+    public List<Snippet> LoadSnippets()
+    {
+        if (File.Exists(FilePath))
         {
-            var snippets = LoadSnippets();
-            snippets.Add(snippet);
-            File.WriteAllText(FilePath, JsonSerializer.Serialize(snippets));
+            var json = File.ReadAllText(FilePath);
+            return JsonSerializer.Deserialize<List<Snippet>>(json) ?? new List<Snippet>();
         }
 
-        public List<Snippet> LoadSnippets()
-        {
-            if (File.Exists(FilePath))
-            {
-                var json = File.ReadAllText(FilePath);
-                return JsonSerializer.Deserialize<List<Snippet>>(json) ?? new List<Snippet>();
-            }
-            return new List<Snippet>();
-        }
+        return new List<Snippet>();
     }
 }

@@ -1,100 +1,99 @@
-﻿using SnippetManager.Models;
-using SnippetManager.ViewModels;
-using System;
+﻿using System.Security.Cryptography;
+using System.Text;
 using System.Windows;
-using System.Windows.Controls;
 using Microsoft.EntityFrameworkCore;
+using SnippetManager.Models;
+using SnippetManager.ViewModels;
 
-namespace SnippetManager
+namespace SnippetManager;
+
+/// <summary>
+///     Interaction logic for Settings.xaml
+/// </summary>
+public partial class Settings : Window
 {
-    /// <summary>
-    /// Interaction logic for Settings.xaml
-    /// </summary>
-    public partial class Settings : Window
-    {
-        private readonly codexDBContext _context;
-        private readonly MainViewModel _mainViewModel;
+    private readonly codexDBContext _context;
+    private readonly MainViewModel _mainViewModel;
 
-        public Settings(DbContextOptions<codexDBContext> options, MainViewModel mainViewModel)
+    public Settings(DbContextOptions<codexDBContext> options, MainViewModel mainViewModel)
+    {
+        InitializeComponent();
+        _context = new codexDBContext(options);
+        _mainViewModel = mainViewModel;
+    }
+
+    private void SaveButton_Click(object sender, RoutedEventArgs e)
+    {
+        var username = UsernameTextBox.Text;
+        var oldPassword = OldPasswordBox.Password;
+        var newPassword = NewPasswordBox.Password;
+        var confirmPassword = ConfirmPasswordBox.Password;
+
+        // Validation
+        if (string.IsNullOrWhiteSpace(username) ||
+            string.IsNullOrWhiteSpace(oldPassword) ||
+            string.IsNullOrWhiteSpace(newPassword) ||
+            string.IsNullOrWhiteSpace(confirmPassword))
         {
-            InitializeComponent();
-            _context = new codexDBContext(options);
-            _mainViewModel = mainViewModel;
+            MessageBox.Show("All fields are required.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            return;
         }
 
-        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        if (newPassword != confirmPassword)
         {
-            string username = UsernameTextBox.Text;
-            string oldPassword = OldPasswordBox.Password;
-            string newPassword = NewPasswordBox.Password;
-            string confirmPassword = ConfirmPasswordBox.Password;
+            MessageBox.Show("New password and confirm password do not match.", "Validation Error", MessageBoxButton.OK,
+                MessageBoxImage.Error);
+            return;
+        }
 
-            // Validation
-            if (string.IsNullOrWhiteSpace(username) ||
-                string.IsNullOrWhiteSpace(oldPassword) ||
-                string.IsNullOrWhiteSpace(newPassword) ||
-                string.IsNullOrWhiteSpace(confirmPassword))
+        // Update user settings
+        var currentUser = MainViewModel.CurrentUser;
+        if (currentUser != null)
+        {
+            if (currentUser.PasswordHash == HashPassword(oldPassword))
             {
-                MessageBox.Show("All fields are required.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
+                currentUser.Username = username;
+                currentUser.PasswordHash = HashPassword(newPassword);
+                // Save changes to the database
+                _context.Users.Update(currentUser);
+                _context.SaveChanges();
 
-            if (newPassword != confirmPassword)
-            {
-                MessageBox.Show("New password and confirm password do not match.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-
-            // Update user settings
-            var currentUser = MainViewModel.CurrentUser;
-            if (currentUser != null)
-            {
-                if (currentUser.PasswordHash == HashPassword(oldPassword))
-                {
-                    currentUser.Username = username;
-                    currentUser.PasswordHash = HashPassword(newPassword);
-                    // Save changes to the database
-                    _context.Users.Update(currentUser);
-                    _context.SaveChanges();
-
-                    MessageBox.Show("User account settings saved successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                    this.Close();
-                }
-                else
-                {
-                    MessageBox.Show("Old password is incorrect.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
+                MessageBox.Show("User account settings saved successfully.", "Success", MessageBoxButton.OK,
+                    MessageBoxImage.Information);
+                Close();
             }
             else
             {
-                MessageBox.Show("No user is currently logged in.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Old password is incorrect.", "Validation Error", MessageBoxButton.OK,
+                    MessageBoxImage.Error);
             }
         }
-
-        private void LogoutButton_Click(object sender, RoutedEventArgs e)
+        else
         {
-            // Clear the current user and reset the application state
-            MainViewModel.CurrentUser = null;
-            MainViewModel.ClearRememberMeInfo();
-            MessageBox.Show("You have been logged out.", "Logout", MessageBoxButton.OK, MessageBoxImage.Information);
-
-            // Switch to the login view
-            _mainViewModel.CurrentView = new DefaultView { DataContext = _mainViewModel };
-            this.Close();
+            MessageBox.Show("No user is currently logged in.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
+    }
 
-        private string HashPassword(string password)
+    private void LogoutButton_Click(object sender, RoutedEventArgs e)
+    {
+        // Clear the current user and reset the application state
+        MainViewModel.CurrentUser = null;
+        MainViewModel.ClearRememberMeInfo();
+        MessageBox.Show("You have been logged out.", "Logout", MessageBoxButton.OK, MessageBoxImage.Information);
+
+        // Switch to the login view
+        _mainViewModel.CurrentView = new DefaultView { DataContext = _mainViewModel };
+        Close();
+    }
+
+    private string HashPassword(string password)
+    {
+        using (var sha256 = SHA256.Create())
         {
-            using (var sha256 = System.Security.Cryptography.SHA256.Create())
-            {
-                var bytes = sha256.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
-                var builder = new System.Text.StringBuilder();
-                foreach (var b in bytes)
-                {
-                    builder.Append(b.ToString("x2"));
-                }
-                return builder.ToString();
-            }
+            var bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+            var builder = new StringBuilder();
+            foreach (var b in bytes) builder.Append(b.ToString("x2"));
+            return builder.ToString();
         }
     }
 }

@@ -1,5 +1,5 @@
-﻿using System.ComponentModel;
-using SnippetManager.Models;
+﻿using SnippetManager.Models;
+using System.ComponentModel;
 using System.Diagnostics;
 
 namespace SnippetManager.ViewModels

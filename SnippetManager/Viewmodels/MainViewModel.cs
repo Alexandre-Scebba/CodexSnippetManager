@@ -1,19 +1,15 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using SnippetManager.Models;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Configuration;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
-using Microsoft.EntityFrameworkCore;
-using SnippetManager.Data;
-using SnippetManager.Models;
-using System.Configuration;
-using System.Windows.Controls;
 
 namespace SnippetManager.ViewModels
 {
@@ -526,6 +522,20 @@ namespace SnippetManager.ViewModels
                 }
             }
         }
+
+        private string _selectedLanguage;
+        public string SelectedLanguage
+        {
+            get => _selectedLanguage;
+            set
+            {
+                _selectedLanguage = value;
+                OnPropertyChanged(nameof(SelectedLanguage));
+                OnPropertyChanged(nameof(HighlightingText));
+            }
+        }
+
+        public string HighlightingText => $"Highlighting for {_selectedLanguage}";
 
         private void AdjustWindowSize()
         {
