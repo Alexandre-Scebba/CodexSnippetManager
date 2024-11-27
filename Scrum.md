@@ -168,19 +168,18 @@ ________________________________________________________________________________
 - - - 2024/11/25 Alexandre - - - - - - - - - - - - - - - -
       
 1. Done since last scrum
--Snippet creation main functions integrated.
--Debugged database issues, moved schema alignment from EF6 to EF Core.
--Updated `codexDBContext` integration across files.
--Re-enabled migrations and addressed nullable warnings.
-(Accidentally cleaned up one by one instead of creating a global supression.)
--Fixed MainViewModel to align with EF Core context.
+- Snippet creation main functions integrated.
+- Debugged database issues, moved schema alignment from EF6 to EF Core.
+- Updated `codexDBContext` integration across files.
+- Re-enabled migrations and addressed nullable warnings. (Accidentally cleaned up one by one instead of creating a global supression.)
+- Fixed MainViewModel to align with EF Core context.
 
-3. Plan until next Scrum
--Investigating snippet creation save failures
--Add remaining functionality like multiple language selection and proper syntax highlighting.
+2. Plan until next Scrum
+- Investigating snippet creation save failures
+- Add remaining functionality like multiple language selection and proper syntax highlighting.
 
-5. Need assistance / figure things out
--Want to make sure codexDBContext works consistently without breaking existing functionality.
+3. Need assistance / figure things out
+- Want to make sure codexDBContext works consistently without breaking existing functionality.
 
 - - - 2024/11/25 Michael - - - - - - - - - - - - - - - - -
 1. Done since last scrum
@@ -194,5 +193,68 @@ ________________________________________________________________________________
 - search function
 - soft delete
 3. Need assistance / figure things out
--
+
 ________________________________________________________________________________________
+
+- - - 2024/11/26  Dimitri - - - - - - - - - - - - - - - -
+
+1. Done since last scrum
+- Fixed Snippet edit, snippet save, snippet cancel, import export dtos
+- snippet save
+- snippet cancel
+- import export dtos
+- fixed basic xaml issues
+- fixed highlighting in dashboard
+- fixed fixed selection of snippets
+- sixed select all + export all
+- fixed delete selected
+- fixed sizing for windows
+- remember me
+- adding icon so not basic
+- removed connected to database message
+- logout button -> login window
+- back to login window on register window
+- General touchups
+  
+2. Plan until next Scrum
+- Present
+- Finish trello
+- Submit Project
+  
+3. Need assistance / figure things out
+
+
+- - - 2024/11/26 Alexandre - - - - - - - - - - - - - - - -
+      
+1. Done since last scrum
+- Every unit test
+- Presentation slides
+- Trello Updates
+- Essential Front end touchups
+- applicationDBCOntext -> codexDBContext
+
+3. Plan until next Scrum
+- Present
+- Finish trello
+- Submit Project
+5. Need assistance / figure things out
+
+
+- - - 2024/11/26 Michael - - - - - - - - - - - - - - - - -
+1. Done since last scrum
+- Copy to clipboard
+- changed syntax highlighting to common library
+- fixing datagrid resizing
+- Confirm for delete
+- Helped dimitri with his issues
+- Dynamic Search
+- adding scrolling to dashboard snippets
+- essential touchups
+  
+2. Plan until next Scrum
+- Present
+- Finish trello
+- Submit Project
+  
+3. Need assistance / figure things out
+
