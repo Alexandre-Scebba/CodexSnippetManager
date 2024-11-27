@@ -196,8 +196,8 @@ ________________________________________________________________________________
 3. Need assistance / figure things out
 -
 ________________________________________________________________________________________
-- - - 2024/11/26 - - -
-- - -  Dimitri - - - - - - - - - - - - - - - - 
+
+- - - 2024/11/26  Dimitri - - - - - - - - - - - - - - - - 
 1. Done since last scrum
 - Fixed Snippet edit, snippet save, snippet cancel, import export dtos
 - snippet save
@@ -224,11 +224,14 @@ ________________________________________________________________________________
 3. Need assistance / figure things out
 -
 
-- - - 2024/11/25 Alexandre - - - - - - - - - - - - - - - -
+- - - 2024/11/26 Alexandre - - - - - - - - - - - - - - - -
       
 1. Done since last scrum
--Every unit test
--Presentation slides
+- Every unit test
+- Presentation slides
+- Trello Updates
+- Essential Front end touchups
+- applicationDBCOntext -> codexDBContext
 
 3. Plan until next Scrum
 - Present
@@ -237,11 +240,14 @@ ________________________________________________________________________________
 5. Need assistance / figure things out
 
 
-- - - 2024/11/25 Michael - - - - - - - - - - - - - - - - -
+- - - 2024/11/26 Michael - - - - - - - - - - - - - - - - -
 1. Done since last scrum
 - Copy to clipboard
 - changed syntax highlighting to common library
 - fixing datagrid resizing
+- Confirm for delete
+- Helped dimitri with his issues
+- Dynamic Search
 - adding scrolling to dashboard snippets
 - essential touchups
   
