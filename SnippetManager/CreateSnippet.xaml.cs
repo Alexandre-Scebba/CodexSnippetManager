@@ -21,8 +21,7 @@ public partial class CreateSnippet : Window
     {
         InitializeComponent();
         _context = context ?? throw new ArgumentNullException(nameof(context), "Database context cannot be null.");
-        _snippets = snippets ??
-                    throw new ArgumentNullException(nameof(snippets), "Snippets collection cannot be null.");
+        _snippets = snippets ?? throw new ArgumentNullException(nameof(snippets), "Snippets collection cannot be null.");
         _viewModel = new MainViewModel();
         DataContext = _viewModel;
     }
@@ -36,7 +35,12 @@ public partial class CreateSnippet : Window
         foreach (string removedItem in e.RemovedItems) _viewModel.ToggleLanguageSelection(removedItem);
 
         if (LanguagesListBox.SelectedItems.Count > 0)
-            SetSyntaxHighlighting(LanguagesListBox.SelectedItems[0]?.ToString() ?? string.Empty);
+        {
+            var selectedLanguage = LanguagesListBox.SelectedItems[0]?.ToString() ?? string.Empty;
+            _viewModel.SelectedLanguage = selectedLanguage;
+            SetSyntaxHighlighting(selectedLanguage);
+        }
+
         _viewModel.OnPropertyChanged(nameof(MainViewModel.SelectedLanguagesText));
     }
 
@@ -67,7 +71,7 @@ public partial class CreateSnippet : Window
             }
 
             // find CategoryId for the selected language
-            var firstSelectedLanguage = selectedLanguages.Split(',').First().Trim();
+            var firstSelectedLanguage = selectedLanguages.Split(new[] { ", " }, StringSplitOptions.None).First().Trim();
             var category = _context.Categories
                 .FirstOrDefault(c => c.Name == firstSelectedLanguage && c.Type == "Language");
             if (category == null)
@@ -136,60 +140,6 @@ public partial class CreateSnippet : Window
 
     private void SetSyntaxHighlighting(string language)
     {
-        //switch (language.ToLower())
-        //{
-        //    case "c#":
-        //    case "csharp":
-        //        ContentEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("C#");
-        //        break;
-        //    case "xml":
-        //        ContentEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("XML");
-        //        break;
-        //    case "html":
-        //        ContentEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("HTML");
-        //        break;
-        //    case "javascript":
-        //    case "js":
-        //        ContentEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("JavaScript");
-        //        break;
-        //    case "python":
-        //        ContentEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("Python");
-        //        break;
-        //    case "sql":
-        //        ContentEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("SQL");
-        //        break;
-        //    case "java":
-        //        ContentEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("Java");
-        //        break;
-        //    case "css":
-        //        ContentEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("CSS");
-        //        break;
-        //    case "php":
-        //        ContentEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("PHP");
-        //        break;
-        //    case "ruby":
-        //        ContentEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("Ruby");
-        //        break;
-        //    case "json":
-        //        ContentEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("JSON");
-        //        break;
-        //    case "typescript":
-        //    case "ts":
-        //        ContentEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("TypeScript");
-        //        break;
-        //    case "markdown":
-        //    case "md":
-        //        ContentEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("Markdown");
-        //        break;
-        //    case "vb":
-        //    case "visualbasic":
-        //        ContentEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("VBNET");
-        //        break;
-        //    default:
-        //        ContentEditor.SyntaxHighlighting = null;
-        //        break;
-        //}
-
         ContentEditor.SyntaxHighlighting = SyntaxHighLightingHelper.GetSyntaxHighlighting(language);
     }
 }

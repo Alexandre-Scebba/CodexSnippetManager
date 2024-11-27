@@ -78,6 +78,7 @@
             <ListBox x:Name="TagsListBox" ItemsSource="{Binding AvailableTags}"
                      SelectionMode="Multiple" Width="400" Height="100" SelectionChanged="TagsListBox_SelectionChanged"
                      ItemContainerStyle="{StaticResource CustomListBoxItemStyle}" />
+            <TextBlock Text="{Binding HighlightingText}" Margin="5" Foreground="Gray" />
         </StackPanel>
         <avalonedit:TextEditor x:Name="ContentEditor" Margin="5" ShowLineNumbers="True" Grid.Row="1"
                                VerticalAlignment="Stretch" />
