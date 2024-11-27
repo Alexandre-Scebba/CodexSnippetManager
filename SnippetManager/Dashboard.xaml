@@ -8,6 +8,7 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:behaviors="clr-namespace:SnippetManager.Behaviors"
              xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:fa="http://schemas.fontawesome.com/wpf"
              mc:Ignorable="d" 
              HorizontalAlignment="Stretch"
              VerticalAlignment="Stretch"
@@ -183,6 +184,7 @@
                         <DataGridTemplateColumn Header="Content" Width="*" MaxWidth="1000">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
+                                    <Grid>
                                     <avalonedit:TextEditor ShowLineNumbers="True" IsReadOnly="True">
                                         <b:Interaction.Behaviors>
                                             <behaviors:TextEditorBindingBehavior Text="{Binding Snippet.Content, Mode=TwoWay}" />
@@ -191,6 +193,12 @@
                                             <Binding Path="Snippet.Language" Converter="{StaticResource LanguageToSyntaxHighlightingConverter}" />
                                         </avalonedit:TextEditor.SyntaxHighlighting>
                                     </avalonedit:TextEditor>
+
+                                        <Button Click="CopyToClipboard_Click" HorizontalAlignment="Right" VerticalAlignment="Top" Width="24" Height="24" ToolTip="Copy to Clipboard" Background="Transparent"
+                                                Tag="{Binding Snippet.Content}">
+                                            <Image Source="/Resources/Images/copy-icon.png" Width="16" Height="16"/>
+                                        </Button>
+                                    </Grid>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
