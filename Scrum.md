@@ -194,10 +194,11 @@ ________________________________________________________________________________
 - search function
 - soft delete
 3. Need assistance / figure things out
--
+
 ________________________________________________________________________________________
 
-- - - 2024/11/26  Dimitri - - - - - - - - - - - - - - - - 
+- - - 2024/11/26  Dimitri - - - - - - - - - - - - - - - -
+
 1. Done since last scrum
 - Fixed Snippet edit, snippet save, snippet cancel, import export dtos
 - snippet save
@@ -222,7 +223,7 @@ ________________________________________________________________________________
 - Submit Project
   
 3. Need assistance / figure things out
--
+
 
 - - - 2024/11/26 Alexandre - - - - - - - - - - - - - - - -
       
@@ -257,4 +258,4 @@ ________________________________________________________________________________
 - Submit Project
   
 3. Need assistance / figure things out
--
+
