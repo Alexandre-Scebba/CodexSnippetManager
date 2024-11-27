@@ -196,3 +196,59 @@ ________________________________________________________________________________
 3. Need assistance / figure things out
 -
 ________________________________________________________________________________________
+- - - 2024/11/26 - - -
+- - -  Dimitri - - - - - - - - - - - - - - - - 
+1. Done since last scrum
+- Fixed Snippet edit, snippet save, snippet cancel, import export dtos
+- snippet save
+- snippet cancel
+- import export dtos
+- fixed basic xaml issues
+- fixed highlighting in dashboard
+- fixed fixed selection of snippets
+- sixed select all + export all
+- fixed delete selected
+- fixed sizing for windows
+- remember me
+- adding icon so not basic
+- removed connected to database message
+- logout button -> login window
+- back to login window on register window
+- General touchups
+  
+2. Plan until next Scrum
+- Present
+- Finish trello
+- Submit Project
+  
+3. Need assistance / figure things out
+-
+
+- - - 2024/11/25 Alexandre - - - - - - - - - - - - - - - -
+      
+1. Done since last scrum
+-Every unit test
+-Presentation slides
+
+3. Plan until next Scrum
+- Present
+- Finish trello
+- Submit Project
+5. Need assistance / figure things out
+
+
+- - - 2024/11/25 Michael - - - - - - - - - - - - - - - - -
+1. Done since last scrum
+- Copy to clipboard
+- changed syntax highlighting to common library
+- fixing datagrid resizing
+- adding scrolling to dashboard snippets
+- essential touchups
+  
+2. Plan until next Scrum
+- Present
+- Finish trello
+- Submit Project
+  
+3. Need assistance / figure things out
+-
