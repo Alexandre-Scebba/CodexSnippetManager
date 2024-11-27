@@ -94,6 +94,8 @@ namespace SnippetManager
             }
         }
 
+        public WindowStartupLocation WindowStartupLocation { get; private set; }
+
         private void LoadSnippets()
         {
             Debug.WriteLine("Loading snippets...");
@@ -368,6 +370,9 @@ namespace SnippetManager
                 optionsBuilder.UseSqlServer(connectionString);
 
                 ViewEditSnippet viewEditSnippetWindow = new ViewEditSnippet(new codexDBContext(optionsBuilder.Options), selectedSnippetViewModel.Snippet);
+                {
+                    WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                };
                 viewEditSnippetWindow.ShowDialog();
 
                 CommitAndRefreshDataGrid();
@@ -393,5 +398,6 @@ namespace SnippetManager
                 MessageBox.Show("Content copied to clipboard!", "Copy", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
+
     }
 }
