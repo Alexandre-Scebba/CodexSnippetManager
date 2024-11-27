@@ -39,33 +39,33 @@ public partial class MainWindow : Window
         _isLoggedIn = isLoggedIn;
         DataContext = new MainViewModel();
 
-        CheckDatabaseConnection();
+        //CheckDatabaseConnection();
         Debug.WriteLine("MainWindow initialized.");
     }
 
     //added a-sync run to avoid block UI thread
-    private async void CheckDatabaseConnection()
-    {
-        try
-        {
-            var canConnect = await Task.Run(() => _context.Database.CanConnect());
-            if (canConnect)
-            {
-                MessageBox.Show("Database connection is available.");
-                Debug.WriteLine("Database connection is available.");
-            }
-            else
-            {
-                MessageBox.Show("Failed to connect to the database.");
-                Debug.WriteLine("Failed to connect to the database.");
-            }
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show($"Error checking database connection: {ex.Message}\n{ex.InnerException?.Message}");
-            Debug.WriteLine($"Error checking database connection: {ex.Message}\n{ex.InnerException?.Message}");
-        }
-    }
+    //private async void CheckDatabaseConnection()
+    //{
+    //    try
+    //    {
+    //        var canConnect = await Task.Run(() => _context.Database.CanConnect());
+    //        if (canConnect)
+    //        {
+    //            MessageBox.Show("Database connection is available.");
+    //            Debug.WriteLine("Database connection is available.");
+    //        }
+    //        else
+    //        {
+    //            MessageBox.Show("Failed to connect to the database.");
+    //            Debug.WriteLine("Failed to connect to the database.");
+    //        }
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        MessageBox.Show($"Error checking database connection: {ex.Message}\n{ex.InnerException?.Message}");
+    //        Debug.WriteLine($"Error checking database connection: {ex.Message}\n{ex.InnerException?.Message}");
+    //    }
+    //}
 
 
     private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)

@@ -410,7 +410,6 @@ namespace SnippetManager.ViewModels
             {
                 IsLoggedIn = true;
                 MainViewModel.CurrentUser = user; //set current user
-                MessageBox.Show("Login successful.");
                 Debug.WriteLine("Login successful.");
 
                 if (RememberMe)
