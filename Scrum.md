@@ -168,19 +168,18 @@ ________________________________________________________________________________
 - - - 2024/11/25 Alexandre - - - - - - - - - - - - - - - -
       
 1. Done since last scrum
--Snippet creation main functions integrated.
--Debugged database issues, moved schema alignment from EF6 to EF Core.
--Updated `codexDBContext` integration across files.
--Re-enabled migrations and addressed nullable warnings.
-(Accidentally cleaned up one by one instead of creating a global supression.)
--Fixed MainViewModel to align with EF Core context.
+- Snippet creation main functions integrated.
+- Debugged database issues, moved schema alignment from EF6 to EF Core.
+- Updated `codexDBContext` integration across files.
+- Re-enabled migrations and addressed nullable warnings. (Accidentally cleaned up one by one instead of creating a global supression.)
+- Fixed MainViewModel to align with EF Core context.
 
-3. Plan until next Scrum
--Investigating snippet creation save failures
--Add remaining functionality like multiple language selection and proper syntax highlighting.
+2. Plan until next Scrum
+- Investigating snippet creation save failures
+- Add remaining functionality like multiple language selection and proper syntax highlighting.
 
-5. Need assistance / figure things out
--Want to make sure codexDBContext works consistently without breaking existing functionality.
+3. Need assistance / figure things out
+- Want to make sure codexDBContext works consistently without breaking existing functionality.
 
 - - - 2024/11/25 Michael - - - - - - - - - - - - - - - - -
 1. Done since last scrum
