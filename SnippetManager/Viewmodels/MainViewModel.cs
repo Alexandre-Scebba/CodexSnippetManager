@@ -248,6 +248,7 @@ namespace SnippetManager.ViewModels
             RegisterCommand = new RelayCommand(_ => Register());
             LoginCommand = new RelayCommand(_ => Login());
             ShowRegisterViewCommand = new RelayCommand(_ => ShowRegisterView());
+            ShowLoginViewCommand = new RelayCommand(_ => ShowLoginView());
             CurrentView = new DefaultView { DataContext = this };
 
             //set default syntax highlighting
@@ -315,6 +316,7 @@ namespace SnippetManager.ViewModels
                 _currentView = value;
                 OnPropertyChanged(nameof(CurrentView));
                 Debug.WriteLine($"CurrentView set to: {_currentView.GetType().Name}");
+                AdjustWindowSize();
             }
         }
 
@@ -343,6 +345,7 @@ namespace SnippetManager.ViewModels
         public ICommand RegisterCommand { get; }
         public ICommand LoginCommand { get; }
         public ICommand ShowRegisterViewCommand { get; }
+        public ICommand ShowLoginViewCommand { get; }
 
         private void Register()
         {
@@ -422,6 +425,7 @@ namespace SnippetManager.ViewModels
 
                 // Switch to the main view or dashboard
                 CurrentView = new Dashboard { DataContext = this };
+                CenterWindowOnScreen();
             }
             else
             {
@@ -434,6 +438,12 @@ namespace SnippetManager.ViewModels
         {
             Debug.WriteLine("ShowRegisterView command executed.");
             CurrentView = new RegistrationView { DataContext = this };
+        }
+
+        private void ShowLoginView()
+        {
+            Debug.WriteLine("ShowLoginView command executed.");
+            CurrentView = new DefaultView { DataContext = this };
         }
 
         private string HashPassword(string password)
@@ -514,6 +524,43 @@ namespace SnippetManager.ViewModels
                         Debug.WriteLine("Logged in with Remember Me");
                     }
                 }
+            }
+        }
+
+        private void AdjustWindowSize()
+        {
+            if (Application.Current.MainWindow != null)
+            {
+                if (CurrentView is DefaultView)
+                {
+                    Application.Current.MainWindow.SizeToContent = SizeToContent.WidthAndHeight;
+                }
+
+                else if (CurrentView is RegistrationView)
+                {
+                    Application.Current.MainWindow.SizeToContent = SizeToContent.WidthAndHeight;
+                }
+                else if (CurrentView is Dashboard)
+                {
+                    Application.Current.MainWindow.SizeToContent = SizeToContent.Manual;
+                    Application.Current.MainWindow.Width = 800;
+                    Application.Current.MainWindow.Height = 800;
+                    CenterWindowOnScreen();
+                }
+                else
+                {
+                    Application.Current.MainWindow.SizeToContent = SizeToContent.Manual;
+                }
+            }
+        }
+
+        private void CenterWindowOnScreen()
+        {
+            if (Application.Current.MainWindow != null)
+            {
+                var mainWindow = Application.Current.MainWindow;
+                mainWindow.Left = (SystemParameters.WorkArea.Width - mainWindow.Width) / 2 + SystemParameters.WorkArea.Left;
+                mainWindow.Top = (SystemParameters.WorkArea.Height - mainWindow.Height) / 2 + SystemParameters.WorkArea.Top;
             }
         }
     }

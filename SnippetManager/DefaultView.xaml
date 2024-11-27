@@ -3,14 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="400">
-    <StackPanel Margin="10">
+             mc:Ignorable="d"
+             HorizontalAlignment="Stretch"
+             VerticalAlignment="Stretch">
+    <StackPanel Margin="10,10,10,5" HorizontalAlignment="Center" VerticalAlignment="Center">
         <StackPanel Margin="5">
-            <Label Content="Username:" />
+            <Label Content="Username:" Width="205" />
             <TextBox x:Name="EmailTextBox" Width="200" Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}" />
         </StackPanel>
         <StackPanel Margin="5">
-            <Label Content="Password:" />
+            <Label Content="Password:" Width="205" />
             <PasswordBox x:Name="PasswordBox" Width="200" PasswordChanged="PasswordBox_PasswordChanged" KeyDown="PasswordBox_KeyDown" />
         </StackPanel>
         <CheckBox x:Name="RememberMeCheckBox" Content="Remember Me" IsChecked="{Binding RememberMe}" Width="200" />

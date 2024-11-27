@@ -87,6 +87,24 @@ namespace SnippetManager
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
+            TitleTextBox.Text = _snippet.Title;
+            DescriptionTextBox.Text = _snippet.Description;
+            ContentEditor.Text = _snippet.Content;
+
+            _viewModel.SelectedLanguages.Clear();
+            var selectedLanguages = _snippet.Language?.Split(new[] { ", " }, StringSplitOptions.None) ?? Array.Empty<String>();
+            foreach (var language in selectedLanguages)
+            {
+                _viewModel.SelectedLanguages.Add(language);
+            }
+
+            _viewModel.SelectedTags.Clear();
+            var selectedTags = _snippet.Tags?.Split(new[] { ", " }, StringSplitOptions.None) ?? Array.Empty<String>();
+            foreach (var tag in selectedTags)
+            {
+                _viewModel.SelectedTags.Add(tag);
+            }
+
             this.Close();
         }
 

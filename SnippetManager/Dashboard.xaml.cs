@@ -68,14 +68,14 @@ namespace SnippetManager
         private void LoadCategories()
         {
             Debug.WriteLine("Loading categories...");
-            var languages = _context.Categories.Where(c => c.Type == "Language").ToList();
+            var languages = _context.Categories.AsNoTracking().Where(c => c.Type == "Language").ToList();
             foreach (var language in languages)
             {
                 LanguagesListBox.Items.Add(language.Name);
                 Debug.WriteLine($"Loaded language: {language.Name}");
             }
 
-            var tags = _context.Categories.Where(c => c.Type == "Tag").ToList();
+            var tags = _context.Categories.AsNoTracking().Where(c => c.Type == "Tag").ToList();
             foreach (var tag in tags)
             {
                 TagsListBox.Items.Add(tag.Name);

@@ -32,6 +32,7 @@ namespace SnippetManager
         public MainWindow(codexDBContext context, bool isLoggedIn)
         {
             InitializeComponent();
+            this.SizeToContent = SizeToContent.WidthAndHeight;
             //added 
             // configure DbContext
             var optionsBuilder = new DbContextOptionsBuilder<codexDBContext>();
