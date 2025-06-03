@@ -1,3 +1,127 @@
+#Codex Snippet Manager
+
+Une application de bureau légère pour organiser, éditer et partager des extraits de code avec coloration syntaxique avancée.
+
+🚀 Présentation
+
+Codex est une application WPF en C# (.NET 6) qui permet aux développeurs de stocker, catégoriser et retrouver leurs extraits de code en un seul endroit. Objectifs principaux :
+
+Accès rapide : recherchez instantanément dans votre bibliothèque de snippets.
+
+Édition enrichie : éditez vos extraits avec coloration syntaxique complète grâce à AvalonEdit.
+
+Import & Export : sauvegardez ou partagez votre collection au format JSON/CSV.
+
+Comptes Utilisateur : inscription/connexion simple pour isoler les bibliothèques personnelles.
+
+🔑 Fonctionnalités Clés
+
+Tableau de bord  • Affiche vos catégories de snippets et les ajouts récents.
+
+Créer & Éditer des Snippets  • Titre, étiquette de langue, description et éditeur de code avec coloration syntaxique.
+
+Inscription / Connexion  • Authentification basique (nom d’utilisateur/mot de passe) pour isoler les bibliothèques.
+
+Recherche & Filtrage  • Recherche en temps réel par titre, langage ou tags.
+
+Import & Export  • Exportez votre bibliothèque au format JSON ou CSV.  • Importez des fichiers existants pour remplir rapidement la base de données.
+
+Coloration Syntaxique  • Gérée par AvalonEdit pour C#, JavaScript, Python, et plus.
+
+🔧 Stack Technique
+
+Framework : .NET 6 (WPF)
+
+Éditeur UI : AvalonEdit (coloration syntaxique)
+
+Stockage de Données : SQLite (base locale)
+
+ORM : Entity Framework Core
+
+Authentification : nom d’utilisateur/mot de passe personnalisé stocké dans SQLite (hashé)
+
+Compilation & Packaging : MSBuild / WiX Toolset (installateur optionnel)
+
+⚙️ Installation & Utilisation
+
+Cloner ou Télécharger
+
+git clone https://github.com/Alexandre-Scebba/snippet-codex.git
+cd snippet-codex
+
+Ouvrir dans Visual Studio 2022• Assurez-vous que le Runtime .NET 6 Desktop est installé.
+
+Restaurer & Compiler
+
+dotnet restore
+dotnet build
+
+Exécuter l’Application• Appuyez sur F5 dans Visual Studio ou lancez SnippetCodex.exe depuis bin\Debug\net6.0-windows.
+
+Configuration Initiale• Créez un nouveau compte via l’écran de connexion.• La base SQLite (snippets.db) se créera automatiquement dans le dossier de l’application.
+
+🚧 Défis Connus & Solutions
+
+Mise à jour dynamique  • La liste des snippets se rafraîchit en direct lors de l’ajout ou de la modification — implémenté via le suivi des changements d’EF Core.
+
+Erreurs de champs vides  • Validation pour éviter les titres ou corps de code vides.
+
+Coloration syntaxique  • AvalonEdit peut ralentir sur les très gros fichiers — optimisé en limitant le rendu des polices sur les blocs volumineux.
+
+🧪 Leçons Apprises
+
+Tests Unitaires  • Couvre les opérations CRUD de snippets et la validation de connexion.
+
+Intégration AvalonEdit  • Personnalisation des règles de coloration pour plusieurs langages.
+
+Injection de Dépendances  • Configuration du DbContext EF Core et des services dans une application WPF via Microsoft.Extensions.Hosting.
+
+🔭 Travaux Futurs
+
+Synchronisation Cloud  • Synchronisez vos snippets avec Azure Cosmos DB ou un autre stockage cloud.
+
+Organisation par Tags  • Glisser-déposer des tags et catégories hiérarchiques.
+
+Partage de Snippets  • Générer des URLs publiques ou des exports Gist pour chaque snippet.
+
+Multi-Plateforme  • Créer une application web ou mobile compagnon pour accéder à la bibliothèque sur le pouce.
+
+Stockage Chiffré  • Chiffrer la base SQLite locale pour plus de sécurité.
+
+👥 Équipe
+
+Michael Rourke – Responsable Front-End & Correcteur de Bugs
+
+Dimitri Teolis – Chef de Projet & Testeur Principal
+
+Alexandre Scebba – Architecte Backend & Spécialiste Intégration
+
+📜 Licence
+
+Ce projet est sous licence MIT. Voir LICENSE pour plus de détails.
+
+⭐ Contribution
+
+Forkez le dépôt sur GitHub
+
+Créez une branche de fonctionnalité :
+
+git checkout -b feature/<VotreFeature>
+
+Commit & Push :
+
+git commit -m "Ajout <feature> / correction <bug>"
+git push origin feature/<VotreFeature>
+
+Ouvrez une Pull Request vers main
+
+Intégrez les retours et fusionnez une fois approuvé
+
+Merci pour vos contributions !
+
+-------------------------------------------------------------------------------------------------------------------------
+#ENG:
+
 # Codex Snippet Manager
 
 > A lightweight desktop app for organizing, editing, and sharing code snippets with rich syntax highlighting.
