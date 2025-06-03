@@ -1,4 +1,4 @@
-#Codex Snippet Manager
+Codex Snippet Manager
 
 Une application de bureau légère pour organiser, éditer et partager des extraits de code avec coloration syntaxique avancée.
 
@@ -16,17 +16,17 @@ Comptes Utilisateur : inscription/connexion simple pour isoler les bibliothèqu
 
 🔑 Fonctionnalités Clés
 
-Tableau de bord  • Affiche vos catégories de snippets et les ajouts récents.
+Tableau de bord• Affiche vos catégories de snippets et les ajouts récents.
 
-Créer & Éditer des Snippets  • Titre, étiquette de langue, description et éditeur de code avec coloration syntaxique.
+Créer & Éditer des Snippets• Titre, étiquette de langue, description et éditeur de code avec coloration syntaxique.
 
-Inscription / Connexion  • Authentification basique (nom d’utilisateur/mot de passe) pour isoler les bibliothèques.
+Inscription / Connexion• Authentification basique (nom d’utilisateur/mot de passe) pour isoler les bibliothèques.
 
-Recherche & Filtrage  • Recherche en temps réel par titre, langage ou tags.
+Recherche & Filtrage• Recherche en temps réel par titre, langage ou tags.
 
-Import & Export  • Exportez votre bibliothèque au format JSON ou CSV.  • Importez des fichiers existants pour remplir rapidement la base de données.
+Import & Export• Exportez votre bibliothèque au format JSON ou CSV.• Importez des fichiers existants pour remplir rapidement la base de données.
 
-Coloration Syntaxique  • Gérée par AvalonEdit pour C#, JavaScript, Python, et plus.
+Coloration Syntaxique• Gérée par AvalonEdit pour C#, JavaScript, Python, et plus.
 
 🔧 Stack Technique
 
@@ -62,31 +62,31 @@ Configuration Initiale• Créez un nouveau compte via l’écran de connexion.�
 
 🚧 Défis Connus & Solutions
 
-Mise à jour dynamique  • La liste des snippets se rafraîchit en direct lors de l’ajout ou de la modification — implémenté via le suivi des changements d’EF Core.
+Mise à jour dynamique• La liste des snippets se rafraîchit en direct lors de l’ajout ou de la modification — implémenté via le suivi des changements d’EF Core.
 
-Erreurs de champs vides  • Validation pour éviter les titres ou corps de code vides.
+Erreurs de champs vides• Validation pour éviter les titres ou corps de code vides.
 
-Coloration syntaxique  • AvalonEdit peut ralentir sur les très gros fichiers — optimisé en limitant le rendu des polices sur les blocs volumineux.
+Coloration syntaxique• AvalonEdit peut ralentir sur les très gros fichiers — optimisé en limitant le rendu des polices sur les blocs volumineux.
 
 🧪 Leçons Apprises
 
-Tests Unitaires  • Couvre les opérations CRUD de snippets et la validation de connexion.
+Tests Unitaires• Couvre les opérations CRUD de snippets et la validation de connexion.
 
-Intégration AvalonEdit  • Personnalisation des règles de coloration pour plusieurs langages.
+Intégration AvalonEdit• Personnalisation des règles de coloration pour plusieurs langages.
 
-Injection de Dépendances  • Configuration du DbContext EF Core et des services dans une application WPF via Microsoft.Extensions.Hosting.
+Injection de Dépendances• Configuration du DbContext EF Core et des services dans une application WPF via Microsoft.Extensions.Hosting.
 
 🔭 Travaux Futurs
 
-Synchronisation Cloud  • Synchronisez vos snippets avec Azure Cosmos DB ou un autre stockage cloud.
+Synchronisation Cloud• Synchronisez vos snippets avec Azure Cosmos DB ou un autre stockage cloud.
 
-Organisation par Tags  • Glisser-déposer des tags et catégories hiérarchiques.
+Organisation par Tags• Glisser-déposer des tags et catégories hiérarchiques.
 
-Partage de Snippets  • Générer des URLs publiques ou des exports Gist pour chaque snippet.
+Partage de Snippets• Générer des URLs publiques ou des exports Gist pour chaque snippet.
 
-Multi-Plateforme  • Créer une application web ou mobile compagnon pour accéder à la bibliothèque sur le pouce.
+Multi-Plateforme• Créer une application web ou mobile compagnon pour accéder à la bibliothèque sur le pouce.
 
-Stockage Chiffré  • Chiffrer la base SQLite locale pour plus de sécurité.
+Stockage Chiffré• Chiffrer la base SQLite locale pour plus de sécurité.
 
 👥 Équipe
 
